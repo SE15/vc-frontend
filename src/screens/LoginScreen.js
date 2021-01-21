@@ -1,5 +1,6 @@
-import{Input, Stack,Button,IconButton,InputGroup, InputLeftElement, Box} from '@chakra-ui/react';
-import { Divider, FormControl,Flex,Heading,Icon ,Text} from '@chakra-ui/react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import{Input, Stack,Button,InputGroup, Box
+,Divider, FormControl,Flex,Heading ,Text} from '@chakra-ui/react';
 
 const LoginScreen=()=>{
     return(
