@@ -1,5 +1,6 @@
-import{Input, Stack,Button,InputGroup, InputLeftElement, Box, HStack} from '@chakra-ui/react';
-import { Divider, FormControl,Flex,Heading } from '@chakra-ui/react';
+import{Input, Stack,Button,InputGroup, InputLeftElement, Box,
+     HStack,Divider, FormControl,Flex,Heading,Text} from '@chakra-ui/react';
+
 
 const SignInScreen=()=>{
     return(
@@ -15,33 +16,33 @@ const SignInScreen=()=>{
                 <FormControl isRequired>
                     <InputGroup>
                         <InputLeftElement/>
-                        <Input type='email' placeholder='Email' bg="white.100" color="brand.600" borderColor="blueGreen.100"/>
+                        <Input type='email' placeholder='Email' bg="white.100" color="black.600" borderColor="blueGreen.100"/>
                     </InputGroup>
                 </FormControl>
                 <HStack>
                 <FormControl isRequired>
                     <InputGroup>
                         <InputLeftElement/>
-                        <Input type='text' placeholder='First Name' bg="white.100" color="brand.600" width="100%" borderColor="blueGreen.100"/>
+                        <Input type='text' placeholder='First Name' bg="white.100" color="black.600" width="100%" borderColor="blueGreen.100"/>
                     </InputGroup>
                 </FormControl>
                 <FormControl isRequired>
                     <InputGroup>
                         <InputLeftElement/> 
-                        <Input type='text' placeholder='Last Name' bg="white.100" color="brand.600" borderColor="blueGreen.100"/>
+                        <Input type='text' placeholder='Last Name' bg="white.100" color="black.600" borderColor="blueGreen.100"/>
                     </InputGroup>
                 </FormControl>
                 </HStack>
                 <FormControl isRequired>
                     <InputGroup>
                         <InputLeftElement/>
-                        <Input type='password' aria-label='password' placeholder='Password' bg="white.100" color="brand.600" borderColor="blueGreen.100"/>
+                        <Input type='password' aria-label='password' placeholder='Password' bg="white.100" color="black.600" borderColor="blueGreen.100"/>
                     </InputGroup>
                 </FormControl>
                 <FormControl isRequired>
                     <InputGroup>
                         <InputLeftElement/>
-                        <Input type='password' aria-label='Confirm password' placeholder='Confirm Password' bg="white.100" color="brand.600" borderColor="blueGreen.100"/>
+                        <Input type='password' aria-label='Confirm password' placeholder='Confirm Password' bg="white.100" color="black.600" borderColor="blueGreen.100"/>
                     </InputGroup>
                 </FormControl>
              
@@ -51,6 +52,10 @@ const SignInScreen=()=>{
                     Sign Up!</Button> 
 
             </Stack>
+            <Text textStyle="h2" color="blue.100" >
+            <br/>
+            <a href="#">Already Registered? Sign In</a>
+            </Text>
 
         </form>
         </Box>

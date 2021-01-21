@@ -30,9 +30,9 @@ const LoginScreen=()=>{
                     Log In!</Button> 
 
             </Stack>
-        <Text textStyle="h2">
+        <Text textStyle="h2" color="blue.100">
             <br/>
-            <a href="#">Sign Up?</a>
+            <a href="#">Create New Account</a>
         </Text>
         </form>
         
