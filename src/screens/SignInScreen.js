@@ -1,10 +1,10 @@
-import{Input, Stack,Button,IconButton,InputGroup, InputLeftElement, Box} from '@chakra-ui/react';
+import{Input, Stack,Button,InputGroup, InputLeftElement, Box, HStack} from '@chakra-ui/react';
 import { Divider, FormControl,Flex,Heading } from '@chakra-ui/react';
 
 const SignInScreen=()=>{
     return(
         <Flex width="Full" align="center" justifyContent="center">
-        <Box p={8} maxWidth="500px" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
+        <Box p={8} maxWidth="900px" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
         <Box textAlign="center" color="blueGreen.100" textStyle="h1">
             <Heading> SignUp </Heading>
         </Box>
@@ -18,6 +18,7 @@ const SignInScreen=()=>{
                         <Input type='email' placeholder='Email' bg="white.100" color="brand.600" borderColor="blueGreen.100"/>
                     </InputGroup>
                 </FormControl>
+                <HStack>
                 <FormControl isRequired>
                     <InputGroup>
                         <InputLeftElement/>
@@ -30,6 +31,7 @@ const SignInScreen=()=>{
                         <Input type='text' placeholder='Last Name' bg="white.100" color="brand.600" borderColor="blueGreen.100"/>
                     </InputGroup>
                 </FormControl>
+                </HStack>
                 <FormControl isRequired>
                     <InputGroup>
                         <InputLeftElement/>
