@@ -14,6 +14,7 @@ import {
 
 
 import ErrorMessage from '../components/ErrorMessage';
+import logo from '../assets/logo.png';
 
 export default function Profile() {
   const [fname, setFName] = useState('');
@@ -80,7 +81,7 @@ export default function Profile() {
                   width="50%"
                   height="50%"
                   objectFit="cover"
-                  src="https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
+                  src = {logo}
                   alt="Profile Picture"
                 />
                 </center>
