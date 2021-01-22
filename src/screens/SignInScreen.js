@@ -6,7 +6,7 @@ import{Input, Stack,Button,InputGroup, InputLeftElement, Box,
 const SignInScreen=()=>{
     return(
         <Flex width="Full" align="center" justifyContent="center">
-        <Box p={8} maxWidth="900px" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
+        <Box p={8} maxWidth="85%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
         <Box textAlign="center" color="blueGreen.100" textStyle="h1">
             <Heading> SignUp </Heading>
         </Box>

@@ -5,7 +5,7 @@ import{Input, Stack,Button,InputGroup, Box
 const LoginScreen=()=>{
     return(
         <Flex width="Full" align="center" justifyContent="center">
-        <Box p={8} maxWidth="500px" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
+        <Box p={8} maxWidth="95%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
         <Box textAlign="center" color="blueGreen.100" textStyle="h1">
             <Heading> Login </Heading>
         </Box>
