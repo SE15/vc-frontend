@@ -2,13 +2,13 @@ import React from "react"
 import { ChakraProvider } from "@chakra-ui/react"
 
 import './App.css';
-import ThemeToggler from "./components/ThemeToggler";
+import ThemeSelector from "./components/ThemeToggler";
 import Main from "./pages/Main";
 
 function App() {
   return (
     <ChakraProvider>
-      <ThemeToggler />
+      <ThemeSelector />
       <Main />
     </ChakraProvider>
   )
