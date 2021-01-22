@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {
+  ThemeProvider,
+  theme,
+  ColorModeProvider,
+  CSSReset
+} from '@chakra-ui/core';
 
-function App() {
+import ThemeToggler from './components/ThemeToggler';
+
+import ProfileSettings from './pages/ProfileSettings';
+//import ChangePassword from './pages/ChangePassword';
+//import DeleteAccount from './pages/DeleteAccount';
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <ColorModeProvider>
+        <CSSReset />
+        <ThemeToggler />
+        
+        <ProfileSettings />
+
+      </ColorModeProvider>
+    </ThemeProvider>
   );
 }
-
-export default App;
