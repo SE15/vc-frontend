@@ -44,6 +44,23 @@ export default function Profile() {
     }
   };
 
+  //image uploading
+  const uploadedImage = React.useRef(null);
+  const imageUploader = React.useRef(null);
+
+  const handleImageUpload = e => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const { current } = uploadedImage;
+      current.file = file;
+      reader.onload = e => {
+        current.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   
 
   return (
@@ -83,16 +100,27 @@ export default function Profile() {
                   objectFit="cover"
                   src = {logo}
                   alt="Profile Picture"
+                  ref={uploadedImage}
                 />
                 </center>
             </Box>
             <Stack align="center">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                ref={imageUploader}
+                style={{
+                  display: "none"
+                }}
+              />
               <Button
                 variantColor="teal"
                 variant="outline"
                 type="submit"
                 alignItems="center"
                 mt={4}
+                onClick={() => imageUploader.current.click()}
               >
                 {isLoading ? (
                   <CircularProgress
