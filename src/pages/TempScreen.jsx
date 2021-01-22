@@ -18,7 +18,8 @@ const TempScreen = () => {
             
             <body>
                 <a href="/login">Login</a><br />
-                <a href="/home">Home</a><br />
+                <a href="/signup">SignUp</a><br />
+                <a href="/profile">Profile</a><br />
                 <a href="/settings">Settings</a><br />
                 <a href="/search">Search</a><br />
             </body>

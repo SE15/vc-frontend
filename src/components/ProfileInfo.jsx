@@ -1,29 +1,30 @@
 import React from 'react';
 
 import logo from '../assets/logo.png';
-import { Image, Button, Box, Heading, Text } from '@chakra-ui/react';
+import { Image, Button, Box, Heading } from '@chakra-ui/react';
+import { kPrimaryBlackLight } from '../utils/constants';
+
 
 /**
  * Information of the user.
  * 
  * @param name - Name of the user
- * @param type - 0-guest, 1-home, 2-profile
+ * @param type - 0-guest/home, 1-add, 2-remove 3-pending
  */
 const ProfileInfo = (props) => {
     return (
         <center>
-            <Box w="100%" border = "5px" borderRadius="md" backgroundColor = "#EDFDFD">
+            <Box w="100%" border = "5px" borderRadius="md" bg = {kPrimaryBlackLight}>
                 <Image
                     src = {logo} //TODO: Need a method to update the profile pic
                     htmlWidth="200px"
                 />
-                <Heading fontSize="25px" color="gray.900"> {props.name} </Heading>
+                <Heading fontSize="25px" color="white"> {props.name} </Heading>
                 <Box h={3}/>
                 <ConnectionButton type = {props.button}/>
                 <Box h={3}/>
             </Box>
         </center>
-
     );
 }
 
@@ -44,6 +45,9 @@ const ConnectionButton = (props) => {
         <Button colorScheme="red" variant="solid">
         Remove Connection
         </Button>);
+    } else if (props.type == "3") {
+        return (
+        <Heading color = "green.100" size = "md">Request Pending</Heading>);  
     } else if (props.type == "0") {
         return (<div></div>)
     } else {

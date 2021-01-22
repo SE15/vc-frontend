@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import TempScreen from './TempScreen';
 import ProfileSettings from './ProfileSettings';
-import Home from './Home';
+import Profile from './Profile';
+import Login from './Login';
+import SignUp from './SignUp';
 
 const Main = () => {
     return (
@@ -14,8 +16,14 @@ const Main = () => {
                 <Route path="/settings" exact>
                     <ProfileSettings />
                 </Route>
-                <Route path="/home" exact>
-                    <Home />
+                <Route path="/profile" exact>
+                    <Profile />
+                </Route>
+                <Route path="/login" exact>
+                    <Login />
+                </Route>
+                <Route path="/signup" exact>
+                    <SignUp/>
                 </Route>
             </Switch>
         </BrowserRouter>

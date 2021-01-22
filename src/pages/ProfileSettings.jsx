@@ -15,6 +15,7 @@ import {
 
 import ErrorMessage from '../components/ErrorMessage';
 import logo from '../assets/logo.png';
+import { kPrimaryGray } from '../utils/constants';
 
 export default function Profile() {
   const [fname, setFName] = useState('');
@@ -64,13 +65,14 @@ export default function Profile() {
   
 
   return (
-    <Flex width="full" align="center" justifyContent="center">
+    <Flex width="full" align="center" justifyContent="center" >
       <Box
         p={8}
         maxWidth="500px"
         borderWidth={1}
         borderRadius={8}
         boxShadow="lg"
+        bg = {kPrimaryGray}
       >
         {isLoggedIn ? (
           <Box textAlign="center">
@@ -84,10 +86,10 @@ export default function Profile() {
             >
               Back Profile
             </Button>
-          </Box>
+          </Box >
         ) : (
           <>
-            <Box textAlign="center">
+            <Box textAlign="center" >
               <Heading>Profile</Heading>
             </Box>
             <Box height="20px"></Box>
@@ -115,8 +117,8 @@ export default function Profile() {
                 }}
               />
               <Button
-                variantColor="teal"
-                variant="outline"
+                colorScheme="blue"
+                variant="solid"
                 type="submit"
                 alignItems="center"
                 mt={4}
@@ -138,26 +140,31 @@ export default function Profile() {
               <form onSubmit={handleSubmit}>
                 {error && <ErrorMessage message={error} />}
                 <FormControl>
+                    <Box borderColor = "blue.500">
                   <Input
                     type="text"
                     placeholder="First Name"
                     size="lg"
                     onChange={event => setFName(event.currentTarget.value)}
                   />
+                  </Box>
                 </FormControl>
                 <Box height="20px"></Box>
                 <FormControl>
+                <Box borderColor = "blue.500">
                   <Input
                     type="text"
                     placeholder="Last Name"
+                    colorScheme = "black"
                     size="lg"
                     onChange={event => setLName(event.currentTarget.value)}
                   />
+                  </Box>
                 </FormControl>
-                
+                <Box height="40px"></Box>
                 <Button
-                  variantColor="teal"
-                  variant="outline"
+                  colorScheme="blue"
+                  variant="solid"
                   type="submit"
                   width="full"
                   mt={4}
@@ -172,10 +179,9 @@ export default function Profile() {
                     'Save'
                   )}
                 </Button>
-                <Box height="40px"></Box>
                 <Button
-                  variantColor="teal"
-                  variant="outline"
+                  colorScheme="blue"
+                  variant="solid"
                   type="submit"
                   width="full"
                   mt={4}
@@ -192,8 +198,8 @@ export default function Profile() {
                 </Button>
                 <Box height="40px"></Box>
                 <Button
-                  variantColor="teal"
-                  variant="outline"
+                  colorScheme="red"
+                  variant="solid"
                   type="submit"
                   width="full"
                   mt={4}
