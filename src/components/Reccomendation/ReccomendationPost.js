@@ -53,12 +53,13 @@ function ReccomendationButton(props) {
                 </Heading>
                                 <br />
                                 <Stack direction="row">
-                                    {props.image}!=null)?
-                                        <Image src={props.image} size="100%" rounded="1rem" shadow="2xl" />
-                                    
-                 
-                                        :<Avatar name={props.name} src="https://bit.ly/broken-link" />
+                                {props.cimage!=null?(
+                                    <Image src={props.image}  borderRadius="full" boxSize="3rem" />
                                 
+                                ) :(
+                                    <Avatar name={props.name} src="https://bit.ly/broken-link" />
+                                )
+                                }
 
 
                                     <Text color={kSecondaryBlueLight}>

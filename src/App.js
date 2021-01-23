@@ -29,9 +29,9 @@ function App() {
         <br></br>
         <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
         <br></br>
-        <Connections name="Thushani Jayasekera" image="null"/>
+        <Connections cname="Thushani Jayasekera" cimage={null}/>
         <br></br>
-        <Connections name="Laksks Ramannsns" image="null"/>
+        <Connections cname="Laksks Ramannsns" cimage="https://minds-in-bloom.com/wp-content/uploads/2015/01/Maximizing-Time-with-Mentor-Texts-120x120.png"/>
         <br></br>
         
         <LoginScreen/>
