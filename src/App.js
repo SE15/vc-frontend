@@ -3,21 +3,30 @@ import './App.css';
 import LoginScreen from './screens/LoginScreen'
 import SignInScreen from './screens/SignInScreen'
 
-import Skill from './components/Skill';
+
 
 import NavBar from './components/Navbar';
-import Connections from './components/Connection.Component';
-import Reccomendations from './components/Reccomendation.Component';
-import Skills from './components/Skill.Component';
+import Connections from './components/Connections/Connection/Connection';
+import ReccomendationPost from './components/Reccomendation/ReccomendationPost';
+import Reccomendation from './components/Reccomendation/Reccomendation'
+import SkillList from './components/Skills/Skill/SkillList';
+
 function App() {
+
   return (
     <div className="App">
       <header className="App-header">
         <NavBar/>
         <br/>
+        
+        
+        <ReccomendationPost name="AKKD Knkndda" visit={false}/>
 
-        <Reccomendations name="AKKD Knkndda" visit="false"/>
-        <Reccomendations name="Thushani Jayasekera" image="null"/>
+        <br></br>
+        <ReccomendationPost name="Thushani Jayasekera" image="null"/>
+        <br></br>
+        <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
+        <br></br>
         <Connections name="Thushani Jayasekera" image="null"/>
         <br></br>
         <Connections name="Laksks Ramannsns" image="null"/>
@@ -25,7 +34,7 @@ function App() {
         
         <LoginScreen/>
         <br/>
-        <Skills/>
+        
         <br></br>
         <SignInScreen/>
         <br></br>
