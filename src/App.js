@@ -10,6 +10,7 @@ import Connections from './components/Connections/Connection/Connection';
 import ReccomendationPost from './components/Reccomendation/ReccomendationPost';
 import Reccomendation from './components/Reccomendation/Reccomendation'
 import SkillList from './components/Skills/Skill/SkillList';
+import Skill from './components/Skills/Skill/Skill';
 
 function App() {
 
@@ -18,7 +19,8 @@ function App() {
       <header className="App-header">
         <NavBar/>
         <br/>
-        
+        <Skill skillname="Organizing" validations={4} visit={true}/>
+        <Skill skillname="Leadership" validations={2} visit={false}/>
         
         <ReccomendationPost name="AKKD Knkndda" visit={false}/>
 

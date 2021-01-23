@@ -18,8 +18,25 @@ const ReccomendationPost = props => {
 
 function ReccomendationButton(props) {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const[isreccomended,setIsReccomended]=useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
-    if (props.visit == true && isLoggedIn == true) {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleReccomendation= async event=>{
+        setIsLoading(true);
+        try{
+            //wait for update validation in db
+            setIsReccomended(true);
+            setIsLoading(false);
+
+        }catch{
+            setIsReccomended(false);
+            setIsLoading(false);
+            setError("Couldn't Post Reccomendation")
+        }
+    }
+    if (props.visit == true && isLoggedIn == true && isreccomended==false) {
 
         return (
             <>
@@ -47,14 +64,14 @@ function ReccomendationButton(props) {
                                     <Text color={kSecondaryBlueLight}>
                                         {props.name}
                                     </Text>
-                    if({props.visit}===true){
+                   
                                         <Textarea placeholder="Enter reccomendation" color="black.400" />
-                                    }
+                                    
                                     <ModalCloseButton />
                                 </Stack>
                             </stack>
                             <ModalFooter>
-                                <Button colorScheme="blue" mr={3} >
+                                <Button colorScheme="blue" mr={3} onClick={()=>handleReccomendation()}>
                                     Post
             </Button>
                             </ModalFooter>
@@ -66,10 +83,13 @@ function ReccomendationButton(props) {
         );
     } else {
         return (
-            <Button onClick={onOpen} bg={kSecondaryBlueLight}isDisabled={true}>Post Reccomendation</Button>);
+            <Button onClick={onOpen} bg={kSecondaryBlueLight}isDisabled={true}>Post Reccomendation</Button>
+            );
     }
-
 }
+
+
+
 
 
 ReccomendationPost.propTypes = {

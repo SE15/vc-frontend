@@ -1,8 +1,13 @@
 
 //import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
-import { Spacer, Heading, Flex, Button, Box, HStack } from "@chakra-ui/react"
+import { Spacer, Heading, Flex, Button, Box, HStack ,CircularProgress} from "@chakra-ui/react"
 import { DeleteIcon,AddIcon} from '@chakra-ui/icons'
+import {
+    Modal, ModalOverlay, ModalContent, Image
+    , ModalCloseButton, Text, useDisclosure, ModalFooter,
+     Textarea, Avatar, Stack
+} from '@chakra-ui/react';
 import {
     AlertDialog,Badge,
     AlertDialogBody,
@@ -13,14 +18,36 @@ import {
   } from "@chakra-ui/react"
 
 import {React,useState,useRef} from 'react' 
-
+import { kPrimaryBlack, kPrimaryBlackLight,kPrimaryGray, kSecondaryBlue, kSecondaryBlueDark, kSecondaryBlueLight } from './../../../constants'
 const Skill=props=>{
+    
     const [isOpen, setIsOpen] = useState(false)
     const onClose = () => setIsOpen(false)
+    const onOpen = () => setIsOpen(true)
     const cancelRef = useRef()
+    const [name, setName] = useState(props.name);
+    const [image, setimage]=useState(props.image)
+    const [isLoading, setIsLoading] = useState(false);
     const [validations, setValidations]=useState(props.validations)
     const [skillname, setSkillname]=useState(props.skillname)
+    
+    const [error, setError] = useState('');
 
+    const handleValidation= async event=>{
+        setIsLoading(true);
+        try{
+            //wait for update validation in db
+            setValidations(validations+1);
+            setIsLoading(false);
+
+        }catch{
+            setValidations(validations);
+            setIsLoading(false);
+            setError("Couldn't validate skill")
+        }
+    }
+
+    
 if(props.visit=="0"){
     
                 
@@ -28,53 +55,57 @@ if(props.visit=="0"){
     return (
         <>
         <Flex>
-                    <Box w="20rem" p={4} bg="white.200">
-                        <HStack  spacing="3rem">
+            <Box w="md" p={4} bg={kPrimaryGray}>
+                <HStack  spacing="3rem">
                         
                         
-                            <Badge ml="1" fontSize="0.8em" colorScheme="blue" borderRadius="5rem">
-                            {validations}
-                            </Badge>
+                    <Badge ml="1" fontSize="lg" colorScheme="blue" variant="outline" borderRadius="5rem">
+                        {validations}
+                    </Badge>
                           
                   
                           
-                        <Heading size="md" color="black.600">{skillname}</Heading>
+                    <Heading size="md" color={kSecondaryBlue}>{skillname}</Heading>
                     
                     <Spacer />
                 
                    
-                    <Button rightIcon={<DeleteIcon />} colorScheme="red" onClick={()=> setValidations(0)}></Button>
+                    <Button rightIcon={<DeleteIcon />} colorScheme="red"  onClick={() => setIsOpen(true)}></Button>
                   
                  
                 
-                    <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-            <AlertDialogOverlay>
-          <AlertDialogContent>
-          <Box bg="white.200" w="80%" p={4} color="white">
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Skill
-            </AlertDialogHeader>
+                        <AlertDialog
+                                    isOpen={isOpen}
+                                    leastDestructiveRef={cancelRef}
+                                    onClose={onClose}
+                                >
+                            <AlertDialogOverlay>
+                            <AlertDialogContent>
+                            <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
 
-            <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
-            </AlertDialogBody>
+                            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                            Delete Skill
+                            </AlertDialogHeader>
 
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={onClose} ml={3}>
-                Delete
-              </Button>
-            </AlertDialogFooter>
-            </Box>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+                            <AlertDialogBody>
+                            Are you sure? You can't undo this action afterwards.
+                            </AlertDialogBody>
+
+                            <AlertDialogFooter>
+                            <Button colorScheme={kPrimaryBlack} ref={cancelRef} onClick={onClose}>
+                                Cancel
+                            </Button>
+                            <Button colorScheme="red" onClick={onClose} ml={3}>
+                            
+                                Delete
+                            </Button>
+                            </AlertDialogFooter>
+
+                            </Box>
+
+                            </AlertDialogContent>
+                            </AlertDialogOverlay>
+                        </AlertDialog>
       
                     </HStack>
                     </Box>
@@ -87,20 +118,62 @@ if(props.visit=="0"){
     return (
         <>
             <Flex>
-                    <Box w="20rem" p={4} bg="white.200">
+                    <Box w="md" p={4} bg={kPrimaryGray}>
                         <HStack  spacing="3rem">
                         <Badge ml="1" fontSize="0.8em" colorScheme="blue" variant="outline" borderRadius="5rem">
                             {validations}
                             </Badge>
                           
-                        <Heading size="md" color="black.600">{skillname}</Heading>
+                        <Heading size="md" color={kSecondaryBlue}>{skillname}</Heading>
                     
                     <Spacer />
                 
-                
+                    {isLoading ? (
+                     
+                     <CircularProgress isIndeterminate color="green.300"/>
                    
-                    <Button rightIcon={<AddIcon />} colorScheme="blue" onClick={()=> setValidations(validations+1)}>
+                ) :(
+                   <>
+                    <Button rightIcon={<AddIcon />} colorScheme="blue" onClick={onOpen}>
                     </Button>
+                    <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
+                    <ModalOverlay />
+                    <ModalContent>
+                        <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
+                            <stack>
+                                <Heading color="black.400" fontSize="lg">
+                                    Skill Validation
+                </Heading>
+                                <br />
+                                <Stack direction="row">
+                                    {props.image}!=null)?
+                                        <Image src={image} size="100%" rounded="1rem" shadow="2xl" />
+                                    
+                 
+                                        :<Avatar name={name} src="https://bit.ly/broken-link" />
+                                
+
+
+                                    <Text color={kSecondaryBlueLight}>
+                                        {name}
+                                    </Text>
+                    if({props.visit}===true){
+                                        <Textarea placeholder="Enter reason for skill Validation" color="black.400" />
+                                    }
+                                    <ModalCloseButton />
+                                </Stack>
+                            </stack>
+                            <ModalFooter>
+                                <Button colorScheme="blue" mr={3} onClick={()=> setValidations(validations+1)}>
+                                    Post
+            </Button>
+                            </ModalFooter>
+                        </Box>
+                    </ModalContent>
+
+                </Modal>
+                </>
+)}
 
                   
                  </HStack>
