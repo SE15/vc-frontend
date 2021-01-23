@@ -17,7 +17,8 @@ import {
     AlertDialogOverlay 
   } from "@chakra-ui/react"
 
-import {React,useState,useRef} from 'react' 
+import {React,useState,useRef, useEffect} from 'react' 
+import axios from 'axios';
 import { kPrimaryBlack, kPrimaryBlackLight,kPrimaryGray, kSecondaryBlue, kSecondaryBlueDark, kSecondaryBlueLight } from './../../../constants'
 const Skill=props=>{
     
@@ -36,7 +37,7 @@ const Skill=props=>{
     const handleValidation= async event=>{
         setIsLoading(true);
         try{
-            //wait for update validation in db
+            const res=await axios.put('api/users/skills/:id',{data:validations+1})
             setValidations(validations+1);
             setIsLoading(false);
 
@@ -46,6 +47,9 @@ const Skill=props=>{
             setError("Couldn't validate skill")
         }
     }
+    useEffect(()=>{
+        handleValidation()
+    },[handleValidation])
 
     
 if(props.visit=="0"){
