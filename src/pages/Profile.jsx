@@ -12,7 +12,7 @@ class Profile extends Component {
     render() {
         return (
             <div>
-                <ProfileInfo name="Danushka Gunathilake" button="1" />
+                <ProfileInfo name="Danushka Gunathilake" button={this.props.button} />
                 <Box h={3}/>
                 <Wrap justify="space-around">
                     <TempBox name = "Skills"/>

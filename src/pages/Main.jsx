@@ -13,11 +13,14 @@ const Main = () => {
                 <Route path="/" exact>
                     <TempScreen />
                 </Route>
+                <Route path="/home" exact>
+                    <Profile button = "0" />
+                </Route>
                 <Route path="/settings" exact>
                     <ProfileSettings />
                 </Route>
-                <Route path="/profile" exact>
-                    <Profile />
+                <Route path="/profile">
+                    <Profile button = "1" />
                 </Route>
                 <Route path="/login" exact>
                     <Login />
