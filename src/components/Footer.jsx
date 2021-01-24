@@ -5,7 +5,7 @@ import { kPrimaryBlack } from '../utils/constants';
 const Footer = () => {
   return (
       [
-          <Box h={5} />,
+          <Box h={8} />,
     <Flex
       width="full"
       position="fixed"

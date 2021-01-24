@@ -14,7 +14,7 @@ import {
 
 
 import ErrorMessage from '../components/ErrorMessage';
-import logo from '../assets/logo.png';
+import anonymous from '../assets/anonymous.png';
 import { kPrimaryGray } from '../utils/constants';
 
 export default function Profile() {
@@ -68,7 +68,7 @@ export default function Profile() {
     <Flex width="full" align="center" justifyContent="center" >
       <Box
         p={8}
-        maxWidth="500px"
+        w = "30%"
         borderWidth={1}
         borderRadius={8}
         boxShadow="lg"
@@ -100,7 +100,7 @@ export default function Profile() {
                   width="50%"
                   height="50%"
                   objectFit="cover"
-                  src = {logo}
+                  src = {anonymous}
                   alt="Profile Picture"
                   ref={uploadedImage}
                 />

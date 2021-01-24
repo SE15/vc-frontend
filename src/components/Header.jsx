@@ -10,7 +10,7 @@ function Header() {
    const [isLoggedIn, setIsLoggedIn] = useState(true);
    const [isUser, setUser] = useState(true);
    return ([
-           <Box bg={kPrimaryBlack} w="100%" p={5}  position="fixed" color="white" h = {16} borderBottomRadius="1rem" p= {2}>
+           <Box bg={kPrimaryBlack} w="100%" p={5}  position="fixed" color="white" h = {16} p= {2}>
                <HStack>
                     <Image 
                         src = {logo}
