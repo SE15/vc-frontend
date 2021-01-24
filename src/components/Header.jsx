@@ -4,11 +4,10 @@ import { Search2Icon,BellIcon,SettingsIcon } from '@chakra-ui/icons'
 import {React,useState} from 'react'
 import { kPrimaryBlack, kSecondaryBlue } from '../utils/constants'
 import logo from '../assets/logo.png';
+import { NavLink } from 'react-router-dom';
 
-function Header() {
+function Header(props) {
 
-   const [isLoggedIn, setIsLoggedIn] = useState(true);
-   const [isUser, setUser] = useState(true);
    return ([
            <Box bg={kPrimaryBlack} w="100%" p={5}  position="fixed" color="white" h = {16} p= {2}>
                <HStack>
@@ -31,10 +30,7 @@ function Header() {
                    </InputGroup>
                    <Spacer/>
                    <HStack>
-                   <IconButton icon={<BellIcon />} bg="blueGreen.200"/>
-                   <IconButton icon={<SettingsIcon />} bg="blueGreen.200" />
-                   <SignButton type={isLoggedIn}/>
-                  
+                   <SignButton type={props.type}/>                  
                    </HStack>
                    
                </HStack>
@@ -45,21 +41,30 @@ function Header() {
 }
 
 function SignButton(props){
-   const [isLoggedIn, setIsLoggedIn] = useState(false);
-   const [isUser, setUser] = useState(true);
    if(props.type==false){
        //Guest
        return(
            <HStack>
-           <Button size="md"  bg="blueGreen.100" >Sign Up</Button>
-           <Button size="md" bg="blueGreen.100" onClick={()=>setIsLoggedIn(true)}>Sign In</Button> 
+           <Button size="md" bg="blueGreen.100" >Sign In</Button> 
        </HStack>); 
    }
    if(props.type==true){
        return(
-           <Button size="md" bg="blueGreen.100" onClick={()=>setIsLoggedIn(false)}>Sign Out</Button> );
+           <HStack>
+               <IconButton icon={<BellIcon />} bg="blueGreen.200"/>
+                <IconButton icon={<SettingsIcon />} bg="blueGreen.200" />
+                <NavLink
+                    to="/logout"
+                    activeStyle={{
+                    fontWeight: "bold",
+                    color: "white"
+                    }}
+                    >Sign Out</NavLink>
+           </HStack>
+           );
    }
    
 }
+
 
 export default Header;

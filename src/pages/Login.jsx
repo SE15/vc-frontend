@@ -43,12 +43,11 @@ class Login extends Component {
                 valid: false,
                 touched: false
             }
-        },
-        isSignup: true
+        }
     }
 
     componentDidMount() {
-        if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
+        if (this.props.authRedirectPath !== '/login') {
             this.props.onSetAuthRedirectPath();
         }
     }
@@ -99,14 +98,7 @@ class Login extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(this.state.controls.email.value, this.state.controls.password.value);
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup);
-    }
-
-    switchAuthModeHandler = () => {
-        this.setState(prevState => {
-            return { isSignup: !prevState.isSignup };
-        });
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
     }
 
     render() {
@@ -134,14 +126,15 @@ class Login extends Component {
             form = <Spinner />
         }
 
-        let errorMessage = null;
-
         if (this.props.error) 
         console.log(this.props.error.errorMessage);
 
         let authRedirect = null;
         if (this.props.isAuthenticated) {
+            console.log(this.props.token);
             authRedirect = <Redirect to={this.props.authRedirectPath} />
+        } else {
+            authRedirect = <Redirect to='/login' />
         }
 
         return ([
@@ -160,7 +153,7 @@ class Login extends Component {
                                 <Button btnType="Success">SUBMIT</Button>
                                 <Text textStyle="h2" color={kSecondaryBlue}>
                                     <br />
-                                    <a href="signup">Create New Account</a>
+                                    <a href="signup">Create a new account</a>
                                 </Text>
                             </form>
                         </Center>
@@ -176,15 +169,16 @@ const mapStateToProps = state => {
     return {
         loading: state.loading,
         error: state.error,
-        isAuthenticated: state.token !== null,
+        isAuthenticated: !(state.token === null || state.token === undefined),
+        token : state.token,
         authRedirectPath: state.authRedirectPath
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
-        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+        onAuth: (email, password) => dispatch(actions.auth(email, password)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/home'))
     };
 };
 
