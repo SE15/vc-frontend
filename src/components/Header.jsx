@@ -7,7 +7,7 @@ import logo from '../assets/logo.png';
 
 function Header() {
 
-   const [isLoggedIn, setIsLoggedIn] = useState(true);
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
    const [isUser, setUser] = useState(true);
    return ([
            <Box bg={kPrimaryBlack} w="100%" p={5}  position="fixed" color="white" h = {16} p= {2}>

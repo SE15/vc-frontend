@@ -6,7 +6,7 @@ import {
     , ModalCloseButton, Text, useDisclosure, ModalFooter,
      Textarea, Avatar, Stack, Heading, Box
 } from '@chakra-ui/react';
-
+import { kPrimaryBlackLight,kSecondaryBlueLight } from './../utils/constants'
 const ReccomendationPost = props => {
     return (
         <>
@@ -18,44 +18,61 @@ const ReccomendationPost = props => {
 
 function ReccomendationButton(props) {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const [isUser, setUser] = useState(true);
+    const[isreccomended,setIsReccomended]=useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
-    if (props.visit == true && isLoggedIn == true) {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleReccomendation= async event=>{
+        setIsLoading(true);
+        try{
+            //wait for update validation in db
+            setIsReccomended(true);
+            setIsLoading(false);
+
+        }catch{
+            setIsReccomended(false);
+            setIsLoading(false);
+            setError("Couldn't Post Reccomendation")
+        }
+    }
+    if (props.visit == true && isLoggedIn == true && isreccomended==false) {
 
         return (
             <>
                 <Box>
-                    <Button onClick={onOpen} bg="blueGreen.200" isDisabled={false}>Post Reccomendation</Button>
+                    <Button onClick={onOpen} bg={kSecondaryBlueLight} isDisabled={false}>Post Recommendation</Button>
                 </Box>
                 <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
                     <ModalOverlay />
                     <ModalContent>
-                        <Box bg="white.200" w="100%" p={4} color="white">
+                        <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
                             <stack>
                                 <Heading color="black.400" fontSize="lg">
-                                    Post Reccomendation
+                                    Post Recommendation
                 </Heading>
                                 <br />
                                 <Stack direction="row">
-                                    if({props.image}!=null){
-                                        <Image src={props.image} size="100%" rounded="1rem" shadow="2xl" />
-                                    }
-                 else{
-                                        <Avatar name={props.name} src="https://bit.ly/broken-link" />
-                                    }
+                                {props.image!=null?(
+                                    <Image src={props.image}  borderRadius="full" boxSize="3rem" />
+                                
+                                ) :(
+                                    <Avatar name={props.name} src="https://bit.ly/broken-link" />
+                                )
+                                }
 
 
-                                    <Text color="blue.100">
+                                    <Text color={kSecondaryBlueLight}>
                                         {props.name}
                                     </Text>
-                    if({props.visit}===true){
+                   
                                         <Textarea placeholder="Enter reccomendation" color="black.400" />
-                                    }
+                                    
                                     <ModalCloseButton />
                                 </Stack>
                             </stack>
                             <ModalFooter>
-                                <Button colorScheme="blue" mr={3} >
+                                <Button colorScheme="blue" mr={3} onClick={()=>handleReccomendation()}>
                                     Post
             </Button>
                             </ModalFooter>
@@ -67,10 +84,13 @@ function ReccomendationButton(props) {
         );
     } else {
         return (
-            <Button onClick={onOpen} bg="blueGreen.200" isDisabled={true}>Post Reccomendation</Button>);
+            <Button onClick={onOpen} bg={kSecondaryBlueLight}isDisabled={true}>Post Reccomendation</Button>
+            );
     }
-
 }
+
+
+
 
 
 ReccomendationPost.propTypes = {
