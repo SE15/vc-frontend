@@ -91,14 +91,14 @@ const BoxContent = (props) => {
             <Skill skillname="Organizing" validations={4} visit={true}/>
             <Skill skillname="Organizing" validations={4} visit={true}/>
             <Skill skillname="Organizing" validations={4} visit={true}/> */}
-                {
+                {/* {
                     
                     props.detailss.map((skill, i) =>
                         <Skill key={i} skillname={skill.name} validations={skill.validations} visit={false}/>
 
                     )
                     
-                }
+                } */}
                 
             </>
             );
@@ -111,13 +111,13 @@ const BoxContent = (props) => {
             <Connections cname="Thushani Jayasekera" cimage={null}/>
             <Connections cname="Thushani Jayasekera" cimage={null}/>
             <Connections cname="Thushani Jayasekera" cimage={null}/> */}
-                {
+                {/* {
                     
                     props.detailss.map((connection, i) =>
                         <Connections key={i} cname={connection.first_name+" "+connection.last_name} cimage={null}/>
                     )
                     
-                }
+                } */}
                 
             </>
             );
@@ -130,13 +130,13 @@ const BoxContent = (props) => {
             <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
             <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
             <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/> */}
-                {
+                {/* {
                     
                     props.detailss.map((recommendation, i) =>
                         <Reccomendation key={i} postedBy={recommendation.first_name+" "+recommendation.last_name} postedImage="null" reccomendation={recommendation.description}/>
                     )
                     
-                }
+                } */}
                 
             </>
             );  
