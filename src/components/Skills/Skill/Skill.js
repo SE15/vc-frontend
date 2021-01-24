@@ -34,10 +34,10 @@ const Skill=props=>{
     
     const [error, setError] = useState('');
 
-    const handleValidation= async event=>{
+    const handleValidation= event=>{
         setIsLoading(true);
         try{
-            const res=await axios.put('api/users/skills/:id',{data:validations+1})
+            const res=axios.put('api/users/skills/:id',{data:validations+1})
             setValidations(validations+1);
             setIsLoading(false);
 
@@ -49,7 +49,8 @@ const Skill=props=>{
     }
     useEffect(()=>{
         handleValidation()
-    },[handleValidation])
+        console.log(validations)
+    },[])
 
     
 if(props.visit=="0"){
@@ -169,7 +170,7 @@ if(props.visit=="0"){
                                 </Stack>
                             </stack>
                             <ModalFooter>
-                                <Button colorScheme="blue" mr={3} onClick={()=> setValidations(validations+1)}>
+                                <Button colorScheme="blue" mr={3} onClick={()=> handleValidation()}>
                                     Post
             </Button>
                             </ModalFooter>
