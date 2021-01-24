@@ -1,6 +1,7 @@
 import React from 'react';
 import{Input, Stack,Button,InputGroup, InputLeftElement, Box,
     HStack,Divider, FormControl,Flex,Heading,Text} from '@chakra-ui/react';
+import { kSecondaryBlue } from '../utils/constants';
 
 
 const SignInScreen=()=>{
@@ -41,12 +42,6 @@ const SignInScreen=()=>{
                        <Input type='password' aria-label='password' placeholder='Password' bg="white.100" color="black.600" borderColor="blueGreen.100"/>
                    </InputGroup>
                </FormControl>
-               <FormControl isRequired>
-                   <InputGroup>
-                       <InputLeftElement/>
-                       <Input type='password' aria-label='Confirm password' placeholder='Confirm Password' bg="white.100" color="black.600" borderColor="blueGreen.100"/>
-                   </InputGroup>
-               </FormControl>
             
                <Divider/>
                
@@ -54,9 +49,9 @@ const SignInScreen=()=>{
                    Sign Up!</Button> 
 
            </Stack>
-           <Text textStyle="h2" color="blue.100" >
+           <Text textStyle="h2" color={kSecondaryBlue} align = "center">
            <br/>
-           <a href="#">Already Registered? Sign In</a>
+           <a href="login">Already Registered? Log In</a>
            </Text>
 
        </form>

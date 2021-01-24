@@ -1,8 +1,8 @@
 import React from 'react';
 
-import logo from '../assets/logo.png';
+import anonymous from '../assets/anonymous.png';
 import { Image, Button, Box, Heading } from '@chakra-ui/react';
-import { kPrimaryBlackLight } from '../utils/constants';
+import { kSecondaryBlue} from '../utils/constants';
 
 
 /**
@@ -14,10 +14,10 @@ import { kPrimaryBlackLight } from '../utils/constants';
 const ProfileInfo = (props) => {
     return (
         <center>
-            <Box w="100%" border = "5px" borderRadius="md" bg = {kPrimaryBlackLight}>
+            <Box w="100%" border = "5px"  bg = {kSecondaryBlue}>
                 <Image
-                    src = {logo} //TODO: Need a method to update the profile pic
-                    htmlWidth="200px"
+                    src = {anonymous} //TODO: Need a method to update the profile pic
+                    htmlWidth="150px"
                 />
                 <Heading fontSize="25px" color="white"> {props.name} </Heading>
                 <Box h={3}/>

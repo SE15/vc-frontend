@@ -106,8 +106,8 @@ export default function DeleteAccount() {
                 
                 
                 <Button
-                  variantColor="teal"
-                  variant="outline"
+                  colorScheme = "red"
+                  variant="solid"
                   type="submit"
                   width="full"
                   mt={4}

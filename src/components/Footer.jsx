@@ -1,18 +1,18 @@
 import React from "react";
 import { Flex, Box, Heading, Stack } from "@chakra-ui/react";
-import { kPrimaryBlackDark } from '../utils/constants';
+import { kPrimaryBlack } from '../utils/constants';
 
 const Footer = () => {
   return (
       [
-          <Box h={5} />,
+          <Box h={8} />,
     <Flex
       width="full"
       position="fixed"
       bottom="0"
-      mt={4}
-      py={4}
-      bg={kPrimaryBlackDark}
+      mt={2}
+      py={3}
+      bg={kPrimaryBlack}
       borderTopRadius="1rem"
     >
       <Box width="full" boxShadow="xs">
@@ -28,7 +28,7 @@ const Footer = () => {
 const FooterName = () => {
   return (
     <Heading
-      fontSize="20px"
+      fontSize="16px"
       color = "white"
     >
       Designed by SE15

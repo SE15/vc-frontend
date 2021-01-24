@@ -18,6 +18,7 @@ class Profile extends Component {
     }
 
     async componentWillMount(){
+        
         let data = {
             headers: {
             'Access-Control-Allow-Headers': 'x-Auth-token',
