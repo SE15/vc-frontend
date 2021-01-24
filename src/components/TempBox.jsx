@@ -86,11 +86,11 @@ const BoxContent = (props) => {
     if (props.type == "Skills") {
         return (
             <>
+            {/* <Skill skillname="Organizing" validations={4} visit={true}/>
             <Skill skillname="Organizing" validations={4} visit={true}/>
             <Skill skillname="Organizing" validations={4} visit={true}/>
             <Skill skillname="Organizing" validations={4} visit={true}/>
-            <Skill skillname="Organizing" validations={4} visit={true}/>
-            <Skill skillname="Organizing" validations={4} visit={true}/>
+            <Skill skillname="Organizing" validations={4} visit={true}/> */}
                 {
                     
                     props.detailss.map((skill, i) =>
@@ -106,18 +106,18 @@ const BoxContent = (props) => {
         return (
             
             <>
+            {/* <Connections cname="Thushani Jayasekera" cimage={null}/>
             <Connections cname="Thushani Jayasekera" cimage={null}/>
             <Connections cname="Thushani Jayasekera" cimage={null}/>
             <Connections cname="Thushani Jayasekera" cimage={null}/>
-            <Connections cname="Thushani Jayasekera" cimage={null}/>
-            <Connections cname="Thushani Jayasekera" cimage={null}/>
-                {/* {
+            <Connections cname="Thushani Jayasekera" cimage={null}/> */}
+                {
                     
-                    props.details.map((connection, i) =>
+                    props.detailss.map((connection, i) =>
                         <Connections key={i} cname={connection.first_name+" "+connection.last_name} cimage={null}/>
                     )
                     
-                } */}
+                }
                 
             </>
             );
@@ -125,18 +125,18 @@ const BoxContent = (props) => {
         return (
             
             <>
+            {/* <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
             <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
             <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
             <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
-            <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
-            <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/>
-                {/* {
+            <Reccomendation postedBy="Thshhshs" postedImage="null" reccomendation="very gooddd fkejfkjfk mfsfmsfm smfs,fm"/> */}
+                {
                     
-                    props.details.map((recommendation, i) =>
+                    props.detailss.map((recommendation, i) =>
                         <Reccomendation key={i} postedBy={recommendation.first_name+" "+recommendation.last_name} postedImage="null" reccomendation={recommendation.description}/>
                     )
                     
-                } */}
+                }
                 
             </>
             );  

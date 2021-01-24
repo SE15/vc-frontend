@@ -59,7 +59,7 @@ if(props.visit=="0"){
     return (
         <>
         <Flex>
-            <Box w="md" p={4} bg={kPrimaryGray}>
+            <Box w="390px" p={4} bg={kPrimaryGray}>
                 <HStack  spacing="3rem">
                         
                         
@@ -138,9 +138,10 @@ if(props.visit=="0"){
                    
                 ) :(
                    <>
-                    <Button rightIcon={<AddIcon />} colorScheme="blue" onClick={onOpen}>
+                    <Button rightIcon={<AddIcon />} colorScheme="blue" onClick={()=> handleValidation()}>
                     </Button>
-                    <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
+                    
+                    {/* <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
                     <ModalOverlay />
                     <ModalContent>
                         <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
@@ -176,7 +177,7 @@ if(props.visit=="0"){
                         </Box>
                     </ModalContent>
 
-                </Modal>
+                </Modal> */}
                 </>
 )}
 
