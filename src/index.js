@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 
 import './index.css';
 import App from './App';
+
 // import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './store/reducers/auth';
 
