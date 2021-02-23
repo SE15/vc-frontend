@@ -21,7 +21,7 @@ const ProfileInfo = (props) => {
                 />
                 <Heading fontSize="25px" color="white"> {props.name} </Heading>
                 <Box h={3}/>
-                <ConnectionButton type = {props.button}/>
+                <ConnectionButton type = {props.button} visit={props.visit}/>
                 <Box h={3}/>
             </Box>
         </center>
@@ -35,24 +35,34 @@ const ProfileInfo = (props) => {
  */
 //TODO: Add onClick method
 const ConnectionButton = (props) => {
-    if (props.type == "1") {
-        return (
-        <Button colorScheme="blue" variant="solid" >
-        Add Connection
-         </Button>);
-    } else if (props.type == "2") {
-        return (
-        <Button colorScheme="red" variant="solid">
-        Remove Connection
-        </Button>);
-    } else if (props.type == "3") {
-        return (
-        <Heading color = "green.100" size = "md">Request Pending</Heading>);  
-    } else if (props.type == "0") {
-        return (<div></div>)
+    if (props.visit) {
+        if (props.type == "1") {
+            return (
+            <Button colorScheme="blue" variant="solid" >
+            Add Connection
+             </Button>);
+        } else if (props.type == "2") {
+            return (
+            <Button colorScheme="red" variant="solid">
+            Remove Connection
+            </Button>);
+        } else if (props.type == "3") {
+            return (
+            <Heading color = "green.100" size = "md">Request Pending</Heading>);  
+        } else if (props.type == "0") {
+            return (<div></div>)
+        } else {
+            throw new Error("Invalid type for ConnectionButton");
+        }
     } else {
-        throw new Error("Invalid type for ConnectionButton");
+        return(
+            <div>
+            
+            </div>
+        );
     }
+
+    
 }
 
 export default ProfileInfo;

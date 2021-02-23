@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 
 import{Input, Stack,Button,InputGroup, Box
-,Divider, FormControl,Flex,Heading ,Text, Spinner, InputLeftElement, InputRightElement, IconButton} from '@chakra-ui/react';
+,Divider, FormControl,Flex,Heading ,Text, Spinner, InputRightElement, IconButton} from '@chakra-ui/react';
 
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
@@ -29,9 +29,11 @@ class Login extends Component {
         }
     }
 
-    submitHandler = (event) => {
+    submitHandler = async (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.email, this.state.password);
+        await this.props.onAuth(this.state.email, this.state.password);
+        //console.log("token : "  + localStorage.getItem('token'))
+        //console.log("user : "  + localStorage.getItem('user'))
     }
   
     handleChange(field, e){         
@@ -92,7 +94,7 @@ class Login extends Component {
 
         let authRedirect = null;
         if (this.props.isAuthenticated) {
-            console.log(this.props.token);
+            console.log(localStorage.getItem('token'));
             authRedirect = <Redirect to={this.props.authRedirectPath} />
         } else {
             authRedirect = <Redirect to='/login' />

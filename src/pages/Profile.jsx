@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ProfileInfo from "../components/ProfileInfo";
-import { Box, Heading, Wrap, WrapItem, Center } from "@chakra-ui/react"
+import { Box, Center, Wrap, Spinner } from "@chakra-ui/react"
 import TempBox from "../components/TempBox"
 import axios from "axios";
 
@@ -13,28 +13,31 @@ class Profile extends Component {
             skill: {},
             recommendation:{},
             connections:{},
-
+            loading: true,
+            visit: true
         };
     }
 
-    async componentWillMount(){
-        
+    async componentDidMount(){
+        const token = localStorage.getItem('token');
+        console.log(" sd" + token);
         let data = {
             headers: {
             'Access-Control-Allow-Headers': 'x-Auth-token',
-            'x-Auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzMsImlhdCI6MTYxMTQ5OTk5NSwiZXhwIjoxNjExNTAzNTk1fQ.zlAdtIrZDa20SrzrahSdMVmPmytUhmBhVQJGP9MBJ5M'
+            'x-Auth-token': token
             }
           }
-        const token = JSON.parse(localStorage.getItem('token'));
+          
+        
         const result = await axios.get("http://localhost:5000/api/users/2",Object.assign({}, {}, data))
         .then((result) => {
-            console.log(result);
             if(result.data.err==0){
                 this.setState({
                     profile: result.data.obj[0][0],
                     skill: result.data.obj[1],
                     recommendation: result.data.obj[2],
-                    connections: result.data.obj[3]
+                    connections: result.data.obj[3],
+                    loading: false
                 });
                 console.log(this.state.skill);
             }else{
@@ -48,18 +51,35 @@ class Profile extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <ProfileInfo name={this.state.profile.first_name+" "+this.state.profile.last_name} button="1" />
-                <Box h={3}/>
-                <Wrap justify="space-around">
-                    {/* visit method will show whether a user or guest */}
-                    <TempBox name = "Skills" data={this.state.skill} visit={false}/>
-                    <TempBox name = "Connections" data={this.state.connections} visit={false}/>
-                    <TempBox name = "Recommendations" data={this.state.recommendation} visit={false}/>
-                </Wrap>
-            </div>
-        );
+        if (this.state.loading) {
+            return (
+                <div>
+                    <Center>
+                        <Spinner
+                            thickness="5px"
+                            speed="0.65s"
+                            emptyColor="black"
+                            color="white"
+                            size="xl"
+                        />
+                    </Center>
+                </div>
+            );
+        }else{
+            return (
+                <div>
+                    <ProfileInfo name={this.state.profile.first_name+" "+this.state.profile.last_name} button="1" visit={this.state.visit} />
+                    <Box h={3}/>
+                    <Wrap justify="space-around">
+                        {/* visit method will show whether a user or guest */}
+                        <TempBox name = "Skills" data={this.state.skill} visit={this.state.visit}/>
+                        <TempBox name = "Connections" data={this.state.connections} visit={this.state.visit}/>
+                        <TempBox name = "Recommendations" data={this.state.recommendation} visit={this.state.visit}/>
+                    </Wrap>
+                </div>
+            );
+        }
+        
     }
 }
 

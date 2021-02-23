@@ -47,7 +47,7 @@ function ReccomendationButton(props) {
                     <ModalOverlay />
                     <ModalContent>
                         <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
-                            <stack>
+                            <Stack>
                                 <Heading color="black.400" fontSize="lg">
                                     Post Reccomendation
                 </Heading>
@@ -70,7 +70,7 @@ function ReccomendationButton(props) {
                                     
                                     <ModalCloseButton />
                                 </Stack>
-                            </stack>
+                            </Stack>
                             <ModalFooter>
                                 <Button colorScheme="blue" mr={3} onClick={()=>handleReccomendation()}>
                                     Post

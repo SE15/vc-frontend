@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import{Input, Stack,Button,InputGroup, InputLeftElement, Box,
-    HStack,Divider, FormControl,Flex,Heading,Text, InputRightElement, IconButton} from '@chakra-ui/react';
+import{Input, Stack,Button,InputGroup, Box,
+    HStack,Divider, FormControl,Flex,Heading,Text, InputRightElement, IconButton, Spinner} from '@chakra-ui/react';
 import { ViewIcon } from '@chakra-ui/icons';
 
 import axios from 'axios';
-
+import { connect } from 'react-redux';
 
 class SignUp extends Component {
     state = { 
@@ -14,7 +14,8 @@ class SignUp extends Component {
         password: '',
         confirmPassword: '',
         passwordConfirmed: true,
-        show: false
+        show: false,
+        loading: false
      }
 
     handleClick(){
@@ -30,12 +31,12 @@ class SignUp extends Component {
             ...this.state,
             [field]: textField
         },
-        function() {if (field=="confirmPassword" || field=="password")  this.checkPassword(textField)});
+        function() {if (field==="confirmPassword" || field==="password")  this.checkPassword(textField)});
         
     }
 
     checkPassword(textField){
-        if (this.state.confirmPassword==this.state.password) {
+        if (this.state.confirmPassword===this.state.password) {
             this.setState({
                 ...this.state,
                 passwordConfirmed: true
@@ -49,25 +50,33 @@ class SignUp extends Component {
         
     }
 
-    submitHandler = (event) => {
+    submitHandler = async (event) => {
         event.preventDefault();
+        this.setState({
+            ...this.state,
+            loading: true
+        })
         if(this.state.passwordConfirmed){
-            // axios.post('http://localhost:5000/api/guests/users/registration', this.state)
-            // .then(data => {
-            //   console.log("RESPONSE: " + JSON.stringify(data))
-            // })
-            // .catch(err => {
-            //  console.log("ERR: " + err.message)
-            // })
+            await axios.post('http://localhost:5000/api/guests/users/registration', this.state)
+            .then(data => {
+              console.log("RESPONSE: " + JSON.stringify(data))
+            })
+            .catch(err => {
+             console.log("ERR: " + err.message)
+            })
             alert("SignUp is Success");
         }else{
             console.log("error")
         }
+        this.setState({
+            ...this.state,
+            loading: false
+        })
     }
 
     render() {
-
-        const form = <Box p={8} maxWidth="85%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
+        console.log("render");
+        let form = <Box p={8} maxWidth="85%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
             <Box textAlign="center" color="blueGreen.100" textStyle="h1">
                 <Heading> SignUp </Heading>
             </Box>
@@ -101,7 +110,7 @@ class SignUp extends Component {
                         </FormControl>
                         <FormControl isRequired>
                             <InputGroup>
-                                <Input type='password' focusBorderColor={this.state.passwordConfirmed ? this.state.password=="" ? "blue.400": "green.400" : "red.400"} value={this.state.confirmPassword} borderColor={this.state.passwordConfirmed ? this.state.password=="" ? "blueGreen.400": "green.400" : "red.400"} onChange={this.handleChange.bind(this, "confirmPassword")} aria-label='Confirm password' placeholder='Confirm Password' bg="white.100" color="black.600"/>
+                                <Input type='password' focusBorderColor={this.state.passwordConfirmed ? this.state.password==="" ? "blue.400": "green.400" : "red.400"} value={this.state.confirmPassword} borderColor={this.state.passwordConfirmed ? this.state.password==="" ? "blueGreen.400": "green.400" : "red.400"} onChange={this.handleChange.bind(this, "confirmPassword")} aria-label='Confirm password' placeholder='Confirm Password' bg="white.100" color="black.600"/>
                             </InputGroup>
                         </FormControl>
 
@@ -111,11 +120,21 @@ class SignUp extends Component {
                     </Stack>
                     <Text textStyle="h2" color="blue.200">
                         <br />
-                        <a href="#">Already Registered? Sign In</a>
+                        <a href="Login">Already Registered? Sign In</a>
                     </Text>
                 </form>
             </Box>
         </Box>;
+
+        if (this.state.loading) {
+            form = <Spinner
+            thickness="5px"
+            speed="0.65s"
+            emptyColor="black"
+            color="white"
+            size="xl"
+        />;
+        }
 
         return(
             [
@@ -128,4 +147,10 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+const mapStateToProps = state => {
+    return {
+        loading: state.loading,
+    };
+};
+
+export default connect(mapStateToProps)(SignUp);

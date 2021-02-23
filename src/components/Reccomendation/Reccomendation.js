@@ -11,7 +11,7 @@ const Reccomendation = props => {
     return (
         <>
              <Box bg="white.200" w="50%" p={4} color="white">
-                            <stack>
+                            <Stack>
                                 
                                 
                                 <Stack direction="row">
@@ -32,7 +32,7 @@ const Reccomendation = props => {
                                 <Text color="black.900" fontSize="md" textAlign="left">
                                     {props.reccomendation}
                                 </Text>
-                            </stack>
+                            </Stack>
                             </Box>
         </>
     )
