@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import ProfileInfo from "../components/ProfileInfo";
-import { Box, Heading, Wrap, WrapItem, Center } from "@chakra-ui/react"
+import { Box, Heading, Wrap, WrapItem, Center, Spinner } from "@chakra-ui/react"
 import TempBox from "../components/TempBox"
 import { connect } from 'react-redux'
-import * as actions from '../store/actions/auth'
+//import * as actions from '../store/actions/auth'
 import { withRouter } from 'react-router-dom';
 
 class Home extends Component {
@@ -23,7 +23,17 @@ class Home extends Component {
                 </div>
             );
         } else {
-            return <p>Loading</p>;
+            return (
+                <Center>
+                    <Spinner
+                        thickness="5px"
+                        speed="0.65s"
+                        emptyColor="black"
+                        color="white"
+                        size="xl"
+                    />
+                </Center>
+            );
         }
        
     }

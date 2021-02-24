@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ProfileSettings from './ProfileSettings';
 import Profile from './Profile';
 import Home from './Home';
-import Login from '../screens/Login';
+import Login from './Login';
 import SignUp from './SignUp';
 import Logout from './Logout';
 import Delete from '../popups/DeleteAccount'

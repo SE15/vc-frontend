@@ -1,49 +1,26 @@
-import React, { Component } from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { Component } from 'react'
+
+import{Input, Stack,Button,InputGroup, Box
+,Divider, FormControl,Flex,Heading ,Text, Spinner, InputRightElement, IconButton} from '@chakra-ui/react';
+
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-
-import Input from '../components/Login/Input/Input';
-import Button from '../components/Login/Button/Button';
-import Spinner from '../components/Login/Spinner/Spinner';
 import * as actions from '../store/actions/auth';
-
-import {
-    Center, Box, Flex, Heading, Text
-} from '@chakra-ui/react';
-import { kSecondaryBlue } from '../utils/constants';
+import { Redirect } from 'react-router-dom';
+import { ViewIcon } from '@chakra-ui/icons';
 
 class Login extends Component {
-    state = {
-        controls: {
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    placeholder: 'Mail Address'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    isEmail: true
-                },
-                valid: false,
-                touched: false
-            },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'password',
-                    placeholder: 'Password'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 6
-                },
-                valid: false,
-                touched: false
-            }
-        }
+    state = { 
+        email: '',
+        password: '',
+        show: false
+     }
+
+    handleClick(){
+        this.setState({
+            ...this.state,
+            show: !this.state.show
+        });
     }
 
     componentDidMount() {
@@ -52,116 +29,86 @@ class Login extends Component {
         }
     }
 
-    checkValidity(value, rules) {
-        let isValid = true;
-        if (!rules) {
-            return true;
-        }
-
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid
-        }
-
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        return isValid;
-    }
-
-    inputChangedHandler = (event, controlName) => {
-        const updatedControls = {
-            ...this.state.controls,
-            [controlName]: {
-                ...this.state.controls[controlName],
-                value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
-                touched: true
-            }
-        };
-        this.setState({ controls: updatedControls });
-    }
-
-    submitHandler = (event) => {
+    submitHandler = async (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
+        await this.props.onAuth(this.state.email, this.state.password);
+        
+        console.log("token : "  + localStorage.getItem('token'))
+        console.log("user : "  + localStorage.getItem('user'))
+    }
+  
+    handleChange(field, e){         
+        let textField = e.target.value;        
+        this.setState({
+          ...this.state,
+          [field]: textField
+        });
     }
 
     render() {
-        const formElementsArray = [];
-        for (let key in this.state.controls) {
-            formElementsArray.push({
-                id: key,
-                config: this.state.controls[key]
-            });
-        }
+        let form = 
+            <Box p={8} maxWidth="95%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
+                <Box textAlign="center" color="blueGreen.100" textStyle="h1">
+                    <Heading> Login </Heading>
+                </Box>
+                <Box my={4} textAlign="left">
+                    <form action='submit' onSubmit={this.submitHandler}>
+                        <Stack spacing={3}>
+                            <FormControl isRequired>
+                                <InputGroup>
+                                    <Input type='email' placeholder='Email' bg="white.100" color="black.600" borderColor="blueGreen.100" onChange={this.handleChange.bind(this, "email")} value={this.state.email} />
+                                </InputGroup>
+                            </FormControl>
+                            <FormControl isRequired>
+                                <InputGroup>
+                                    <Input type={this.state.show ? "text" : "password"} onChange={this.handleChange.bind(this, "password")} value={this.state.password} aria-label='password' placeholder='Password' bg="white.100" color="black.600" borderColor="blueGreen.100" />
+                                    <InputRightElement>
+                                        <IconButton aria-label="view password" h="1.75rem" colorScheme="gray" icon={<ViewIcon/>} size="sm" onClick={this.handleClick.bind(this)}/>
+                                    </InputRightElement>
+                                </InputGroup>
+                            </FormControl>
 
-        let form = formElementsArray.map(formElement => (
-            <Input
-                key={formElement.id}
-                elementType={formElement.config.elementType}
-                elementConfig={formElement.config.elementConfig}
-                value={formElement.config.value}
-                invalid={!formElement.config.valid}
-                shouldValidate={formElement.config.validation}
-                touched={formElement.config.touched}
-                changed={(event) => this.inputChangedHandler(event, formElement.id)} />
-        ));
+                            <Divider />
+
+                            <Button type='submit' variant='solid' boxShadow='sm' _hover={{ boxShadow: 'md' }} bg="black.500">Log In!</Button>
+                        </Stack>
+                        <Text textStyle="h2" color="blue.200">
+                            <br />
+                            <a href="signup">Create New Account</a>
+                        </Text>
+                    </form>
+                </Box>
+            </Box>;
 
         if (this.props.loading) {
-            form = <Spinner />
+            form = <Spinner
+            thickness="5px"
+            speed="0.65s"
+            emptyColor="black"
+            color="white"
+            size="xl"
+          />;
         }
-
+        
         if (this.props.error) 
         console.log(this.props.error.errorMessage);
 
         let authRedirect = null;
         if (this.props.isAuthenticated) {
-            console.log(this.props.token);
+            console.log(localStorage.getItem('token'));
             authRedirect = <Redirect to={this.props.authRedirectPath} />
         } else {
             authRedirect = <Redirect to='/login' />
         }
 
-        return ([
-            <Box h={window.innerHeight * 0.1} />,
-            <Flex width="Full" align="center" justifyContent="center">
-                <Box p={8} maxWidth="95%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
-                    <Box textAlign="center" color="blueGreen.100" textStyle="h1">
-                        <Heading> Login </Heading>
-                    </Box>
-                    <Box my={4} textAlign="left" align="center">
-                        <Center align = "center">
-                            {authRedirect}
-                            <form onSubmit={this.submitHandler}>
-                                {form}
-                                <Box h = {5}/>
-                                <Button btnType="Success">SUBMIT</Button>
-                                <Text textStyle="h2" color={kSecondaryBlue}>
-                                    <br />
-                                    <a href="signup">Create a new account</a>
-                                </Text>
-                            </form>
-                        </Center>
-
-                    </Box>
-                </Box>
-            </Flex>
-        ]);
+        return(
+            [
+                <Box h={window.innerHeight * 0.1} />,
+                <Flex width="Full" align="center" justifyContent="center">
+                    {form}
+                </Flex>
+            ]
+        );
     }
 }
 

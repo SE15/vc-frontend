@@ -6,7 +6,8 @@ import {
     , ModalCloseButton, Text, useDisclosure, ModalFooter,
      Textarea, Avatar, Stack, Heading, Box
 } from '@chakra-ui/react';
-import { kPrimaryBlackLight,kSecondaryBlueLight } from './../../constants'
+import { kPrimaryBlackLight,kSecondaryBlueLight } from '../../constants';
+
 const ReccomendationPost = props => {
     return (
         <>
@@ -50,23 +51,20 @@ function ReccomendationButton(props) {
                             <Stack>
                                 <Heading color="black.400" fontSize="lg">
                                     Post Reccomendation
-                </Heading>
+                                </Heading>
                                 <br />
                                 <Stack direction="row">
-                                {props.cimage!=null?(
-                                    <Image src={props.image}  borderRadius="full" boxSize="3rem" />
-                                
-                                ) :(
-                                    <Avatar name={props.name} src="https://bit.ly/broken-link" />
-                                )
-                                }
-
-
+                                    {props.cimage!=null?(
+                                        <Image src={props.image}  borderRadius="full" boxSize="3rem" />
+                                    ) :(
+                                        <Avatar name={props.name} src="https://bit.ly/broken-link" />
+                                    )
+                                    }
                                     <Text color={kSecondaryBlueLight}>
                                         {props.name}
                                     </Text>
                    
-                                        <Textarea placeholder="Enter reccomendation" color="black.400" />
+                                    <Textarea placeholder="Enter reccomendation" color="black.400" />
                                     
                                     <ModalCloseButton />
                                 </Stack>
@@ -74,24 +72,19 @@ function ReccomendationButton(props) {
                             <ModalFooter>
                                 <Button colorScheme="blue" mr={3} onClick={()=>handleReccomendation()}>
                                     Post
-            </Button>
+                                </Button>
                             </ModalFooter>
                         </Box>
                     </ModalContent>
-
                 </Modal>
             </>
         );
     } else {
         return (
             <Button onClick={onOpen} bg={kSecondaryBlueLight}isDisabled={true}>Post Reccomendation</Button>
-            );
+        );
     }
 }
-
-
-
-
 
 ReccomendationPost.propTypes = {
     name: PropTypes.string,

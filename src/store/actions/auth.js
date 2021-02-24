@@ -36,7 +36,6 @@ export const auth = (email, password) => {
         dispatch(authStart());
         ajax.get(`guests/auth/login?email=${email}&password=${password}`)
             .then(response => {
-                console.log(localStorage.getItem('token'));
                 if (response.data.token !== undefined) {
                     localStorage.setItem('token', response.data.token);
                     localStorage.setItem('user', response.data.user);

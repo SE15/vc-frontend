@@ -11,7 +11,7 @@ function Connections(props){
     return(
         <>
         <Flex>
-            <Box w="md" p={4} bg={kPrimaryGray}>
+            <Box w="390px" p={4} bg={kPrimaryGray}>
                 <HStack  spacing="3rem">
                 {props.cimage!=null?(
                      <Image src={props.cimage}  borderRadius="full" boxSize="3rem" />
