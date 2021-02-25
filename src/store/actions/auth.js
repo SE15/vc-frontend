@@ -44,7 +44,7 @@ export const auth = (email, password) => {
                 dispatch(authSuccess(response.data.token, response.data.user));
             })
             .catch(err => {
-                dispatch(authFail(err.response.data.error));
+                dispatch(authFail(err));
             });
     };
 };
