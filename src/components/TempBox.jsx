@@ -7,6 +7,7 @@ import Skill from './Skills/Skill/Skill';
 import Connections from './Connections/Connection/Connection';
 import Reccomendation from './Reccomendation/Reccomendation';
 import ReccomendationPost from './Reccomendation/ReccomendationPost';
+import AddSkill from './Skills/Skill/addSkill'
 
 
 class TempBox extends Component {
@@ -25,7 +26,6 @@ class TempBox extends Component {
             ...this.state,
             isLoading: false
         });
-        console.log("CDM" + this.props.loading)
     }
 
     componentDidUpdate(prevProps,prevState){
@@ -43,9 +43,6 @@ class TempBox extends Component {
                 isLoading: false
             });
         }
-        console.log("CDU " + JSON.stringify(this.state.details));
-        console.log("CDU pre" , prevState.details.size);
-        console.log("CDU cu" ,this.state.isLoading);
     }
 
     eventHandler = (ev) => {
@@ -83,8 +80,6 @@ class TempBox extends Component {
             ...this.state,
             isLoading: true
         });
-        console.log("q" + JSON.stringify(this.state.details));
-        console.log("q" + skillname);
         let filteredArray = this.state.details.filter(skill => skill.name !== skillname);
         this.setState({
                 ...this.state,
@@ -95,14 +90,16 @@ class TempBox extends Component {
                     ...this.state,
                     details:filteredArray,
                 },)
-            },
-            function(){console.log("il t " + JSON.stringify(this.state.isLoading))}
+            }
         );
-        console.log("2" + JSON.stringify(this.state.details));
+    }
+
+    async addSkill(skill){
+        console.log("addskill");
+        console.log(skill);
     }
 
     render() {
-        console.log("render" + this.state.isLoading)
         if (this.state.isLoading) {
             return (
                 <div>
@@ -129,13 +126,13 @@ class TempBox extends Component {
                             
                             <VStack overflowY="scroll" h="320px" w="436px" ml="2" mb="5">
                                 
-                                <BoxContent type = {this.props.name} detailss={this.state.details} visit={this.props.visit} onclick={this.removeElement.bind(this)}/>
+                                <BoxContent type = {this.props.name} detailss={this.state.details} visit={this.props.visit} onClickRemove={this.removeElement.bind(this)}  />
                             
                             </VStack>
     
                             <Center>
                                 <Box h={3}/>
-                                    <EventButton new = {this.eventHandler.bind(this)} type = {this.props.name} visit={this.props.visit}/>
+                                    <EventButton new = {this.eventHandler.bind(this)} type = {this.props.name} visit={this.props.visit} onClickAddSkill={this.addSkill.bind(this)}/>
                                 <Box h={3}/>
                             </Center>
                             
@@ -152,12 +149,11 @@ class TempBox extends Component {
 const BoxContent = (props) => {
 
     if (props.type == "Skills") {
-        console.log("box" + props.detailss)
         return (
             <>
                  {
                     props.detailss.map((skill, i) =>
-                        <Skill key={i} skillname={skill.name} validations={skill.validations} visit={props.visit} onClick={props.onclick}/>
+                        <Skill key={i} skillname={skill.name} validations={skill.validations} visit={props.visit} onClick={props.onClickRemove} />
 
                     )
                     
@@ -201,9 +197,7 @@ const EventButton = (props) => {
                 </div>);
         }else{
             return (
-                <Button onClick={props.new} colorScheme="blue" variant="solid" >
-                Add Skill
-                </Button>);
+                <AddSkill onClick={props.new} onClickAddSkill={props.onClickAddSkill}/>);
         }
     } else if (props.type == "Connections") {
         return (

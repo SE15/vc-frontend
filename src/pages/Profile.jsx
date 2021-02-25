@@ -14,7 +14,7 @@ class Profile extends Component {
             recommendation:{},
             connections:{},
             loading: true,
-            visit: true
+            visit: false
         };
     }
 

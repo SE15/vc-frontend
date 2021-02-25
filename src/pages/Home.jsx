@@ -7,7 +7,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 
 class Home extends Component {
+
     render() {
+        
+        console.log(localStorage.getItem('user')); 
+        console.log(localStorage.getItem('user')[0][0].password);
         if (this.props.user !== null) {
             console.log(this.props.user[1]);
             return (

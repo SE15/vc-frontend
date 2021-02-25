@@ -37,9 +37,11 @@ export const auth = (email, password) => {
         ajax.get(`guests/auth/login?email=${email}&password=${password}`)
             .then(response => {
                 if (response.data.token !== undefined) {
+                    console.log(response.data.user[0][0]);
                     localStorage.setItem('token', response.data.token);
                     localStorage.setItem('user', response.data.user);
                 }
+                    
                 dispatch(authSuccess(response.data.token, response.data.user));
             })
             .catch(err => {

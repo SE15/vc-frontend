@@ -168,42 +168,7 @@ class Skill extends Component {
                                         <>
                                             <Button isDisabled={this.state.isValidated? true:false}  size="sm" rightIcon={<AddIcon />} colorScheme="blue" onClick={this.handleValidation.bind(this)}>
                                             </Button>
-                                            {/* <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
-                                                <ModalOverlay />
-                                                <ModalContent>
-                                                    <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
-                                                        <Stack>
-                                                            <Heading color="black.400" fontSize="lg">
-                                                                Skill Validation
-                                                            </Heading>
-                                                            <br />
-                                                            <Stack direction="row">
-                                                                {
-                                                                    props.cimage!=null?(
-                                                                        <Image src={props.image}  borderRadius="full" boxSize="3rem" />
-                                        
-                                                                    ) :(
-                                                                        <Avatar name={props.name} src="https://bit.ly/broken-link" />
-                                                                    )
-                                                                }
-                                                                <Text color={kSecondaryBlueLight}>
-                                                                    {name}
-                                                                </Text>
-                                                                if({props.visit}==true){
-                                                                    <Textarea placeholder="Enter reason for skill Validation" color="black.400" />
-                                                                }
-                                                                <ModalCloseButton />
-                                                            </Stack>
-                                                        </Stack>
-                                                        <ModalFooter>
-                                                        <Button colorScheme="blue" mr={3} onClick={()=> handleValidation()}>
-                                                            Post
-                                                        </Button>
-                                                        </ModalFooter>
-                                                    </Box>
-                                                </ModalContent>
-    
-                                            </Modal> */}
+                                            
                                         </>
                                     )
                                 }
