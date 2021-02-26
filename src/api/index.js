@@ -1,4 +1,8 @@
 export {
+    login
+} from './auth-api'
+
+export {
     addConnection,
     respondConnection,
     deleteConnection

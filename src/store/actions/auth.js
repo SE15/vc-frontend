@@ -1,6 +1,5 @@
-import ajax from '../../utils/ajax';
-
 import * as actionTypes from './actionTypes';
+import { login } from '../../api';
 
 export const authStart = () => {
     return {
@@ -34,7 +33,11 @@ export const logout = () => {
 export const auth = (email, password) => {
     return dispatch => {
         dispatch(authStart());
-        ajax.get(`guests/auth/login?email=${email}&password=${password}`)
+        const authData = {
+            email: email,
+            password: password
+        };
+        login(authData)
             .then(response => {
                 if (response.data.token !== undefined) {
                     console.log(response.data.user[0][0]);
