@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Skill /> should render blue colour button if its a visit by other user 1`] = `
+Array [
+  <React.Fragment>
+    <Flex>
+      <Box
+        bg="#E2E8F0"
+        p={4}
+        w="390px"
+      >
+        <HStack
+          spacing="3rem"
+        >
+          <Badge
+            borderRadius="5rem"
+            colorScheme="blue"
+            fontSize="0.8em"
+            ml="1"
+            variant="outline"
+          >
+            5
+          </Badge>
+          <Heading
+            color="#01579b"
+            size="md"
+          />
+          <Spacer />
+          <React.Fragment>
+            <Button
+              colorScheme="blue"
+              id="addBtn"
+              isDisabled={false}
+              onClick={[Function]}
+              rightIcon={<AddIcon />}
+              size="sm"
+            />
+          </React.Fragment>
+        </HStack>
+      </Box>
+    </Flex>
+  </React.Fragment>,
+]
+`;
+
+exports[`<Skill /> should increase validations and disable add button when validated 1`] = `
+Array [
+  <React.Fragment>
+    <Flex>
+      <Box
+        bg="#E2E8F0"
+        p={4}
+        w="390px"
+      >
+        <HStack
+          spacing="3rem"
+        >
+          <Badge
+            borderRadius="5rem"
+            colorScheme="blue"
+            fontSize="0.8em"
+            ml="1"
+            variant="outline"
+          >
+            6
+          </Badge>
+          <Heading
+            color="#01579b"
+            size="md"
+          />
+          <Spacer />
+          <React.Fragment>
+            <Button
+              colorScheme="blue"
+              id="addBtn"
+              isDisabled={true}
+              onClick={[Function]}
+              rightIcon={<AddIcon />}
+              size="sm"
+            />
+          </React.Fragment>
+        </HStack>
+      </Box>
+    </Flex>
+  </React.Fragment>,
+]
+`;
+
+exports[`<Skill /> should render red colour button if its not a visit by other user 1`] = `
+Array [
+  <React.Fragment>
+    <Flex>
+      <Box
+        bg="#E2E8F0"
+        p={4}
+        w="390px"
+      >
+        <HStack
+          spacing="3rem"
+        >
+          <Badge
+            borderRadius="5rem"
+            colorScheme="blue"
+            fontSize="lg"
+            ml="1"
+            variant="outline"
+          >
+            5
+          </Badge>
+          <Heading
+            color="#01579b"
+            size="md"
+          />
+          <Spacer />
+          <Button
+            colorScheme="red"
+            id="deleteBtn"
+            onClick={[Function]}
+            rightIcon={<DeleteIcon />}
+          />
+          <AlertDialog
+            isOpen={false}
+            leastDestructiveRef={
+              Object {
+                "current": null,
+              }
+            }
+            onClose={[Function]}
+          >
+            <ModalOverlay>
+              <ForwardRef>
+                <Box
+                  bg="#4f5b62"
+                  color="white"
+                  p={4}
+                  w="100%"
+                >
+                  <ModalHeader
+                    fontSize="lg"
+                    fontWeight="bold"
+                  >
+                    Delete Skill
+                  </ModalHeader>
+                  <ModalBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button
+                      colorScheme="#263238"
+                      onClick={[Function]}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      ml={3}
+                      onClick={[Function]}
+                    >
+                      Delete
+                    </Button>
+                  </ModalFooter>
+                </Box>
+              </ForwardRef>
+            </ModalOverlay>
+          </AlertDialog>
+        </HStack>
+      </Box>
+    </Flex>
+  </React.Fragment>,
+]
+`;
