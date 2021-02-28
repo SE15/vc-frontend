@@ -45,9 +45,16 @@ describe('<Skill />',()=>{
     });
 
     it('should increase validations and disable add button when validated',()=>{
+        wrapper.setProps({visit:true})
         wrapper.instance().handleValidation();
         expect(wrapper.getElements()).toMatchSnapshot();
     });
+
+    it('should keep add button disabled if already validated',()=>{
+        wrapper.setProps({visit:true})
+        wrapper.setState({isValidated:true})
+        expect(wrapper.getElements()).toMatchSnapshot();
+    })
 
    
 });
