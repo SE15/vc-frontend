@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Connection /> should match snapshot with correct name, image, link 1`] = `
+Array [
+  <React.Fragment>
+    <Flex>
+      <Box
+        bg="#E2E8F0"
+        p={4}
+        w="390px"
+      >
+        <HStack
+          spacing="3rem"
+        >
+          <Avatar
+            name="Anne De Mel"
+            src="https://bit.ly/broken-link"
+          />
+          <Heading
+            color="#000a12"
+            size="sm"
+          >
+            Anne De Mel
+          </Heading>
+          <Link
+            color="blue.200"
+            fontSize="md"
+            href="https://www.test.com/"
+            textAlign="end"
+          >
+            View
+          </Link>
+        </HStack>
+      </Box>
+    </Flex>
+  </React.Fragment>,
+]
+`;
+
+exports[`<Connection /> should match snapshot with correct name, image, link for different connection name 1`] = `
+Array [
+  <React.Fragment>
+    <Flex>
+      <Box
+        bg="#E2E8F0"
+        p={4}
+        w="390px"
+      >
+        <HStack
+          spacing="3rem"
+        >
+          <Avatar
+            name="Emma Watson"
+            src="https://bit.ly/broken-link"
+          />
+          <Heading
+            color="#000a12"
+            size="sm"
+          >
+            Emma Watson
+          </Heading>
+          <Link
+            color="blue.200"
+            fontSize="md"
+            href="https://www.emma.com/"
+            textAlign="end"
+          >
+            View
+          </Link>
+        </HStack>
+      </Box>
+    </Flex>
+  </React.Fragment>,
+]
+`;

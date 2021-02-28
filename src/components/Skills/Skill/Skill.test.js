@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button,AddIcon,DeleteIcon} from '@chakra-ui/icons';
 
 import {configure,mount,shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
