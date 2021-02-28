@@ -30,6 +30,9 @@ const Main = () => {
             <Route path="/profile">
                 <Profile button="3" />
             </Route>
+            <Route path="/user/profile" exact>
+                <Profile  />
+            </Route>
             <Route path="/login" exact>
                 <Login />
             </Route>

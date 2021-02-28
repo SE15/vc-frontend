@@ -19,6 +19,10 @@ class Profile extends Component {
     }
 
     async componentDidMount(){
+        console.log(this.props.userId)
+        if (this.props.userId) {
+            console.log(this.props.userId)
+        }
         const token = localStorage.getItem('token');
         console.log(" sd" + token);
         let data = {

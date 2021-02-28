@@ -40,12 +40,10 @@ export const auth = (email, password) => {
         login(authData)
             .then(response => {
                 if (response.data.token !== undefined) {
-                    console.log(response.data.user[0][0]);
                     localStorage.setItem('token', response.data.token);
-                    localStorage.setItem('user', response.data.user);
-                }
-                    
-                dispatch(authSuccess(response.data.token, response.data.user));
+                    localStorage.setItem('user', response.data.user[0][0].id);
+                }   
+                dispatch(authSuccess(response.data.token, response.data.user[0][0].id));
             })
             .catch(err => {
                 dispatch(authFail(err));
@@ -66,7 +64,7 @@ export const authCheckState = () => {
         if (!token) {
             dispatch(logout());
         } else {
-            const userId = localStorage.getItem('userId');
+            const userId = localStorage.getItem('user');
             dispatch(authSuccess(token, userId));
             }   
         };

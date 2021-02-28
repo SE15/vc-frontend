@@ -38,7 +38,7 @@ export const deleteRequest = async (url) => {
 
 const generateSuccessOutput = (response) => {
 	return  {
-		data: response.data.results,
+		data: response.data,
 		message: response.data.message,
 	}
 }

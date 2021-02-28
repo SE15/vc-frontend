@@ -32,9 +32,6 @@ class Login extends Component {
     submitHandler = async (event) => {
         event.preventDefault();
         await this.props.onAuth(this.state.email, this.state.password);
-        
-        console.log("token : "  + localStorage.getItem('token'))
-        console.log("user : "  + localStorage.getItem('user'))
     }
   
     handleChange(field, e){         
@@ -90,17 +87,16 @@ class Login extends Component {
           />;
         }
         
-        if (this.props.error) 
-        console.log(this.props.error.errorMessage);
+        // if (this.props.error) 
+        //     console.log(this.props.error.errorMessage);
 
-        let authRedirect = null;
+        console.log(this.props.isAuthenticated);
+        console.log(this.props.authRedirectPath);
         if (this.props.isAuthenticated) {
-            console.log(localStorage.getItem('token'));
-            authRedirect = <Redirect to={this.props.authRedirectPath} />
-        } else {
-            authRedirect = <Redirect to='/login' />
+            console.log("object");
+            return (<Redirect to={this.props.authRedirectPath} />);
         }
-
+        
         return(
             [
                 <Box h={window.innerHeight * 0.1} />,
