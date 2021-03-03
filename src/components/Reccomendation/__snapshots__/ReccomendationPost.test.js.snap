@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReccomendationPost /> should disable post reccomend button when not logged in 1`] = `
+Array [
+  <Button
+    bg="#4f83cc"
+    isDisabled={true}
+    onClick={[Function]}
+  >
+    Post Reccomendation
+  </Button>,
+]
+`;
+
+exports[`<ReccomendationPost /> should disable post reccomend button when reccomendation is added 1`] = `
+Array [
+  <Button
+    bg="#4f83cc"
+    isDisabled={true}
+    onClick={[Function]}
+  >
+    Post Reccomendation
+  </Button>,
+]
+`;
+
+exports[`<ReccomendationPost /> should disable post reccomend button when user viewing own profile 1`] = `
+Array [
+  <Button
+    bg="#4f83cc"
+    isDisabled={true}
+    onClick={[Function]}
+  >
+    Post Reccomendation
+  </Button>,
+]
+`;
+
+exports[`<ReccomendationPost /> should display post reccomend button if its a profile visit & reccomendation not added before 1`] = `
+Array [
+  <React.Fragment>
+    <Box>
+      <Button
+        bg="#4f83cc"
+        id="post"
+        isDisabled={false}
+        onClick={[Function]}
+      >
+        Post Reccomendation
+      </Button>
+    </Box>
+    <Modal
+      allowPinchZoom={false}
+      autoFocus={true}
+      blockScrollOnMount={true}
+      closeOnOverlayClick="false"
+      color="black.700"
+      isOpen={false}
+      lockFocusAcrossFrames={true}
+      motionPreset="scale"
+      onClose={[Function]}
+      returnFocusOnClose={true}
+      scrollBehavior="outside"
+      trapFocus={true}
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <Box
+          bg="#4f5b62"
+          color="white"
+          p={4}
+          w="100%"
+        >
+          <Stack>
+            <Heading
+              color="black.400"
+              fontSize="lg"
+            >
+              Post Reccomendation
+            </Heading>
+            <br />
+            <Stack
+              direction="row"
+            >
+              <Avatar
+                name="Anne De Mel"
+                src="https://bit.ly/broken-link"
+              />
+              <Text
+                color="#4f83cc"
+              >
+                Anne De Mel
+              </Text>
+              <Textarea
+                color="black.400"
+                placeholder="Enter reccomendation"
+              />
+              <ModalCloseButton />
+            </Stack>
+          </Stack>
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={[Function]}
+            >
+              Post
+            </Button>
+          </ModalFooter>
+        </Box>
+      </ModalContent>
+    </Modal>
+  </React.Fragment>,
+]
+`;

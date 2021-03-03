@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Reccomendation /> should display name and reccomendation according to layout 1`] = `
+Array [
+  <React.Fragment>
+    <Flex>
+      <Box
+        bg="white.200"
+        color="white"
+        p={4}
+        w="50%"
+      >
+        <Stack>
+          <Stack
+            direction="row"
+          >
+            if(
+            !=null)
+            <Image
+              rounded="1rem"
+              shadow="2xl"
+              size="100%"
+            />
+            else
+            <Avatar
+              name="Anne De Mel"
+              src="https://bit.ly/broken-link"
+            />
+            <Heading
+              color="black.400"
+              fontSize="lg"
+            >
+              Anne De Mel
+            </Heading>
+          </Stack>
+          <Divider />
+          <Text
+            color="black.900"
+            fontSize="md"
+            textAlign="left"
+          >
+            A recommendation letter should always be sincere and honest. Do not exaggerate the person's qualifications
+          </Text>
+        </Stack>
+      </Box>
+    </Flex>
+  </React.Fragment>,
+]
+`;

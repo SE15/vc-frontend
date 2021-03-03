@@ -1,4 +1,4 @@
-import { React, useState } from "react"
+import  React, {useState} from "react"
 
 import PropTypes from "prop-types"
 import {
@@ -7,44 +7,84 @@ import {
      Textarea, Avatar, Stack, Heading, Box
 } from '@chakra-ui/react';
 import { kPrimaryBlackLight,kSecondaryBlueLight } from '../../constants';
+import { Component } from "react";
+import Reccomendation from "./Reccomendation";
 
-const ReccomendationPost = props => {
+class ReccomendationPost extends Component{
+    constructor(props){
+        super(props);    
+    }
+    render(){
     return (
         <>
-            <ReccomendationButton visit={props.visit} name={props.name} />
+            <ReccomendationButton id="rec_button"visit={props.visit} name={props.name} />
         </>
-    )
+    );
+    }
 }
 
 
-function ReccomendationButton(props) {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const[isreccomended,setIsReccomended]=useState(false);
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
 
-    const handleReccomendation= async event=>{
-        setIsLoading(true);
+class ReccomendationButton extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggedIn: true,
+            isOpen: false,
+            isLoading: false,
+            isreccomended: false,
+            error: '',
+            
+        };
+    }
+    onClose=()=>{
+        this.setState({
+            ...this.state,
+            isOpen: false
+        }); 
+    }
+    onOpen= ()=>{
+        this.setState({
+            ...this.state,
+            isOpen: true
+        }); 
+    }
+
+
+    handleReccomendation= ()=>{
+        this.setState({
+            ...this.state,
+            isLoading: true
+        });
         try{
             //wait for update validation in db
-            setIsReccomended(true);
-            setIsLoading(false);
+
+            this.setState({
+                ...this.state,
+                isreccomended: true,
+                isLoading: false
+            });
+        
 
         }catch{
-            setIsReccomended(false);
-            setIsLoading(false);
-            setError("Couldn't Post Reccomendation")
+            this.setState({
+                ...this.state,
+                isreccomended: false,
+                isLoading: false,
+                error: "Couldn't Post Reccomendation"
+            });
+
         }
     }
-    if (props.visit == true && isLoggedIn == true && isreccomended==false) {
+    render(){
+    if (this.props.visit == true && this.state.isLoggedIn == true && this.state.isreccomended==false) {
 
         return (
             <>
                 <Box>
-                    <Button onClick={onOpen} bg={kSecondaryBlueLight} isDisabled={false}>Post Reccomendation</Button>
+                    <Button id="post" onClick={()=>this.onOpen()} bg={kSecondaryBlueLight} isDisabled={false}>Post Reccomendation</Button>
                 </Box>
-                <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
+                <Modal isOpen={this.state.isOpen} onClose={()=>onClose()} color="black.700" closeOnOverlayClick="false">
                     <ModalOverlay />
                     <ModalContent>
                         <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
@@ -54,14 +94,14 @@ function ReccomendationButton(props) {
                                 </Heading>
                                 <br />
                                 <Stack direction="row">
-                                    {props.cimage!=null?(
-                                        <Image src={props.image}  borderRadius="full" boxSize="3rem" />
+                                    {this.props.cimage!=null?(
+                                        <Image src={this.props.image}  borderRadius="full" boxSize="3rem" />
                                     ) :(
-                                        <Avatar name={props.name} src="https://bit.ly/broken-link" />
+                                        <Avatar name={this.props.name} src="https://bit.ly/broken-link" />
                                     )
                                     }
                                     <Text color={kSecondaryBlueLight}>
-                                        {props.name}
+                                        {this.props.name}
                                     </Text>
                    
                                     <Textarea placeholder="Enter reccomendation" color="black.400" />
@@ -81,18 +121,13 @@ function ReccomendationButton(props) {
         );
     } else {
         return (
-            <Button onClick={onOpen} bg={kSecondaryBlueLight}isDisabled={true}>Post Reccomendation</Button>
+            <Button onClick={()=>onOpen()} bg={kSecondaryBlueLight}isDisabled={true}>Post Reccomendation</Button>
         );
     }
+    }   
 }
 
-ReccomendationPost.propTypes = {
-    name: PropTypes.string,
-    image: PropTypes.string,
-    visit: PropTypes.bool
-}
-ReccomendationPost.defaultProps = {
-    image: "null",
-    visit: true
-}
-export default ReccomendationPost  
+export {
+    ReccomendationPost,
+    ReccomendationButton
+} 

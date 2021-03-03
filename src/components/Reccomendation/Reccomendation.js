@@ -1,11 +1,12 @@
 import { React } from "react"
 
-import {Image, Text,Avatar, Stack, Heading, Box, Divider
+import {Flex,Image, Text,Avatar, Stack, Heading, Box, Divider
 } from '@chakra-ui/react';
 
 const Reccomendation = props => {
     return (
         <>
+        <Flex>
             <Box bg="white.200" w="50%" p={4} color="white">
                 <Stack>  
                     <Stack direction="row">
@@ -26,6 +27,7 @@ const Reccomendation = props => {
                     </Text>
                 </Stack>
             </Box>
+            </Flex>
         </>
     )
 }
