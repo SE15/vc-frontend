@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react"
 import { Search2Icon, BellIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { React, useState } from 'react'
-import { kPrimaryBlack, kSecondaryBlue } from '../utils/constants'
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 
@@ -60,7 +59,9 @@ function Header({isAuthenticated, logout}) {
                         <Link as={ReactRouterLink} to="/settings">
                             <IconButton icon={<SettingsIcon />} bg="blueGreen.200" color="white" />
                         </Link>
+                        <Link as={ReactRouterLink} to="/">
                         <Button variant="ghost" leftIcon={<ArrowForwardIcon />} pb={1} onClick={logout}> Sign Out</Button>
+                        </Link>
                     </HStack>
                 </GridItem>}
             </Grid>

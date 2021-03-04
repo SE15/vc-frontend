@@ -14,7 +14,7 @@ import ChangePassword from '../containers/Settings/ChangePassword';
 class Settings extends Component {
     render() {
         return (
-            <VStack pl={{ base: 4, sm: 100 }}  py={window.innerHeight / 30}>
+            <VStack pl={{ base: 4, sm: 100 }}  pt={window.innerHeight / 30}  pb={window.innerHeight / 15}>
                 <Heading pb={2} w="100%" align="center" color="gray.700">Profile Settings</Heading>
                 <Grid
                     h="100%"

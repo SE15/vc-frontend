@@ -30,7 +30,7 @@ const Main = (props) => {
 
 const AuthenticatedRoutes = ({ isAuthenticated }) => {
     if (isAuthenticated) return ([
-        <Route path="/">
+        <Route path="/" exact>
             <Home />
         </Route>,
         <Route path="/settings" exact>
@@ -38,7 +38,7 @@ const AuthenticatedRoutes = ({ isAuthenticated }) => {
         </Route>
     ]);
     return ([
-        <Route path="/">
+        <Route path="/" exact>
             <Login />
         </Route>,
         <Route path="/signup" exact>
