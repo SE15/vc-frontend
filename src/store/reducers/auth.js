@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../actions/action-types';
 
 const updateObject = (oldObject, updatedProperties) => {
     return {

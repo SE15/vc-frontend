@@ -1,7 +1,7 @@
 import React from 'react';
 
 import anonymous from '../assets/anonymous.png';
-import { Image, Button, Box, Heading } from '@chakra-ui/react';
+import { Image, Button, Box, Heading, Avatar } from '@chakra-ui/react';
 import { kSecondaryBlue} from '../utils/constants';
 
 
@@ -14,12 +14,15 @@ import { kSecondaryBlue} from '../utils/constants';
 const ProfileInfo = (props) => {
     return (
         <center>
-            <Box w="100%" border = "5px"  bg = {kSecondaryBlue}>
-                <Image
-                    src = {anonymous} //TODO: Need a method to update the profile pic
-                    htmlWidth="150px"
+            <Box w="100%" border = "5px" pt={2}>
+                <Avatar 
+                    name="Ryan Florence" 
+                    src="https://bit.ly/ryan-florence"
+                    size="2xl"
+                    borderColor="purple.500"
+                    showBorder={true}
                 />
-                <Heading fontSize="25px" color="white"> {props.name} </Heading>
+                <Heading fontSize="20px" color="purple.700"> {props.name} </Heading>
                 <Box h={3}/>
                 <ConnectionButton type = {props.button} visit={props.visit}/>
                 <Box h={3}/>

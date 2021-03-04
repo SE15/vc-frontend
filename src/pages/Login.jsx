@@ -1,22 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react'
 
-import{Input, Stack,Button,InputGroup, Box
-,Divider, FormControl,Flex,Heading ,Text, Spinner, InputRightElement, IconButton} from '@chakra-ui/react';
+import {
+    Input, Stack, Button, InputGroup, Box, ReactRouterLink
+    , Divider, FormControl, Flex, Heading, Text, Spinner, InputRightElement, IconButton, HStack, Image
+} from '@chakra-ui/react';
 
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 import { Redirect } from 'react-router-dom';
 import { ViewIcon } from '@chakra-ui/icons';
 
+import { Link } from 'react-router-dom';
+
+
 class Login extends Component {
-    state = { 
+    state = {
         email: '',
         password: '',
         show: false
-     }
+    }
 
-    handleClick(){
+    handleClick() {
         this.setState({
             ...this.state,
             show: !this.state.show
@@ -33,20 +38,20 @@ class Login extends Component {
         event.preventDefault();
         await this.props.onAuth(this.state.email, this.state.password);
     }
-  
-    handleChange(field, e){         
-        let textField = e.target.value;        
+
+    handleChange(field, e) {
+        let textField = e.target.value;
         this.setState({
-          ...this.state,
-          [field]: textField
+            ...this.state,
+            [field]: textField
         });
     }
 
     render() {
-        let form = 
-            <Box p={8} maxWidth="95%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
+        let form =
+            <Box p={8} maxWidth="95%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="purple.100" right={0} align="right">
                 <Box textAlign="center" color="blueGreen.100" textStyle="h1">
-                    <Heading> Login </Heading>
+                    <Heading color="gray.700"> Sign In </Heading>
                 </Box>
                 <Box my={4} textAlign="left">
                     <form action='submit' onSubmit={this.submitHandler}>
@@ -60,35 +65,21 @@ class Login extends Component {
                                 <InputGroup>
                                     <Input type={this.state.show ? "text" : "password"} onChange={this.handleChange.bind(this, "password")} value={this.state.password} aria-label='password' placeholder='Password' bg="white.100" color="black.600" borderColor="blueGreen.100" />
                                     <InputRightElement>
-                                        <IconButton aria-label="view password" h="1.75rem" colorScheme="gray" icon={<ViewIcon/>} size="sm" onClick={this.handleClick.bind(this)}/>
+                                        <IconButton aria-label="view password" h="1.75rem" colorScheme="gray" icon={<ViewIcon />} size="sm" onClick={this.handleClick.bind(this)} />
                                     </InputRightElement>
                                 </InputGroup>
                             </FormControl>
-
                             <Divider />
-
-                            <Button type='submit' variant='solid' boxShadow='sm' _hover={{ boxShadow: 'md' }} bg="black.500">Log In!</Button>
+                            <Button type='submit' colorScheme="purple" isLoading={this.props.loading}>Sign In</Button>
                         </Stack>
-                        <Text textStyle="h2" color="blue.200">
-                            <br />
-                            <a href="signup">Create New Account</a>
+                        <Link as={ReactRouterLink} to="/signup" >
+                            <Text textStyle="h2" color="purple.500" pt={4}>
+                                Create New Account
                         </Text>
+                        </Link>
                     </form>
                 </Box>
             </Box>;
-
-        if (this.props.loading) {
-            form = <Spinner
-            thickness="5px"
-            speed="0.65s"
-            emptyColor="black"
-            color="white"
-            size="xl"
-          />;
-        }
-        
-        // if (this.props.error) 
-        //     console.log(this.props.error.errorMessage);
 
         console.log(this.props.isAuthenticated);
         console.log(this.props.authRedirectPath);
@@ -96,14 +87,18 @@ class Login extends Component {
             console.log("object");
             return (<Redirect to={this.props.authRedirectPath} />);
         }
-        
-        return(
-            [
+
+        return (
+            <HStack spacing={10} pt={window.innerHeight / 10} px={window.innerWidth / 50}>
+                <Image
+                    boxSize="70%"
+                    src="/login-bg.png"
+                />
                 <Box h={window.innerHeight * 0.1} />,
                 <Flex width="Full" align="center" justifyContent="center">
                     {form}
                 </Flex>
-            ]
+            </HStack>
         );
     }
 }
@@ -113,7 +108,7 @@ const mapStateToProps = state => {
         loading: state.loading,
         error: state.error,
         isAuthenticated: !(state.token === null || state.token === undefined),
-        token : state.token,
+        token: state.token,
         authRedirectPath: state.authRedirectPath
     };
 };
@@ -121,7 +116,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password) => dispatch(actions.auth(email, password)),
-        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/home'))
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 };
 

@@ -1,5 +1,8 @@
-import * as actionTypes from './actionTypes';
 import { login } from '../../api';
+import axios from '../../api/axios';
+import jwt_decode from "jwt-decode";
+
+import * as actionTypes from './action-types';
 
 export const authStart = () => {
     return {
@@ -7,11 +10,12 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, user) => {
+export const authSuccess = (token, userID) => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
-        user: user
+        userID: userID
     };
 };
 
@@ -24,30 +28,55 @@ export const authFail = (error) => {
 
 export const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userID');
+    delete axios.defaults.headers.common['Authorization'];
+    
     return {
         type: actionTypes.AUTH_LOGOUT
     };
 };
 
-export const auth = (email, password) => {
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        }, expirationTime * 1000);
+    };
+};
+
+export const auth = (email, password, onLogin = () => {}) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
             email: email,
             password: password
         };
-        login(authData)
-            .then(response => {
-                if (response.data.token !== undefined) {
-                    localStorage.setItem('token', response.data.token);
-                    localStorage.setItem('user', response.data.user[0][0].id);
-                }   
-                dispatch(authSuccess(response.data.token, response.data.user[0][0].id));
-            })
-            .catch(err => {
-                dispatch(authFail(err));
-            });
+        console.log(authData);
+        login(authData).then(result => {
+            if (result.data) { 
+                //decoding the jwt token
+                const token = result.data.token;
+                console.log(token);
+                const decoded = jwt_decode(token);
+                const expiresIn = decoded.expiresIn;
+                const userID = decoded.userID;
+
+                const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+                
+                localStorage.setItem('token', token);
+                localStorage.setItem('expirationDate', expirationDate);
+                localStorage.setItem('userID', userID);
+
+				dispatch(authSuccess(token, userID))
+			
+                onLogin();
+                dispatch(checkAuthTimeout(expiresIn));
+            }
+            else {
+                dispatch(authFail(result.message));
+            }
+        });
     };
 };
 
@@ -64,8 +93,14 @@ export const authCheckState = () => {
         if (!token) {
             dispatch(logout());
         } else {
-            const userId = localStorage.getItem('user');
-            dispatch(authSuccess(token, userId));
-            }   
-        };
+            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if (expirationDate <= new Date()) {
+                dispatch(logout());
+            } else {
+                const userID = localStorage.getItem('userID');
+                dispatch(authSuccess(token, userID));
+                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+            }
+        }
+    };
 };

@@ -24,19 +24,19 @@ class Home extends Component {
         console.log(this.props.isAuthenticated)
         console.log(this.props.user)
         if (this.props.isAuthenticated) {
-            var response = await searchUser(this.props.user)
+            var response = await searchUser(2)
             console.log(response)
-            if(response.data.err==0){
+            if(response.data){
                 this.setState({
                     ...this.state,
-                    profile: response.data.obj[0][0],
-                    skill: response.data.obj[1],
-                    recommendation: response.data.obj[2],
-                    connections: response.data.obj[3],
+                    profile: response.data[0][0],
+                    skill: response.data[1],
+                    recommendation: response.data[2],
+                    connections: response.data[3],
                     loading: false
                 });
             }else{
-                console.log(response.data.msg);
+                console.log(response.message);
             }
         }
     }
@@ -52,15 +52,24 @@ class Home extends Component {
                         <Spinner
                             thickness="5px"
                             speed="0.65s"
-                            emptyColor="black"
-                            color="white"
+                            emptyColor="purple.700"
+                            color="purple.200"
                             size="xl"
                         />
                     </Center>
                 );
-            }else{
-                console.log("2")
-                return (<Redirect to={"/login"}/>);
+            } else {
+                return (
+                    <Center>
+                        <Spinner
+                            thickness="5px"
+                            speed="0.65s"
+                            emptyColor="purple.700"
+                            color="purple.200"
+                            size="xl"
+                        />
+                    </Center>
+                );
             }
         }else{
             return (

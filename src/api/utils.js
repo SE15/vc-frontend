@@ -1,8 +1,9 @@
 import axios from './axios';
 
-export const getRequest = async (url, body) => {
+export const getRequest = async (url) => {
 	try {
-		let response = (body) ? await axios.get(url,body) : await axios.get(url);
+		console.log(url);
+		let response = await axios.get(url);
 		return generateSuccessOutput(response);
 	} catch (error) {
 		return generateErrorOutput(error);
@@ -11,6 +12,7 @@ export const getRequest = async (url, body) => {
 
 export const postRequest = async (url, data) => {
 	try {
+		console.log(url, data);
 		let response = await axios.post(url, data);
 		return generateSuccessOutput(response);
 	} catch (error) {
@@ -37,15 +39,22 @@ export const deleteRequest = async (url) => {
 };
 
 const generateSuccessOutput = (response) => {
+	console.log(response);
 	return  {
-		data: response.data,
+		data: response.data.results,
 		message: response.data.message,
 	}
 }
 
 const generateErrorOutput = (error) => {
-	return  {
-		error: error,
-		message : error.message
-	}
+	if (error.message = "Network Error")
+		return {
+			error: error,
+			message: error.message
+		}
+	else
+		return {
+			error: error,
+			message: error.response.data.message
+		}
 }

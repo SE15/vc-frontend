@@ -10,9 +10,8 @@ const Footer = () => {
       width="full"
       position="fixed"
       bottom="0"
-      mt={2}
-      py={3}
-      bg={kPrimaryBlack}
+      py={2}
+      bg="purple.700"
       borderTopRadius="1rem"
     >
       <Box width="full" boxShadow="xs">
@@ -28,7 +27,7 @@ const Footer = () => {
 const FooterName = () => {
   return (
     <Heading
-      fontSize="16px"
+      fontSize="15px"
       color = "white"
     >
       Designed by SE15

@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
-import{Input, Stack,Button,InputGroup, Box,
-    HStack,Divider, FormControl,Flex,Heading,Text, InputRightElement, IconButton, Spinner} from '@chakra-ui/react';
+import {
+    Input, Stack, Button, InputGroup, Box,
+    HStack, Divider, FormControl, Flex, Heading, Text, InputRightElement, IconButton, Spinner, ReactRouterLink, Image
+} from '@chakra-ui/react';
 import { ViewIcon } from '@chakra-ui/icons';
 
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class SignUp extends Component {
-    state = { 
+    state = {
         firstName: '',
         lastName: '',
         email: '',
@@ -16,27 +19,27 @@ class SignUp extends Component {
         passwordConfirmed: true,
         show: false,
         loading: false
-     }
+    }
 
-    handleClick(){
+    handleClick() {
         this.setState({
             ...this.state,
             show: !this.state.show
         });
     }
 
-    handleChange(field, e){         
-        let textField = e.target.value; 
+    handleChange(field, e) {
+        let textField = e.target.value;
         this.setState({
             ...this.state,
             [field]: textField
         },
-        function() {if (field==="confirmPassword" || field==="password")  this.checkPassword(textField)});
-        
+            function () { if (field === "confirmPassword" || field === "password") this.checkPassword(textField) });
+
     }
 
-    checkPassword(textField){
-        if (this.state.confirmPassword===this.state.password) {
+    checkPassword(textField) {
+        if (this.state.confirmPassword === this.state.password) {
             this.setState({
                 ...this.state,
                 passwordConfirmed: true
@@ -47,7 +50,7 @@ class SignUp extends Component {
                 passwordConfirmed: false
             })
         }
-        
+
     }
 
     submitHandler = async (event) => {
@@ -56,16 +59,16 @@ class SignUp extends Component {
             ...this.state,
             loading: true
         })
-        if(this.state.passwordConfirmed){
+        if (this.state.passwordConfirmed) {
             await axios.post('http://localhost:5000/api/guests/users/registration', this.state)
-            .then(data => {
-              console.log("RESPONSE: " + JSON.stringify(data))
-            })
-            .catch(err => {
-             console.log("ERR: " + err.message)
-            })
+                .then(data => {
+                    console.log("RESPONSE: " + JSON.stringify(data))
+                })
+                .catch(err => {
+                    console.log("ERR: " + err.message)
+                })
             alert("SignUp is Success");
-        }else{
+        } else {
             console.log("error")
         }
         this.setState({
@@ -75,11 +78,10 @@ class SignUp extends Component {
     }
 
     render() {
-        console.log("render");
-        let form = <Box p={8} maxWidth="85%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="blueGreen.100">
-            <Box textAlign="center" color="blueGreen.100" textStyle="h1">
-                <Heading> SignUp </Heading>
-            </Box>
+        let form = (<Box p={8} maxWidth="85%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="purple.100">
+            <HStack textAlign="center" color="blueGreen.100" textStyle="h1" wrap="wrap">
+                <Heading fontSize="24px"> Create Your Own </Heading> <Heading fontSize="24px" color="purple.700">Volunteer Profile! </Heading>
+            </HStack>
             <Box my={4} textAlign="left">
                 <form action='submit' onSubmit={this.submitHandler}>
                     <Stack spacing={3}>
@@ -104,45 +106,41 @@ class SignUp extends Component {
                             <InputGroup>
                                 <Input type={this.state.show ? "text" : "password"} onChange={this.handleChange.bind(this, "password")} value={this.state.password} aria-label='password' placeholder='Password' bg="white.100" color="black.600" borderColor="blueGreen.100" />
                                 <InputRightElement>
-                                    <IconButton aria-label="view password" h="1.75rem" colorScheme="gray" icon={<ViewIcon/>} size="sm" onClick={this.handleClick.bind(this)}/>
+                                    <IconButton aria-label="view password" h="1.75rem" colorScheme="gray" icon={<ViewIcon />} size="sm" onClick={this.handleClick.bind(this)} />
                                 </InputRightElement>
                             </InputGroup>
                         </FormControl>
                         <FormControl isRequired>
                             <InputGroup>
-                                <Input type='password' focusBorderColor={this.state.passwordConfirmed ? this.state.password==="" ? "blue.400": "green.400" : "red.400"} value={this.state.confirmPassword} borderColor={this.state.passwordConfirmed ? this.state.password==="" ? "blueGreen.400": "green.400" : "red.400"} onChange={this.handleChange.bind(this, "confirmPassword")} aria-label='Confirm password' placeholder='Confirm Password' bg="white.100" color="black.600"/>
+                                <Input type='password' focusBorderColor={this.state.passwordConfirmed ? this.state.password === "" ? "blue.400" : "green.400" : "red.400"} value={this.state.confirmPassword} borderColor={this.state.passwordConfirmed ? this.state.password === "" ? "blueGreen.400" : "green.400" : "red.400"} onChange={this.handleChange.bind(this, "confirmPassword")} aria-label='Confirm password' placeholder='Confirm Password' bg="white.100" color="black.600" />
                             </InputGroup>
                         </FormControl>
 
                         <Divider />
 
-                        <Button type='submit' variant='solid' boxShadow='sm' _hover={{ boxShadow: 'md' }} bg="black.500">Sign Up!</Button>
+                        <Button type='submit' colorScheme="purple" isLoading={this.state.loading}>Sign Up!</Button>
                     </Stack>
-                    <Text textStyle="h2" color="blue.200">
-                        <br />
-                        <a href="Login">Already Registered? Sign In</a>
+                    <Link as={ReactRouterLink} to="/">
+                        <Text textStyle="h2" color="purple.700" pt={4}>
+                            Already Registered? Sign In
                     </Text>
+                    </Link>
                 </form>
             </Box>
-        </Box>;
+        </Box>);
 
-        if (this.state.loading) {
-            form = <Spinner
-            thickness="5px"
-            speed="0.65s"
-            emptyColor="black"
-            color="white"
-            size="xl"
-        />;
-        }
-
-        return(
-            [
-                 <Box h={window.innerHeight*0.1} />,
-                 <Flex width="Full" align="center" justifyContent="center">
-                     {form}
-                 </Flex>
-             ]
+        return (
+            <HStack spacing={20} pt={window.innerHeight / 15} px={window.innerWidth / 45} justify="center">
+                <Image
+                    boxSize="20%"
+                    src="/signup-bg1.png"
+                />
+                {form}
+                <Image
+                    boxSize="20%"
+                    src="/signup-bg2.png"
+                />
+            </HStack>
         );
     }
 }
