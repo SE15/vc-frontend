@@ -6,7 +6,7 @@ import {
     , ModalCloseButton, Text, useDisclosure, ModalFooter,
      Textarea, Avatar, Stack, Heading, Box
 } from '@chakra-ui/react';
-import { kPrimaryBlackLight,kSecondaryBlueLight } from '../../../utils/constants';
+import { kPrimaryBlack, kPrimaryBlackLight,kPrimaryGray, kSecondaryBlue, kSecondaryBlueLight } from '../../utils/constants'
 
 
 const AddSkill = props => {
@@ -54,7 +54,7 @@ function AddSkillButton(props) {
                             <br />
                             <Stack direction="row">
                 
-                                <Textarea placeholder="Enter reccomendation" color="black.400" />
+                                <Textarea placeholder="Enter Recommendation" color="black.400" />
                                 
                                 <ModalCloseButton />
                             </Stack>

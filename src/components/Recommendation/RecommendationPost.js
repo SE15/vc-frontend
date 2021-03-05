@@ -8,23 +8,23 @@ import {
 } from '@chakra-ui/react';
 import { kPrimaryBlackLight,kSecondaryBlueLight } from '../../constants';
 
-const ReccomendationPost = props => {
+const RecommendationPost = props => {
     return (
         <>
-            <ReccomendationButton visit={props.visit} name={props.name} />
+            <RecommendationButton visit={props.visit} name={props.name} />
         </>
     )
 }
 
 
-function ReccomendationButton(props) {
+function RecommendationButton(props) {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const[isreccomended,setIsReccomended]=useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const handleReccomendation= async event=>{
+    const handleRecommendation= async event=>{
         setIsLoading(true);
         try{
             //wait for update validation in db
@@ -34,7 +34,7 @@ function ReccomendationButton(props) {
         }catch{
             setIsReccomended(false);
             setIsLoading(false);
-            setError("Couldn't Post Reccomendation")
+            setError("Couldn't Post Recommendation")
         }
     }
     if (props.visit == true && isLoggedIn == true && isreccomended==false) {
@@ -42,7 +42,7 @@ function ReccomendationButton(props) {
         return (
             <>
                 <Box>
-                    <Button onClick={onOpen} bg={kSecondaryBlueLight} isDisabled={false}>Post Reccomendation</Button>
+                    <Button onClick={onOpen} bg={kSecondaryBlueLight} isDisabled={false}>Post Recommendation</Button>
                 </Box>
                 <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
                     <ModalOverlay />
@@ -50,7 +50,7 @@ function ReccomendationButton(props) {
                         <Box bg={kPrimaryBlackLight} w="100%" p={4} color="white">
                             <Stack>
                                 <Heading color="black.400" fontSize="lg">
-                                    Post Reccomendation
+                                    Post Recommendation
                                 </Heading>
                                 <br />
                                 <Stack direction="row">
@@ -64,13 +64,13 @@ function ReccomendationButton(props) {
                                         {props.name}
                                     </Text>
                    
-                                    <Textarea placeholder="Enter reccomendation" color="black.400" />
+                                    <Textarea placeholder="Enter Recommendation" color="black.400" />
                                     
                                     <ModalCloseButton />
                                 </Stack>
                             </Stack>
                             <ModalFooter>
-                                <Button colorScheme="blue" mr={3} onClick={()=>handleReccomendation()}>
+                                <Button colorScheme="blue" mr={3} onClick={()=>handleRecommendation()}>
                                     Post
                                 </Button>
                             </ModalFooter>
@@ -81,18 +81,18 @@ function ReccomendationButton(props) {
         );
     } else {
         return (
-            <Button onClick={onOpen} bg={kSecondaryBlueLight}isDisabled={true}>Post Reccomendation</Button>
+            <Button onClick={onOpen} bg={kSecondaryBlueLight}isDisabled={true}>Post Recommendation</Button>
         );
     }
 }
 
-ReccomendationPost.propTypes = {
+RecommendationPost.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     visit: PropTypes.bool
 }
-ReccomendationPost.defaultProps = {
+RecommendationPost.defaultProps = {
     image: "null",
     visit: true
 }
-export default ReccomendationPost  
+export default RecommendationPost  

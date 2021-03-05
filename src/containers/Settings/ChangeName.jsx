@@ -7,7 +7,7 @@ import {
     FormControl,
     Input
 } from '@chakra-ui/react';
-import GridComponent from '../../components/GridComponent/GridComponent';
+import GridComponent from '../../components/ContainerTemplates/GridComponent';
 
 //TODO: Complete form control
 const ChangeName = () => {

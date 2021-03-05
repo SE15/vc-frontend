@@ -14,7 +14,10 @@ import Delete from '../popups/DeleteAccount'
 import Change from '../popups/ChangePassword'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ConnectionRequest from "../components/Connection/ConnectionRequest"
+import CardHolder from '../components/ContainerTemplates/CardHolder';
+import SkilLCard from '../components/Skill/SkillCard';
+import Recommendation from '../components/Recommendation/Recommendation';
+import Connection from '../components/Connection/Connection';
 
 import * as actions from '../store/actions';
 
@@ -65,9 +68,6 @@ const Content = ({ isAuthenticated }) => {
                 </Route>
                 <Route path="/change" exact>
                     <Change />
-                </Route>
-                <Route path="/request" exact>
-                    <ConnectionRequest />
                 </Route>
                 <Route path="/search" exact>
                     <Search />

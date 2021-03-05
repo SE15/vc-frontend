@@ -15,10 +15,9 @@ import {
 } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom';
 
-const ConnectionRequest = ({ name }) => {
+const ConnectionRequest = ({ name, onAccept, onReject }) => {
     return (
-        <Box borderWidth="1px" borderRadius="lg" bg="white" px={4} py={2} bg="purple.100" boxShadow="lg">
-            <HStack>
+            <HStack borderWidth="1px" borderRadius="lg" bg="white" px={4} py={2} bg="purple.100" boxShadow="lg">
                 <Avatar name={name} />
                 <VStack spacing={1}>
                     <Link as={ReactRouterLink} to='/profile'>
@@ -31,6 +30,7 @@ const ConnectionRequest = ({ name }) => {
                             size="sm"
                             variant="ghost"
                             colorScheme="blue"
+                            onClick={onAccept}
                         >
                             Accept
                     </Button>
@@ -40,13 +40,13 @@ const ConnectionRequest = ({ name }) => {
                             size="sm"
                             variant="ghost"
                             colorScheme="red"
+                            onClick={onReject}
                         >
                             Reject
                     </Button>
                     </HStack>
                 </VStack>
             </HStack>
-        </Box>
     );
 }
 

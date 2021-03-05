@@ -5,7 +5,6 @@ import {
     Spacer,
     Button
 } from '@chakra-ui/react';
-import { Children } from 'react';
 
 const GridComponent = (props) => {
     return (

@@ -21,7 +21,7 @@ import {
 import React, { Component } from 'react'
 
 import axios from 'axios';
-import { kPrimaryBlack, kPrimaryBlackLight,kPrimaryGray, kSecondaryBlue, kSecondaryBlueLight } from './../../../constants';
+import { kPrimaryBlack, kPrimaryBlackLight,kPrimaryGray, kSecondaryBlue, kSecondaryBlueLight } from '../../utils/constants'
 
 
 class Skill extends Component {
@@ -97,7 +97,7 @@ class Skill extends Component {
             return (
                 <>
                     <Flex>
-                        <Box w="390px" p={4} bg={kPrimaryGray}>
+                        <Box w={300} h={16} p={4} bg="purple.100">
                             <HStack  spacing="3rem">
                                     
                                 <Badge ml="1" fontSize="lg" colorScheme="blue" variant="outline" borderRadius="5rem">

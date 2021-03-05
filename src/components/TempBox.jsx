@@ -3,11 +3,11 @@ import { Box, Button, Heading, WrapItem, Center,Spinner, VStack , ScrollView, Fl
 import React, { Component } from "react";
 
 import axios from "axios";
-import Skill from './Skills/Skill/Skill';
+import Skill from './Skill/Skill';
 import Connections from './Connection/Connection';
-import Reccomendation from './Reccomendation/Reccomendation';
-import ReccomendationPost from './Reccomendation/ReccomendationPost';
-import AddSkill from './Skills/Skill/addSkill'
+import Recommendation from './Recommendation/Recommendation';
+import RecommendationPost from './Recommendation/RecommendationPost';
+import AddSkill from './Skill/addSkill'
 
 
 class TempBox extends Component {
@@ -177,7 +177,7 @@ const BoxContent = (props) => {
             <>
                 {
                     props.detailss.map((recommendation, i) =>
-                        <Reccomendation key={i} postedBy={recommendation.first_name+" "+recommendation.last_name} postedImage="null" reccomendation={recommendation.description}/>
+                        <Recommendation key={i} postedBy={recommendation.first_name+" "+recommendation.last_name} postedImage="null" Recommendation={recommendation.description}/>
                     )
                         
                 }
@@ -207,7 +207,7 @@ const EventButton = (props) => {
     } else if (props.type == "Recommendations") {
         if (props.visit) {
             return (
-                <ReccomendationPost onClick={props.new} name="Thushani Jayasekera" image="null"/>);
+                <RecommendationPost onClick={props.new} name="Thushani Jayasekera" image="null"/>);
                 // <Button  colorScheme="blue" variant="solid">
                 // Add Recommendation
                 // </Button>);  

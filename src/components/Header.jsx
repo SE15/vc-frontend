@@ -14,6 +14,7 @@ import {
     Portal,
     ReactRouterLink,
     VStack,
+    useToast
 } from "@chakra-ui/react"
 import { Search2Icon, BellIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { React, useState } from 'react'
@@ -56,12 +57,7 @@ function Header({ isAuthenticated, logout }) {
                 </GridItem>
                 {isAuthenticated && <GridItem colStart={11} colEnd={13} color="white">
                     <HStack justifyContent="center">
-                        <HStack spacing={-3}>
-                            <NotificationPopover>
-                                <IconButton icon={<BellIcon />} bg="blueGreen.200" color="white" />
-                            </NotificationPopover>
-                            <Badge borderRadius="lg" variant="solid" colorScheme="red" zIndex={1}> 3 </Badge>
-                        </HStack >
+                        <NotificationPopover />
                         <Link as={ReactRouterLink} to="/settings">
                             <IconButton icon={<SettingsIcon />} bg="blueGreen.200" color="white" />
                         </Link>
@@ -77,31 +73,68 @@ function Header({ isAuthenticated, logout }) {
 }
 
 const NotificationPopover = (props) => {
-    return (
-        <Popover>
-            <PopoverTrigger>
-                {props.children}
-            </PopoverTrigger>
-            <Portal>
-                <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverHeader fontWeight={600}>Connection Requests</PopoverHeader>
-                    <PopoverCloseButton />
-                    <PopoverBody align="center">
-                        <VStack w="100%" spacing={3}>
-                            <ConnectionRequest name="Kumar Sangakkara" />
-                            <ConnectionRequest name="Mahela Jayawardena" />
-                            <ConnectionRequest name="Angelo Mathews" />
-                        </VStack>
-                        {/* <Alert status="info" colorScheme="purple" borderRadius="1rem">
-                            <AlertIcon />
-                            You have no new connection requests
-                        </Alert> */}
+    const [connections, setConnections] = useState([{id: 1, name:'Kumar Sangakkara'}, {id: 2, name:'Mahela Jayawardena'}, {id: 3, name:'Ashan Priyanjan'}]);
+    const toast = useToast();
 
-                    </PopoverBody>
-                </PopoverContent>
-            </Portal>
-        </Popover>
+    const generateMessage = (isAccepted, name) =>
+        toast({
+            position: "bottom-left",
+            title: `Request ${isAccepted ? 'accepted' : 'rejected'}`,
+            description: `${isAccepted ? 'You are connected with ' + name : 'You have rejected ' + name}`,
+            status: "success",
+            duration: 7000,
+            isClosable: true,
+            htmlWidth: 200
+        });
+
+    const onClick = (isAccepted, obj) => () => {
+        const connectionIndex = connections.findIndex(connection => {
+            return connection.id === obj.id
+        });
+
+        const tempConnections = [...connections];
+
+        if (connectionIndex > -1) {
+            tempConnections.splice(connectionIndex, 1);
+        }
+        setConnections(tempConnections);
+        generateMessage(isAccepted, obj.name);
+    }
+
+    return (
+        <HStack spacing={-3}>
+            <Popover>
+                <PopoverTrigger>
+                    <IconButton icon={<BellIcon />} bg="blueGreen.200" color="white" />
+                </PopoverTrigger>
+                <Portal>
+                    <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverHeader fontWeight={600}>Connection Requests</PopoverHeader>
+                        <PopoverCloseButton />
+                        <PopoverBody align="center">
+                            {connections.length === 0 ?
+                                <Alert status="info" colorScheme="purple" borderRadius="1rem" align="left">
+                                    <AlertIcon />
+                            You have no new connection requests
+                            </Alert> :
+                                <VStack w="100%" spacing={3} overflow="auto" h="270px">
+                                    {connections.map((obj) => 
+                                        <ConnectionRequest
+                                            key={obj.id} 
+                                            name={obj.name}
+                                            onAccept={onClick(true, obj)}
+                                            onReject={onClick(false, obj)}
+                                        />
+                                    )}
+                                </VStack>
+                            }
+                        </PopoverBody>
+                    </PopoverContent>
+                </Portal>
+            </Popover>
+            {connections.length!==0 && <Badge borderRadius="lg" variant="solid" colorScheme="red" zIndex={1}> {connections.length} </Badge>}
+        </HStack>
     );
 }
 

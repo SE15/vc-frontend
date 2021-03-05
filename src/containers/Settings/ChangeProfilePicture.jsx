@@ -5,7 +5,7 @@ import {
     Stack,
     Avatar,
 } from '@chakra-ui/react';
-import GridComponent from '../../components/GridComponent/GridComponent';
+import GridComponent from '../../components/ContainerTemplates/GridComponent';
 
 const ChangeProfilePicture = () => {
     const uploadedImage = useRef(null);

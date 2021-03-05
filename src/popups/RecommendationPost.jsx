@@ -7,16 +7,16 @@ import {
      Textarea, Avatar, Stack, Heading, Box
 } from '@chakra-ui/react';
 
-const ReccomendationPost = props => {
+const RecommendationPost = props => {
     return (
         <>
-            <ReccomendationButton visit={props.visit} name={props.name} />
+            <RecommendationButton visit={props.visit} name={props.name} />
         </>
     )
 }
 
 
-function ReccomendationButton(props) {
+function RecommendationButton(props) {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [isUser, setUser] = useState(true);
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -25,7 +25,7 @@ function ReccomendationButton(props) {
         return (
             <>
                 <Box>
-                    <Button onClick={onOpen} bg="blueGreen.200" isDisabled={false}>Post Reccomendation</Button>
+                    <Button onClick={onOpen} bg="blueGreen.200" isDisabled={false}>Post Recommendation</Button>
                 </Box>
                 <Modal isOpen={isOpen} onClose={onClose} color="black.700" closeOnOverlayClick="false">
                     <ModalOverlay />
@@ -33,7 +33,7 @@ function ReccomendationButton(props) {
                         <Box bg="white.200" w="100%" p={4} color="white">
                             <stack>
                                 <Heading color="black.400" fontSize="lg">
-                                    Post Reccomendation
+                                    Post Recommendation
                 </Heading>
                                 <br />
                                 <Stack direction="row">
@@ -49,7 +49,7 @@ function ReccomendationButton(props) {
                                         {props.name}
                                     </Text>
                     if({props.visit}===true){
-                                        <Textarea placeholder="Enter reccomendation" color="black.400" />
+                                        <Textarea placeholder="Enter Recommendation" color="black.400" />
                                     }
                                     <ModalCloseButton />
                                 </Stack>
@@ -67,19 +67,19 @@ function ReccomendationButton(props) {
         );
     } else {
         return (
-            <Button onClick={onOpen} bg="blueGreen.200" isDisabled={true}>Post Reccomendation</Button>);
+            <Button onClick={onOpen} bg="blueGreen.200" isDisabled={true}>Post Recommendation</Button>);
     }
 
 }
 
 
-ReccomendationPost.propTypes = {
+RecommendationPost.propTypes = {
     name: PropTypes.string,
     image: PropTypes.string,
     visit: PropTypes.bool
 }
-ReccomendationPost.defaultProps = {
+RecommendationPost.defaultProps = {
     image: "null",
     visit: true
 }
-export default ReccomendationPost  
+export default RecommendationPost  
