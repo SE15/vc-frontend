@@ -18,13 +18,9 @@ class Home extends Component {
         connections:{}
      }
         
-    
-
     async componentDidMount() {
-        console.log(this.props.isAuthenticated)
-        console.log(this.props.user)
         if (this.props.isAuthenticated) {
-            var response = await searchUser(2)
+            var response = await searchUser(this.props.userID)
             console.log(response)
             if(response.data){
                 this.setState({

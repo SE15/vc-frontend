@@ -4,7 +4,7 @@ import React, { Component } from "react";
 
 import axios from "axios";
 import Skill from './Skills/Skill/Skill';
-import Connections from './Connections/Connection/Connection';
+import Connections from './Connection/Connection';
 import Reccomendation from './Reccomendation/Reccomendation';
 import ReccomendationPost from './Reccomendation/ReccomendationPost';
 import AddSkill from './Skills/Skill/addSkill'

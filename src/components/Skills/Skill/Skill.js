@@ -14,7 +14,8 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogContent,
-    AlertDialogOverlay 
+    AlertDialogOverlay,
+    IconButton 
 } from "@chakra-ui/react";
 
 import React, { Component } from 'react'
@@ -107,7 +108,7 @@ class Skill extends Component {
                                 
                                 <Spacer />
                             
-                                <Button rightIcon={<DeleteIcon />} colorScheme="red"  onClick={this.onOpen.bind(this)}></Button>
+                                <IconButton icon={<DeleteIcon />} colorScheme="red" variant="ghost" onClick={this.onOpen.bind(this)}/>
                             
                                 <AlertDialog
                                     isOpen={this.state.isOpen}

@@ -32,7 +32,7 @@ class Profile extends Component {
         }
 
 
-        const result = await axios.get("http://localhost:5000/users/2", Object.assign({}, {}, data))
+        axios.get("http://localhost:5000/users/2", Object.assign({}, {}, data))
             .then((result) => {
                 if (result.data.results) {
                     this.setState({
@@ -42,29 +42,11 @@ class Profile extends Component {
                         connections: result.data.results[3],
                         loading: false
                     });
-                    console.log(this.state.skill);
-                    console.log('window inner height: ', window.innerHeight);
-
-                    console.log('document Element client hieght: ', document.documentElement.clientHeight);
-
-                    console.log('document Element scroll hieght: ', document.documentElement.scrollHeight);
-
-                    console.log('document Element offset height: ', document.documentElement.offsetHeight);
-
-                    console.log('document element scrolltop: ', document.documentElement.scrollTop);
-
-                    console.log('window page Y Offset: ', window.pageYOffset);
-
-                    console.log('window document body offsetheight: ', window.document.body.offsetHeight);
                 } else {
          
                     console.log(result.data.message);
-                }
-
-            },
-                (error) => {
-                    console.log("Error");
-                });
+                }})
+                .catch(err => console.error(err));
     }
 
     render() {

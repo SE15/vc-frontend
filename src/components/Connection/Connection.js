@@ -3,7 +3,7 @@ import {React,useState} from "react"
 import PropTypes from "prop-types"
 
 import {  Heading, Flex, Avatar, Box, HStack,Image,Link } from "@chakra-ui/react"
-import { kPrimaryBlackDark, kPrimaryGray } from "../../../constants"
+import { kPrimaryBlackDark, kPrimaryGray } from "../../constants"
 
 function Connections(props){
 
