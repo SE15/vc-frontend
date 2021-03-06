@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
 import {
     Input, Stack, Button, InputGroup, Box,
-    HStack, Divider, FormControl, Flex, Heading, Text, InputRightElement, IconButton, Spinner, ReactRouterLink, Image
+    HStack, Divider, FormControl, useToast, Heading, Text, InputRightElement, IconButton, Spinner, ReactRouterLink, Image
 } from '@chakra-ui/react';
 import { ViewIcon } from '@chakra-ui/icons';
 
-import axios from 'axios';
+import { createUser } from '../api';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
+const withToast = (Component) => {
+    return (props) => {
+        const toast = useToast();
+        const history = useHistory();
+        return <Component {...props} toast={toast} history={history} />;
+    }
+}
 
 class SignUp extends Component {
     state = {
@@ -16,7 +24,7 @@ class SignUp extends Component {
         email: '',
         password: '',
         confirmPassword: '',
-        passwordConfirmed: true,
+        passwordConfirmed: false,
         show: false,
         loading: false
     }
@@ -59,18 +67,31 @@ class SignUp extends Component {
             ...this.state,
             loading: true
         })
-        if (this.state.passwordConfirmed) {
-            await axios.post('http://localhost:5000/api/guests/users/registration', this.state)
-                .then(data => {
-                    console.log("RESPONSE: " + JSON.stringify(data))
-                })
-                .catch(err => {
-                    console.log("ERR: " + err.message)
-                })
-            alert("SignUp is Success");
+
+        const result = await createUser((({ firstName, lastName, email, password }) => ({ firstName, lastName, email, password }))(this.state));
+        if (result.data) {
+            this.props.toast({
+                position: "bottom-left",
+                title: `Account created successfully`,
+                description: `Sign in with your email and password`,
+                status: "success",
+                duration: 7000,
+                isClosable: true,
+                htmlWidth: 200
+            });
+            this.props.history.push('/');
         } else {
-            console.log("error")
+            this.props.toast({
+                position: "bottom-left",
+                title: `Account creation failed`,
+                description: `${result.message}`,
+                status: "error",
+                duration: 7000,
+                isClosable: true,
+                htmlWidth: 200
+            });
         }
+
         this.setState({
             ...this.state,
             loading: false
@@ -118,7 +139,7 @@ class SignUp extends Component {
 
                         <Divider />
 
-                        <Button type='submit' colorScheme="purple" isLoading={this.state.loading}>Sign Up!</Button>
+                        <Button type='submit' colorScheme="purple" isLoading={this.state.loading} isDisabled={!this.state.passwordConfirmed}>Sign Up!</Button>
                     </Stack>
                     <Link as={ReactRouterLink} to="/">
                         <Text textStyle="h2" color="purple.700" pt={4}>
@@ -151,4 +172,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(withToast(SignUp));
