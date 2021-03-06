@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Settings from './Settings';
 import ProfileSettings from './ProfileSettings';
+import Home from './Home';
 import Profile from './Profile';
 import Search from './Search';
 import Login from './Login';
@@ -36,7 +37,7 @@ const Main = (props) => {
 const AuthenticatedRoutes = ({ isAuthenticated }) => {
     if (isAuthenticated) return ([
         <Route path="/" exact>
-            <Profile />
+            <Home />
         </Route>,
         <Route path="/settings" exact>
             <Settings />
@@ -69,14 +70,17 @@ const Content = ({ isAuthenticated }) => {
                 <Route path="/change" exact>
                     <Change />
                 </Route>
-                <Route path="/search" exact>
+                <Route path="/search">
                     <Search />
                 </Route>
                 <Route path="/psettings" exact>
                     <ProfileSettings />
                 </Route>
+                <Route path="/profiles">
+                    <Profile />
+                </Route>
                 <AuthenticatedRoutes isAuthenticated={isAuthenticated} />
-                <Route path="/profile" exact>
+                <Route path="/profiles" exact>
                     <Profile button="3" />
                 </Route>
                 <Route path="/user/profile" exact>

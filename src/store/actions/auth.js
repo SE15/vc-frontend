@@ -15,7 +15,7 @@ export const authSuccess = (token, userID) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
-        userID: userID
+        user: userID
     };
 };
 

@@ -2,7 +2,6 @@ import axios from './axios';
 
 export const getRequest = async (url) => {
 	try {
-		console.log(url);
 		let response = await axios.get(url);
 		return generateSuccessOutput(response);
 	} catch (error) {
@@ -12,7 +11,6 @@ export const getRequest = async (url) => {
 
 export const postRequest = async (url, data) => {
 	try {
-		console.log(url, data);
 		let response = await axios.post(url, data);
 		return generateSuccessOutput(response);
 	} catch (error) {
@@ -40,21 +38,25 @@ export const deleteRequest = async (url) => {
 
 const generateSuccessOutput = (response) => {
 	console.log(response);
-	return  {
+	return {
 		data: response.data.results,
 		message: response.data.message,
 	}
 }
 
 const generateErrorOutput = (error) => {
-	if (error.message = "Network Error")
+	if (error.response)
 		return {
 			error: error,
-			message: error.message
+			title: error.response.statusText,
+			code: error.response.status,
+			message: error.response.data.message
 		}
 	else
 		return {
 			error: error,
-			message: error.response.data.message
+			title: error.message,
+			code: 1,
+			message: "Please check your internet connection."
 		}
 }

@@ -32,9 +32,8 @@ const SkillCard = ({ validations, name, isOwner, onClick }) => {
             boxShadow="lg"
             minWidth="350px"
             >
-                <Text color="purple.700" fontWeight="bold">{validations}</Text>
-                <Spacer />
-                <Text color="gray.700" fontWeight={500} align="center">{name}</Text>
+                <Text color="purple.700" fontWeight="bold" pt={1} pr={6}>{validations}</Text>
+                <Text color="gray.700" fontWeight={500} align="left">{name}</Text>
                 <Spacer />
                 <IconButton
                     variant="ghost"

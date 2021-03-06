@@ -20,7 +20,7 @@ export {
 
 export {
     searchUsers,
-    searchUser,
+    getUser,
     editUserProfile,
     deleteUser,
     createUser
