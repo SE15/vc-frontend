@@ -1,4 +1,5 @@
 import Recommendation from '../../components/Recommendation/Recommendation';
+import RecommendationPost from '../../components/Recommendation/RecommendationPost';
 import CardHolder from '../../components/ContainerTemplates/CardHolder';
 import NoResults from '../../components/Alerts/NoResults';
 
@@ -11,17 +12,20 @@ import {
     EmailIcon
 } from '@chakra-ui/icons';
 
-const Recommendations = ({ recommendations, loading, isOwner }) => {
-    let button = !isOwner ?
-        <Button
-            leftIcon={<EmailIcon />}
-            size="sm"
-            variant="outline"
-            colorScheme="purple"
-            isDisabled={loading}
-        >
-            Post Recommendation
-        </Button>
+import { connect } from 'react-redux';
+
+const Recommendations = ({ recommendations, loading, isOwner, isAuthenticated }) => {
+    let button = !isOwner && isAuthenticated ?
+        // <Button
+        //     leftIcon={<EmailIcon />}
+        //     size="sm"
+        //     variant="outline"
+        //     colorScheme="purple"
+        //     isDisabled={loading}
+        // >
+        //     Post Recommendation
+        // </Button>
+        <RecommendationPost />
         : <Box h="30px" />;
 
     return (
@@ -41,4 +45,10 @@ const Recommendations = ({ recommendations, loading, isOwner }) => {
     );
 }
 
-export default Recommendations;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: !(state.token === null || state.token === undefined)
+    };
+};
+
+export default connect(mapStateToProps)(Recommendations);

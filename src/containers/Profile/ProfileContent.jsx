@@ -10,7 +10,7 @@ import Recommendations from './Recommendations';
 import Connections from './Connections';
 import { connect } from 'react-redux'
 
-import { getUser } from '../../api';
+import { getUser, getConnectionState } from '../../api';
 
 const ProfileContent = ({ authUser, user, isAuthenticated }) => {
     const toast = useToast()
@@ -40,7 +40,20 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
                 //TODO: need to call a back-end method to get the status of the connection
                 //must pass both authUser and user to retrieve the status of the connection.
                 //button is set based on this status. 'none' - 1, 'accepted' - 2, 'pending' - 3 
-                setButton(1);
+                const result = await getConnectionState(authUser, user);
+                if (result.data) {
+                    switch(result.data) {
+                        case 'none':
+                            setButton(1);
+                            break;
+                        case 'accepted':
+                            setButton(2);
+                            break;
+                        case 'pending':
+                            setButton(3);
+                            break;
+                    }
+                }
             }   
 
 

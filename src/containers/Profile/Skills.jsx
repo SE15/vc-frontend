@@ -1,4 +1,5 @@
 import SkillCard from '../../components/Skill/SkillCard';
+import SkilButton from '../../components/Skill/addSkill';
 import CardHolder from '../../components/ContainerTemplates/CardHolder';
 import NoResults from '../../components/Alerts/NoResults';
 
@@ -11,17 +12,20 @@ import {
     AddIcon
 } from '@chakra-ui/icons';
 
-const Skills = ({ skills, isOwner, loading }) => {
+import { connect } from 'react-redux';
+
+const Skills = ({ skills, isOwner, loading, isAuthenticated }) => {
     let button = isOwner ?
-        <Button
-            leftIcon={<AddIcon />}
-            size="sm"
-            variant="outline"
-            colorScheme="purple"
-            isDisabled={loading}
-        >
-            Add Skill
-        </Button>
+        // <Button
+        //     leftIcon={<AddIcon />}
+        //     size="sm"
+        //     variant="outline"
+        //     colorScheme="purple"
+        //     isDisabled={loading}
+        // >
+        //     Add Skill
+        // </Button>
+        <SkilButton/>
         : <Box h="30px" />;
 
     return (
@@ -33,6 +37,7 @@ const Skills = ({ skills, isOwner, loading }) => {
             {skills.length === 0 ? <NoResults message="There are no skills" />
                 : skills.map((skill) =>
                     <SkillCard
+                        isAuth={isAuthenticated}
                         name={skill.name}
                         validations={skill.validations}
                         isOwner={isOwner} />
@@ -40,4 +45,11 @@ const Skills = ({ skills, isOwner, loading }) => {
         </CardHolder>
     );
 }
-export default Skills;
+
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: !(state.token === null || state.token === undefined)
+    };
+};
+
+export default connect(mapStateToProps)(Skills);

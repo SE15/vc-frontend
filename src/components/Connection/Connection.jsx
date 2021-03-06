@@ -6,14 +6,26 @@ import { Text, Avatar, HStack, Button, Spacer, ReactRouterLink } from "@chakra-u
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { useHistory } from 'react-router-dom';
 
+import { connect } from 'react-redux';
 
-function Connection({ name, user, image, widthAuto }) {
+function Connection({ name, user, image, widthAuto, authUser }) {
     const history = useHistory();
+
+    const viewProfile = () => {
+        if (authUser) {
+            if (authUser != user)
+                history.push(`/profiles/${name}`, { user });
+            else
+                history.push('/');
+        } else
+            history.push(`/profiles/${name}`, { user });
+    }
 
     return (
         <HStack
-            overflow="hidden"
+            overflowY="hidden"
             h="70px"
+            minH={70}
             borderWidth="1px"
             borderRadius="lg"
             px={4}
@@ -21,7 +33,7 @@ function Connection({ name, user, image, widthAuto }) {
             bg="purple.100"
             boxShadow="lg"
             spacing={4}
-            width={widthAuto? "100%" : "350px"}>
+            width={widthAuto ? "100%" : "350px"}>
             <Avatar name={name} src={image} />
             <Text color="gray.700" fontWeight={500} align="center" fontSize={16} overflow="hidden" isTruncated>{name}</Text>
             <Spacer />
@@ -30,19 +42,17 @@ function Connection({ name, user, image, widthAuto }) {
                 variant="link"
                 colorScheme="blue"
                 pb={1}
-                onClick={() => { history.push(`/profiles/${name}`, { user }) }}>
+                onClick={viewProfile}>
                 view
             </Button>
         </HStack>
     )
 }
 
-Connection.propTypes = {
-    name: PropTypes.string,
-    image: PropTypes.string,
-    link: PropTypes.string,
-}
-Connection.defaultProps = {
-    image: "null"
-}
-export default Connection  
+const mapStateToProps = state => {
+    return {
+        authUser: state.user
+    };
+};
+
+export default connect(mapStateToProps)(Connection);

@@ -13,7 +13,7 @@ import {
     ArrowUpIcon
 } from '@chakra-ui/icons';
 
-const SkillCard = ({ validations, name, isOwner, onClick }) => {
+const SkillCard = ({ validations, name, isOwner, onClick, isAuth }) => {
     const icon = isOwner ? <DeleteIcon />
         : <Tooltip label="Validate" fontSize="md">
             <ArrowUpIcon />
@@ -35,13 +35,14 @@ const SkillCard = ({ validations, name, isOwner, onClick }) => {
                 <Text color="purple.700" fontWeight="bold" pt={1} pr={6}>{validations}</Text>
                 <Text color="gray.700" fontWeight={500} align="left">{name}</Text>
                 <Spacer />
-                <IconButton
+                {isAuth ? <IconButton
                     variant="ghost"
                     colorScheme={color}
                     icon={icon} 
                     onClick={onClick}/>
+                : <Box w={10}/>}
             </HStack>
     );
 }
 
-export default SkillCard
+export default SkillCard;

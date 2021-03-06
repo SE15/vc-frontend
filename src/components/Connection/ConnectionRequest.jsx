@@ -13,40 +13,47 @@ import {
     CheckIcon,
     CloseIcon,
 } from '@chakra-ui/icons'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
-const ConnectionRequest = ({ name, onAccept, onReject }) => {
+const ConnectionRequest = ({ name, onAccept, onReject, user }) => {
+    const history = useHistory();
+
     return (
-            <HStack borderWidth="1px" borderRadius="lg" bg="white" px={4} py={2} bg="purple.100" boxShadow="lg">
-                <Avatar name={name} />
-                <VStack spacing={1}>
-                    <Link as={ReactRouterLink} to='/profile'>
-                        <Heading fontSize="16px" color="gray.700"> {name} </Heading>
-                    </Link>
-                    <StackDivider borderWidth="1px" borderColor="purple.200" />
-                    <HStack>
-                        <Button
-                            leftIcon={<CheckIcon boxSize="12px" pb="2px" />}
-                            size="sm"
-                            variant="ghost"
-                            colorScheme="blue"
-                            onClick={onAccept}
-                        >
-                            Accept
+        <HStack borderWidth="1px" borderRadius="lg" bg="white" px={4} py={2} bg="purple.100" boxShadow="lg">
+            <Avatar name={name} />
+            <VStack spacing={1}>
+                <Button
+                    fontSize="16px"
+                    color="gray.700"
+                    onClick={() => { history.push(`/profiles/${name}`, { user }) }}
+                    variant="link"
+                >
+                    {name}
+                </Button>
+                <StackDivider borderWidth="1px" borderColor="purple.200" />
+                <HStack>
+                    <Button
+                        leftIcon={<CheckIcon boxSize="12px" pb="2px" />}
+                        size="sm"
+                        variant="ghost"
+                        colorScheme="blue"
+                        onClick={onAccept}
+                    >
+                        Accept
                     </Button>
-                        <Spacer />
-                        <Button
-                            leftIcon={<CloseIcon boxSize="12px" pb={1} />}
-                            size="sm"
-                            variant="ghost"
-                            colorScheme="red"
-                            onClick={onReject}
-                        >
-                            Reject
+                    <Spacer />
+                    <Button
+                        leftIcon={<CloseIcon boxSize="12px" pb={1} />}
+                        size="sm"
+                        variant="ghost"
+                        colorScheme="red"
+                        onClick={onReject}
+                    >
+                        Reject
                     </Button>
-                    </HStack>
-                </VStack>
-            </HStack>
+                </HStack>
+            </VStack>
+        </HStack>
     );
 }
 

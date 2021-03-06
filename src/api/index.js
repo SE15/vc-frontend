@@ -3,7 +3,9 @@ export {
 } from './auth-api'
 
 export {
+    getConnectionRequests,
     addConnection,
+    getConnectionState,
     respondConnection,
     deleteConnection
 } from './connection-api'

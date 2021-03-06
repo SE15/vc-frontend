@@ -20,8 +20,8 @@ const ProfileInfo = ({ name, button, isLoading }) => {
             <Box w="100%" border="5px" pt={2}>
                 {isLoading ? <SkeletonCircle size="120px" /> :
                     <Avatar
-                        name="Ryan Florence"
-                        src="https://bit.ly/ryan-florence"
+                        name={name}
+                        //TODO: set profile picture from the back-end
                         size="2xl"
                         borderColor="purple.500"
                         showBorder={true}

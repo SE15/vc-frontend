@@ -16,14 +16,18 @@ import {
     VStack,
     useToast
 } from "@chakra-ui/react"
-import { Search2Icon, BellIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import { React, useState } from 'react'
+import { Search2Icon, BellIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons';
+import { getConnectionRequests } from '../api';
+import { React, useState, useEffect } from 'react'
 import logo from '../assets/logo.png';
 import { Link, useHistory } from 'react-router-dom';
 import ConnectionRequest from '../components/Connection/ConnectionRequest';
 
+import { connect } from 'react-redux';
+import * as actions from '../store/actions/auth';
 
-function Header({ isAuthenticated, logout }) {
+
+function Header({ isAuthenticated, onLogout, user }) {
     const history = useHistory();
     const [keyword, setKeyword] = useState('');
 
@@ -63,18 +67,18 @@ function Header({ isAuthenticated, logout }) {
                             isRequired
                             onChange={handleChange.bind(this)}
                             value={keyword} />
-                        <IconButton aria-label="Search database" icon={<Search2Icon />} onClick={() => {history.push('/'); history.push(`/search/${keyword}`, { keyword: keyword })}} bg="blueGreen.400" color="white" />
+                        <IconButton aria-label="Search database" icon={<Search2Icon />} onClick={() => { history.push('/'); history.push(`/search/${keyword}`, { keyword: keyword }) }} bg="blueGreen.400" color="white" />
                         <Link />
                     </InputGroup>
                 </GridItem>
                 {isAuthenticated && <GridItem colStart={11} colEnd={13} color="white">
                     <HStack justifyContent="center">
-                        <NotificationPopover />
+                        <NotificationPopover user={user} isAuthenticated={isAuthenticated}/>
                         <Link as={ReactRouterLink} to="/settings">
                             <IconButton icon={<SettingsIcon />} bg="blueGreen.200" color="white" />
                         </Link>
                         <Link as={ReactRouterLink} to="/">
-                            <Button variant="ghost" leftIcon={<ArrowForwardIcon />} pb={1} onClick={logout}> Sign Out</Button>
+                            <Button variant="ghost" leftIcon={<ArrowForwardIcon />} pb={1} onClick={onLogout}> Sign Out</Button>
                         </Link>
                     </HStack>
                 </GridItem>}
@@ -84,9 +88,25 @@ function Header({ isAuthenticated, logout }) {
     )
 }
 
-const NotificationPopover = (props) => {
-    const [connections, setConnections] = useState([{ id: 1, name: 'Kumar Sangakkara' }, { id: 2, name: 'Mahela Jayawardena' }, { id: 3, name: 'Ashan Priyanjan' }]);
+const NotificationPopover = ({ user, isAuthenticated }) => {
+    const [connections, setConnections] = useState([]);
     const toast = useToast();
+
+    const WAIT_TIME_MS = 20000;
+
+    const updateConnections =  async () => {
+        const results = await getConnectionRequests(user);
+        if (results.data) 
+            setConnections(results.data);
+    }
+
+    useEffect(() => {
+        const interval = setInterval(updateConnections, WAIT_TIME_MS);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(updateConnections, [isAuthenticated])
 
     const generateMessage = (isAccepted, name) =>
         toast({
@@ -110,7 +130,7 @@ const NotificationPopover = (props) => {
             tempConnections.splice(connectionIndex, 1);
         }
         setConnections(tempConnections);
-        generateMessage(isAccepted, obj.name);
+        generateMessage(isAccepted, `${obj.first_name} ${obj.last_name}`);
     }
 
     return (
@@ -134,9 +154,10 @@ const NotificationPopover = (props) => {
                                     {connections.map((obj) =>
                                         <ConnectionRequest
                                             key={obj.id}
-                                            name={obj.name}
+                                            name={`${obj.first_name} ${obj.last_name}`}
                                             onAccept={onClick(true, obj)}
                                             onReject={onClick(false, obj)}
+                                            user={obj.id}
                                         />
                                     )}
                                 </VStack>
@@ -150,4 +171,17 @@ const NotificationPopover = (props) => {
     );
 }
 
-export default Header;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: !(state.token === null || state.token === undefined),
+        user: state.user
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(actions.logout('/'))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (Header);

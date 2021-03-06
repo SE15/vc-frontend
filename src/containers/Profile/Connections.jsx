@@ -10,9 +10,10 @@ const Connections  = ({ connections, loading, user }) => {
         >
             {connections.length === 0 ? <NoResults message="There are no connections"/> 
             : connections.map((connection) => 
-                <Connection 
+                <Connection
+                id={connection.id} 
                 name={`${connection.first_name} ${connection.last_name}`}
-                user={33}/> //TODO: Need to assign the connection_id from back-end
+                user={connection.id}/>
             )}
         </CardHolder>
     );

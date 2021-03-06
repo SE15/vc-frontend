@@ -56,7 +56,7 @@ const Search = () => {
                             <Connection
                                 widthAuto
                                 name={`${obj.first_name} ${obj.last_name}`}
-                                user={33}/> //TODO: Need to assign the connection_id from back-end
+                                user={obj.id}/> //TODO: Need to assign the connection_id from back-end
                         ))}
         </VStack>);
     return (
