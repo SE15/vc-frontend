@@ -57,6 +57,6 @@ const generateErrorOutput = (error) => {
 			error: error,
 			title: error.message,
 			code: 1,
-			message: "Please check your internet connection."
+			message: "Cannot connect to the server"
 		}
 }

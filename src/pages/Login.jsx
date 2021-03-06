@@ -18,7 +18,7 @@ class Login extends Component {
     state = {
         email: '',
         password: '',
-        show: false
+        show: false,
     }
 
     handleClick() {
@@ -56,6 +56,7 @@ class Login extends Component {
                 <Box my={4} textAlign="left">
                     <form action='submit' onSubmit={this.submitHandler}>
                         <Stack spacing={3}>
+                            <Text aling="center" color="red.500">{this.props.error}</Text>
                             <FormControl isRequired>
                                 <InputGroup>
                                     <Input type='email' placeholder='Email' bg="white.100" color="black.600" borderColor="blueGreen.100" onChange={this.handleChange.bind(this, "email")} value={this.state.email} />
