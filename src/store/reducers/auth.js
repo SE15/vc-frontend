@@ -10,6 +10,9 @@ const updateObject = (oldObject, updatedProperties) => {
 const initialState = {
     token: null,
     user: null,
+    firstName: null,
+    lastName: null,
+    profilePic: null,
     error: null,
     loading: false,
     authRedirectPath: '/home'
@@ -23,6 +26,9 @@ const authSuccess = (state, action) => {
     return updateObject( state, { 
         token: action.token,
         user: action.user,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        profilePic: action.profilePic,
         error: null,
         loading: false
      } );
@@ -36,7 +42,7 @@ const authFail = (state, action) => {
 };
 
 const authLogout = (state, action) => {
-    return updateObject(state, { token: null, user: null });
+    return updateObject(state, { token: null, user: null, firstName: null, lastName: null, profilePic: null });
 };
 
 const setAuthRedirectPath = (state, action) => {

@@ -10,12 +10,15 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userID) => {
+export const authSuccess = (token, userID, firstName, lastName, profilePic) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
-        user: userID
+        user: userID,
+        firstName: firstName,
+        lastName: lastName,
+        profilePic: profilePic
     };
 };
 
@@ -30,6 +33,9 @@ export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('userID');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('lastName');
+    localStorage.removeItem('profilePic');
     delete axios.defaults.headers.common['Authorization'];
     
     return {
@@ -61,14 +67,20 @@ export const auth = (email, password, onLogin = () => {}) => {
                 const decoded = jwt_decode(token);
                 const expiresIn = decoded.expiresIn;
                 const userID = decoded.userID;
+                const firstName = decoded.firstName;
+                const lastName = decoded.lastName;
+                const profilePic = decoded.profilePic;
 
                 const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
                 
                 localStorage.setItem('token', token);
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userID', userID);
+                localStorage.setItem('firstName', firstName);
+                localStorage.setItem('lastName', lastName);
+                localStorage.setItem('profilePic', profilePic);
 
-				dispatch(authSuccess(token, userID))
+				dispatch(authSuccess(token, userID, firstName, lastName, profilePic))
 			
                 onLogin();
                 dispatch(checkAuthTimeout(expiresIn));
@@ -98,7 +110,10 @@ export const authCheckState = () => {
                 dispatch(logout());
             } else {
                 const userID = localStorage.getItem('userID');
-                dispatch(authSuccess(token, userID));
+                const firstName = localStorage.getItem('firstName');
+                const lastName = localStorage.getItem('lastName');
+                const profilePic = localStorage.getItem('profilePic');
+                dispatch(authSuccess(token, userID, firstName, lastName, profilePic));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
             }
         }
