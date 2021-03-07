@@ -68,7 +68,7 @@ const DeletePopup = ({ name, onClick, isLoading }) => {
             <PopupWindow
                 title="Remove Skill"
                 buttonName="Remove"
-                onClick={onClick}
+                onClick={onClick(onClose)}
                 isLoading={isLoading}
                 isOpen={isOpen}
                 onClose={onClose}>
@@ -95,7 +95,7 @@ const ValidatePopup = ({ name, onClick, isLoading }) => {
             <PopupWindow
                 title="Validate Skill"
                 buttonName="Validate"
-                onClick={onClick}
+                onClick={onClick(onClose)}
                 isLoading={isLoading}
                 isOpen={isOpen}
                 onClose={onClose}>

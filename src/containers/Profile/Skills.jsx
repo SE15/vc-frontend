@@ -76,7 +76,7 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
         setLoading(false);
     }
 
-    const onDeleteSkill = (skillId, name) => async () => {
+    const onDeleteSkill = (skillId, name) => (onClose) => async () => {
         setLoading(true);
         const result = await deleteSkill(user, skillId);
         if(result.data) {
@@ -90,14 +90,31 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
             }
             setSkills(tempSkills);
             generateSuccessMessage('Skill deleted', `Deleted ${name} from your skills`);
+            onClose();
         } else {
             generateErrorMessage('Deleting skill', result.message);
         }
         setLoading(false);
     }
 
-    const onValidateSkill = async () => {
+    const onValidateSkill = (skillId, name) => (onClose) => async () => {
+        setLoading(true);
+        const result = await validateSkill(user, skillId);
+        if(result.data) {
+            const skillIndex = skills.findIndex(skill => {
+                return skill.id === skillId
+            });
 
+            const tempSkills = [...skills];
+            tempSkills[skillIndex].validations++;
+            setSkills(tempSkills);
+
+            generateSuccessMessage('Skill validated', `You have validated the skill, ${name}`);
+            onClose();
+        } else {
+            generateErrorMessage('Validating skill', result.message);
+        }
+        setLoading(false);
     }
 
     let button = isOwner ?
@@ -106,7 +123,7 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
             size="sm"
             variant="outline"
             colorScheme="purple"
-            isDisabled={loading}
+            isDisabled={isOpen || loading}
             onClick={onOpen}
         >
             Add Skill
@@ -129,7 +146,7 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
                         validations={skill.validations}
                         isOwner={isOwner}
                         isLoading={isLoading}
-                        onClick={onDeleteSkill} />
+                        onClick={isOwner ? onDeleteSkill : onValidateSkill} />
                 )}
             <PopupWindow
                 title="New Skill"
@@ -140,7 +157,7 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
                 onClose={onClose}>
                 <Input
                     variant="outline"
-                    placeholder="Skill Name"
+                    placeholder="type your skill..."
                     bg="transparent"
                     borderColor="purple.700"
                     isRequired

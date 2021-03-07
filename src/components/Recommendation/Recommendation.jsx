@@ -1,10 +1,6 @@
 import { React } from "react"
 
 import {
-    Box,
-    Grid,
-    GridItem,
-    Heading,
     Avatar,
     HStack,
     VStack,

@@ -105,6 +105,7 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
                 <Recommendations
                     recommendationList={recommendations}
                     loading={loading}
+                    user={user}
                     isOwner={authUser === user} />
                 <Connections
                     connectionList={connections}
