@@ -2,7 +2,13 @@ import Connection from '../../components/Connection/Connection';
 import CardHolder from '../../components/ContainerTemplates/CardHolder';
 import NoResults from '../../components/Alerts/NoResults';
 
-const Connections  = ({ connections, loading, user }) => {
+import { useState, useEffect } from 'react';
+
+const Connections  = ({ connectionList, loading, user }) => {
+    const [connections, setConnections] = useState(connectionList);
+
+    useEffect(() => {setConnections(connectionList); console.log(connections, connectionList)}, [connectionList]);
+
     return (
         <CardHolder
             heading="Connections"

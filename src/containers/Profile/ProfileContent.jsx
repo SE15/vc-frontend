@@ -99,15 +99,15 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
             </Box>
             <HStack spacing={6} w="100%">
                 <Skills
-                    skills={skills}
+                    skillList={skills}
                     loading={loading}
                     isOwner={authUser === user} />
                 <Recommendations
-                    recommendations={recommendations}
+                    recommendationList={recommendations}
                     loading={loading}
                     isOwner={authUser === user} />
                 <Connections
-                    connections={connections}
+                    connectionList={connections}
                     loading={loading} />
             </HStack>
         </VStack>

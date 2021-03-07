@@ -3,6 +3,8 @@ import RecommendationPost from '../../components/Recommendation/RecommendationPo
 import CardHolder from '../../components/ContainerTemplates/CardHolder';
 import NoResults from '../../components/Alerts/NoResults';
 
+import { useState, useEffect } from 'react';
+
 import {
     Button,
     Box
@@ -14,7 +16,11 @@ import {
 
 import { connect } from 'react-redux';
 
-const Recommendations = ({ recommendations, loading, isOwner, isAuthenticated }) => {
+const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated }) => {
+    const [recommendations , setRecommendations] = useState(recommendationList);
+
+    useEffect(() => {setRecommendations(recommendationList)}, [recommendationList]);
+
     let button = !isOwner && isAuthenticated ?
         // <Button
         //     leftIcon={<EmailIcon />}

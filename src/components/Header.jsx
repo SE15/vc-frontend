@@ -31,11 +31,6 @@ function Header({ isAuthenticated, onLogout, user }) {
     const history = useHistory();
     const [keyword, setKeyword] = useState('');
 
-    const handleChange = (e) => {
-        let textField = e.target.value;
-        setKeyword(textField);
-    }
-
     return (
         <>
             <Grid templateColumns="repeat(12, 1fr)" bg="purple.700" w="100%" gap={2} align="center" py={2} px={1} borderBottomRadius="2rem" position="fixed" top={0} zIndex={1}>
@@ -64,7 +59,7 @@ function Header({ isAuthenticated, onLogout, user }) {
                             placeholder="Search"
                             color="white"
                             isRequired
-                            onChange={handleChange.bind(this)}
+                            onChange={((e) => {setKeyword(e.target.value)}).bind(this)}
                             value={keyword} />
                         <IconButton aria-label="Search database" icon={<Search2Icon />} onClick={() => { history.push('/'); history.push(`/search/${keyword}`, { keyword: keyword }) }} bg="blueGreen.400" color="white" />
                         <Link />
@@ -131,7 +126,6 @@ const NotificationPopover = ({ user, isAuthenticated }) => {
 
         const result = await respondConnection(user, obj.id, data);
         if (result.data) {
-            console.log(result.data)
             const connectionIndex = connections.findIndex(connection => {
                 return connection.id === obj.id
             });
