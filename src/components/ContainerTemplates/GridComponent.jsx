@@ -18,7 +18,7 @@ const GridComponent = (props) => {
                 {props.children}
             </VStack>
             <Spacer />
-            {props.isConfirm && <Button colorScheme="green" w="40%"> Confirm </Button>}
+            {props.isConfirm && <Button type="submit" colorScheme="green" w="40%"> Confirm </Button>}
         </VStack>
     );
 

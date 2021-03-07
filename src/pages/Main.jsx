@@ -4,7 +4,7 @@ import { useTransition, animated } from "react-spring";
 import { connect } from 'react-redux';
 
 import Settings from './Settings';
-import ProfileSettings from './ProfileSettings';
+import ProfileSettings from './Settings';
 import Home from './Home';
 import Profile from './Profile';
 import Search from './Search';
