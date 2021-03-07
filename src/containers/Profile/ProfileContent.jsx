@@ -3,19 +3,27 @@ import ProfileInfo from "../../components/ProfileInfo";
 import {
     useToast,
     VStack,
-    HStack
+    HStack,
+    Box, 
+    Button
 } from "@chakra-ui/react"
 import Skills from './Skills';
 import Recommendations from './Recommendations';
 import Connections from './Connections';
 import { connect } from 'react-redux'
 
-import { getUser, getConnectionState } from '../../api';
+import {
+    EmailIcon,
+    RepeatClockIcon,
+    CloseIcon
+} from '@chakra-ui/icons';
+
+import { getUser, getConnectionState, addConnection, deleteConnection } from '../../api';
 
 const ProfileContent = ({ authUser, user, isAuthenticated }) => {
     const toast = useToast()
 
-    const [profileInfo, setProfileInfo] = useState({ first_name: null, last_name: null, profile_pic: null });
+    const [profileInfo, setProfileInfo] = useState({ id: null, first_name: null, last_name: null, profile_pic: null });
     const [skills, setSkills] = useState([]);
     const [connections, setConnections] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
@@ -27,7 +35,9 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
     useEffect(async () => {
         const results = await getUser(user);
         if (results.data) {
+            console.log(results.data);
             setProfileInfo({
+                id: results.data.id,
                 first_name: results.data.first_name,
                 last_name: results.data.last_name,
                 profile_pic: results.data.profile_pic
@@ -37,12 +47,9 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
             setConnections(results.data.connections);
 
             if (isAuthenticated && authUser !== user) {
-                //TODO: need to call a back-end method to get the status of the connection
-                //must pass both authUser and user to retrieve the status of the connection.
-                //button is set based on this status. 'none' - 1, 'accepted' - 2, 'pending' - 3 
                 const result = await getConnectionState(authUser, user);
                 if (result.data) {
-                    switch(result.data) {
+                    switch (result.data) {
                         case 'none':
                             setButton(1);
                             break;
@@ -54,9 +61,7 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
                             break;
                     }
                 }
-            }   
-
-
+            }
         } else {
             if (results.code === 1) {
                 toast({
@@ -77,19 +82,26 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
 
     return (
         <VStack w="100%" align="center" px={window.innerWidth / 25} pb={window.innerWidth / 25}>
-            <ProfileInfo
-                name={`${profileInfo.first_name} ${profileInfo.last_name}`}
-                button={button}
-                isLoading={loading} />
+            <Box w="100%" border="5px" pt={2} align="center">
+                <ProfileInfo
+                    name={`${profileInfo.first_name} ${profileInfo.last_name}`}
+                    isLoading={loading} />
+                {!loading && <ConnectionButton 
+                                type={button} 
+                                user={profileInfo.id}
+                                authUser={authUser} 
+                                name={`${profileInfo.first_name} ${profileInfo.last_name}`}
+                                setButton={setButton}/>}
+            </Box>
             <HStack spacing={6} w="100%">
                 <Skills
                     skills={skills}
                     loading={loading}
-                    isOwner={authUser===user} />
+                    isOwner={authUser === user} />
                 <Recommendations
                     recommendations={recommendations}
                     loading={loading}
-                    isOwner={authUser===user} />
+                    isOwner={authUser === user} />
                 <Connections
                     connections={connections}
                     loading={loading} />
@@ -98,11 +110,88 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
     );
 }
 
+const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
+    const [loading, setLoading] = useState(false);
+    const toast = useToast();
+
+    const onSendRequest = async () => {
+        setLoading(true);
+        const result = await addConnection(user);
+        if (result.data) {
+            setButton(3);
+            toast({
+                position: "bottom-left",
+                title: 'Request sent successfully',
+                description: `You have sent a request to ${name}`,
+                status: "success",
+                isClosable: true,
+                htmlWidth: 200
+            });
+        } else {
+            toast({
+                position: "bottom-left",
+                title: `${result.title}`,
+                description: `${result.message}`,
+                status: "error",
+                isClosable: true,
+                htmlWidth: 200
+            });
+        }
+        setLoading(false);
+    }
+
+    const onRemoveConnection = (isCancelled) => async () => {
+        setLoading(true);
+        const result = await deleteConnection(authUser, user);
+        if (result.data) {
+            setButton(1);
+            toast({
+                position: "bottom-left",
+                title: `Request ${isCancelled ? 'cancelled' : 'removed'} successfully`,
+                description: `${isCancelled ? `You have cancelled request to ${name}` : `You have removed ${name} from connections`}`,
+                status: "success",
+                isClosable: true,
+                htmlWidth: 200
+            });
+        } else {
+            toast({
+                position: "bottom-left",
+                title: `${result.title}`,
+                description: `${result.message}`,
+                status: "error",
+                isClosable: true,
+                htmlWidth: 200
+            });
+        }
+        setLoading(false);
+    }
+
+    switch (type) {
+        case 1:
+            return (
+                <Button leftIcon={<EmailIcon />} colorScheme="green" variant="outline" my={2} isLoading={loading} onClick={onSendRequest}>
+                    Send Request
+                </Button>);
+        case 2:
+            return (
+                <Button leftIcon={<CloseIcon />} colorScheme="red" variant="outline" my={2} isLoading={loading} onClick={onRemoveConnection(false)}>
+                    Remove Connection
+                </Button>);
+        case 3:
+            return (
+                <Button leftIcon={<RepeatClockIcon />} colorScheme="orange" variant="outline" my={2} isLoading={loading} onClick={onRemoveConnection(true)}> 
+                    Request Pending
+                </Button>);
+        default:
+            return (<div></div>)
+    }
+}
+
 const mapStateToProps = state => {
     return {
-      isAuthenticated: state.token !== null,
-      authUser: state.user
+        isAuthenticated: state.token !== null,
+        authUser: state.user
     };
-  };
+};
 
-export default connect( mapStateToProps )( ProfileContent );
+export default connect(mapStateToProps)(ProfileContent);

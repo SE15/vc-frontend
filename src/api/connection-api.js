@@ -5,7 +5,7 @@ const URL = "connections";
 
 export const getConnectionRequests  = (userId) => getRequest(`${BASE_URL}/${userId}/${URL}`);
 
-export const addConnection = (userId, data) => postRequest(`${BASE_URL}/${userId}/${URL}`, data);
+export const addConnection = (userId) => postRequest(`${BASE_URL}/${userId}/${URL}`);
 
 export const getConnectionState  = (userId, recipientId) => getRequest(`${BASE_URL}/${userId}/${URL}/${recipientId}`);
 
