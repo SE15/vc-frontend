@@ -26,7 +26,7 @@ const Main = (props) => {
     return (
         <BrowserRouter>
             <div>
-                <Header isAuthenticated={props.isAuthenticated} logout={props.onLogout} />
+                <Header />
                 <Content isAuthenticated={props.isAuthenticated} />
                 <Footer />
             </div>

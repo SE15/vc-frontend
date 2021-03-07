@@ -4,9 +4,13 @@ import {
     useToast,
     VStack,
     HStack,
-    Box, 
-    Button
+    Box,
+    Button,
+    useDisclosure,
+    Text
 } from "@chakra-ui/react"
+
+import PopupWindow from '../../components/ContainerTemplates/PopupWindow';
 import Skills from './Skills';
 import Recommendations from './Recommendations';
 import Connections from './Connections';
@@ -86,12 +90,12 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
                 <ProfileInfo
                     name={`${profileInfo.first_name} ${profileInfo.last_name}`}
                     isLoading={loading} />
-                {!loading && <ConnectionButton 
-                                type={button} 
-                                user={profileInfo.id}
-                                authUser={authUser} 
-                                name={`${profileInfo.first_name} ${profileInfo.last_name}`}
-                                setButton={setButton}/>}
+                {!loading && <ConnectionButton
+                    type={button}
+                    user={profileInfo.id}
+                    authUser={authUser}
+                    name={`${profileInfo.first_name} ${profileInfo.last_name}`}
+                    setButton={setButton} />}
             </Box>
             <HStack spacing={6} w="100%">
                 <Skills
@@ -113,6 +117,7 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
 const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
     const [loading, setLoading] = useState(false);
     const toast = useToast();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const onSendRequest = async () => {
         setLoading(true);
@@ -163,6 +168,7 @@ const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
                 htmlWidth: 200
             });
         }
+        if(!isCancelled) onClose();
         setLoading(false);
     }
 
@@ -174,12 +180,23 @@ const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
                 </Button>);
         case 2:
             return (
-                <Button leftIcon={<CloseIcon />} colorScheme="red" variant="outline" my={2} isLoading={loading} onClick={onRemoveConnection(false)}>
-                    Remove Connection
-                </Button>);
+                <>
+                    <Button leftIcon={<CloseIcon />} colorScheme="red" variant="outline" my={2} isDisabled={isOpen} onClick={onOpen}>
+                        Remove Connection
+                    </Button>
+                    <PopupWindow
+                        title='Connection Remove'
+                        buttonName='Confirm'
+                        onClick={onRemoveConnection(false)}
+                        isLoading={loading}
+                        isOpen={isOpen}
+                        onClose={onClose}>
+                        Do you wish to remove <Text as="em">{name}</Text> from your connections?
+                     </PopupWindow>
+                </>);
         case 3:
             return (
-                <Button leftIcon={<RepeatClockIcon />} colorScheme="orange" variant="outline" my={2} isLoading={loading} onClick={onRemoveConnection(true)}> 
+                <Button leftIcon={<RepeatClockIcon />} colorScheme="orange" variant="outline" my={2} isLoading={loading} onClick={onRemoveConnection(true)}>
                     Request Pending
                 </Button>);
         default:

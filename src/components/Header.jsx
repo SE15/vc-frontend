@@ -17,7 +17,7 @@ import {
     useToast
 } from "@chakra-ui/react"
 import { Search2Icon, BellIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-import { getConnectionRequests } from '../api';
+import { getConnectionRequests, respondConnection } from '../api';
 import { React, useState, useEffect } from 'react'
 import logo from '../assets/logo.png';
 import { Link, useHistory } from 'react-router-dom';
@@ -34,7 +34,6 @@ function Header({ isAuthenticated, onLogout, user }) {
     const handleChange = (e) => {
         let textField = e.target.value;
         setKeyword(textField);
-        console.log(keyword);
     }
 
     return (
@@ -90,6 +89,9 @@ function Header({ isAuthenticated, onLogout, user }) {
 
 const NotificationPopover = ({ user, isAuthenticated }) => {
     const [connections, setConnections] = useState([]);
+    const [loader, setLoader] = useState(0);
+    const [loadingId, setLoadingId] = useState(null);
+
     const toast = useToast();
 
     const WAIT_TIME_MS = 20000;
@@ -119,18 +121,40 @@ const NotificationPopover = ({ user, isAuthenticated }) => {
             htmlWidth: 200
         });
 
-    const onClick = (isAccepted, obj) => () => {
-        const connectionIndex = connections.findIndex(connection => {
-            return connection.id === obj.id
-        });
+    const onClick = (isAccepted, obj) => async () => {
+        setLoader(isAccepted ? 1 : 2);
+        setLoadingId(obj.id);
 
-        const tempConnections = [...connections];
-
-        if (connectionIndex > -1) {
-            tempConnections.splice(connectionIndex, 1);
+        const data = {
+            accept: isAccepted
         }
-        setConnections(tempConnections);
-        generateMessage(isAccepted, `${obj.first_name} ${obj.last_name}`);
+
+        const result = await respondConnection(user, obj.id, data);
+        if (result.data) {
+            console.log(result.data)
+            const connectionIndex = connections.findIndex(connection => {
+                return connection.id === obj.id
+            });
+    
+            const tempConnections = [...connections];
+    
+            if (connectionIndex > -1) {
+                tempConnections.splice(connectionIndex, 1);
+            }
+            setConnections(tempConnections);
+            generateMessage(isAccepted, `${obj.first_name} ${obj.last_name}`);
+        } else {
+            toast({
+                position: "bottom-left",
+                title: `${result.title}`,
+                description: `${result.message}`,
+                status: "error",
+                isClosable: true,
+                htmlWidth: 200
+            });
+        }
+        setLoader(0);
+        setLoadingId(null);
     }
 
     return (
@@ -158,6 +182,8 @@ const NotificationPopover = ({ user, isAuthenticated }) => {
                                             onAccept={onClick(true, obj)}
                                             onReject={onClick(false, obj)}
                                             user={obj.id}
+                                            loader={loader}
+                                            loadingId={loadingId}
                                         />
                                     )}
                                 </VStack>

@@ -1,21 +1,18 @@
 import {
     Avatar,
-    Box,
     Button,
-    Heading,
     HStack,
     Spacer,
     StackDivider,
     VStack,
-    ReactRouterLink,
 } from "@chakra-ui/react"
 import {
     CheckIcon,
     CloseIcon,
 } from '@chakra-ui/icons'
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const ConnectionRequest = ({ name, onAccept, onReject, user }) => {
+const ConnectionRequest = ({ name, onAccept, onReject, user, loader, loadingId }) => {
     const history = useHistory();
 
     return (
@@ -38,6 +35,9 @@ const ConnectionRequest = ({ name, onAccept, onReject, user }) => {
                         variant="ghost"
                         colorScheme="blue"
                         onClick={onAccept}
+                        w="90px"
+                        isLoading={loader===1 && loadingId===user}
+                        isDisabled={loader===2 && loadingId===user}
                     >
                         Accept
                     </Button>
@@ -48,6 +48,9 @@ const ConnectionRequest = ({ name, onAccept, onReject, user }) => {
                         variant="ghost"
                         colorScheme="red"
                         onClick={onReject}
+                        w="90px"
+                        isLoading={loader===2 && loadingId===user}
+                        isDisabled={loader===1 && loadingId===user}
                     >
                         Reject
                     </Button>
