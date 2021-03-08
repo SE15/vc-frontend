@@ -7,7 +7,11 @@ import {
     Box,
     Button,
     useDisclosure,
-    Text
+    Text,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription
 } from "@chakra-ui/react"
 
 import PopupWindow from '../../components/ContainerTemplates/PopupWindow';
@@ -32,8 +36,7 @@ const ProfileContent = ({ authUser, user, isAuthenticated, profilePic }) => {
     const [connections, setConnections] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [networkError, setNetworkError] = useState(false);
-    const [noResults, setNoResults] = useState(false);
+    const [error, setError] = useState(null);
     const [button, setButton] = useState(0);
 
     useEffect(async () => {
@@ -67,30 +70,26 @@ const ProfileContent = ({ authUser, user, isAuthenticated, profilePic }) => {
                 }
             }
         } else {
-            if (results.code === 1) {
-                toast({
-                    position: "bottom-left",
-                    title: 'Network Error',
-                    description: 'Please check your internet connection',
-                    status: "error",
-                    isClosable: true,
-                    htmlWidth: 200
-                });
-                setNetworkError(true);
-            } else {
-                setNoResults(true);
-            }
+            toast({
+                position: "bottom-left",
+                title: 'Cannot load the profile',
+                description: results.message,
+                status: "error",
+                isClosable: true,
+                htmlWidth: 200
+            });
+            setError(results);
         }
         setLoading(false);
     }, []);
 
-    return (
-        <VStack w="100%" align="center" px={window.innerWidth / 29} pb={window.innerWidth / 25}>
+    let result = (
+        <VStack w={window.innerWidth - 20} h="100%" pb={window.innerHeight/15} align="center" justify="space-evenly" px={window.innerWidth/25}>
             <Box w="100%" border="5px" pt={2} align="center">
                 <ProfileInfo
                     name={`${profileInfo.first_name} ${profileInfo.last_name}`}
                     isLoading={loading}
-                    profilePic={authUser===user? profilePic : profileInfo.profile_pic} />
+                    profilePic={authUser === user ? profilePic : profileInfo.profile_pic} />
                 {!loading && <ConnectionButton
                     type={button}
                     user={profileInfo.id}
@@ -114,6 +113,33 @@ const ProfileContent = ({ authUser, user, isAuthenticated, profilePic }) => {
             </HStack>
         </VStack>
     );
+
+    if (error === null) return result;
+    else {
+        return (
+            <Box w={window.innerWidth} border="5px" pt={2} align="center" justify="center" h="100%" pt={10}>
+                <Alert
+                    status="error"
+                    variant="subtle"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    textAlign="center"
+                    height="200px"
+                    width="50%"
+                    align="center"
+                >
+                    <AlertIcon boxSize="40px" mr={0} />
+                    <AlertTitle mt={4} mb={1} fontSize="lg">
+                        Cannot load the profile
+            </AlertTitle>
+                    <AlertDescription maxWidth="sm">
+                        {error.message}
+            </AlertDescription>
+                </Alert>
+            </Box>
+        );
+    }
 }
 
 const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
@@ -170,7 +196,7 @@ const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
                 htmlWidth: 200
             });
         }
-        if(!isCancelled) onClose();
+        if (!isCancelled) onClose();
         setLoading(false);
     }
 

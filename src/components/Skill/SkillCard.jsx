@@ -19,7 +19,7 @@ import {
 import PopupWindow from '../ContainerTemplates/PopupWindow';
 
 
-const SkillCard = ({ validations, name, isOwner, onClick, isAuth, isLoading, id }) => {
+const SkillCard = ({ validations, name, isOwner, onClick, isAuth, isLoading, id, alreadyValidated }) => {
     const icon = isOwner
         ? <DeletePopup
             name={name}
@@ -28,7 +28,8 @@ const SkillCard = ({ validations, name, isOwner, onClick, isAuth, isLoading, id 
         : <ValidatePopup
             name={name}
             onClick={onClick(id, name)}
-            isLoading={isLoading} />;
+            isLoading={isLoading} 
+            alreadyValidated={alreadyValidated}/>;
     const color = isOwner ? "red" : "green";
 
     return (
@@ -82,7 +83,7 @@ const DeletePopup = ({ name, onClick, isLoading }) => {
     );
 }
 
-const ValidatePopup = ({ name, onClick, isLoading }) => {
+const ValidatePopup = ({ name, onClick, isLoading, alreadyValidated }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
@@ -90,8 +91,9 @@ const ValidatePopup = ({ name, onClick, isLoading }) => {
             <IconButton
                 variant="ghost"
                 colorScheme="green"
-                icon={<Tooltip label="Validate" fontSize="md"><ArrowUpIcon /></Tooltip>}
-                onClick={onOpen} />
+                icon={<Tooltip label={`${alreadyValidated ? 'Already validated' : 'Validate' }`} fontSize="md"><ArrowUpIcon /></Tooltip>}
+                onClick={onOpen}
+                isDisabled={alreadyValidated} />
             <PopupWindow
                 title="Validate Skill"
                 buttonName="Validate"

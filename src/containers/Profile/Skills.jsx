@@ -107,6 +107,7 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
 
             const tempSkills = [...skills];
             tempSkills[skillIndex].validations++;
+            tempSkills[skillIndex].alreadyValidated = true;
             setSkills(tempSkills);
 
             generateSuccessMessage('Skill validated', `You have validated the skill, ${name}`);
@@ -146,6 +147,7 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
                         validations={skill.validations}
                         isOwner={isOwner}
                         isLoading={isLoading}
+                        alreadyValidated = {skill.alreadyValidated}
                         onClick={isOwner ? onDeleteSkill : onValidateSkill} />
                 )}
             <PopupWindow
