@@ -1,6 +1,6 @@
 import {
     Input, Heading, InputGroup, InputLeftElement, Box, Grid, GridItem,
-    HStack, IconButton, Spacer, Button, Image, Container,
+    HStack, IconButton, Button, Image,
     Popover,
     PopoverTrigger,
     PopoverContent,
@@ -24,7 +24,7 @@ import { Link, useHistory } from 'react-router-dom';
 import ConnectionRequest from '../components/Connection/ConnectionRequest';
 
 import { connect } from 'react-redux';
-import * as actions from '../store/actions/auth';
+import * as actions from '../store/actions';
 
 
 function Header({ isAuthenticated, onLogout, user }) {
@@ -60,8 +60,13 @@ function Header({ isAuthenticated, onLogout, user }) {
                             color="white"
                             isRequired
                             onChange={((e) => {setKeyword(e.target.value)}).bind(this)}
-                            value={keyword} />
-                        <IconButton aria-label="Search database" icon={<Search2Icon />} onClick={() => { history.push('/'); history.push(`/search/${keyword}`, { keyword: keyword }) }} bg="blueGreen.400" color="white" />
+                            value={keyword} 
+                            onKeyPress={((e) => {if (e.key === 'Enter' && keyword.length !== 0)  history.push(`/search/${keyword}`, { keyword: keyword })}).bind(this)}/>
+                        <IconButton  
+                            icon={<Search2Icon />} 
+                            onClick={() => { if (keyword.length !== 0) history.push(`/search/${keyword}`, { keyword: keyword }) }} 
+                            bg="blueGreen.400" 
+                            color="white"/>
                         <Link />
                     </InputGroup>
                 </GridItem>

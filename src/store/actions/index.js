@@ -3,5 +3,6 @@ export {
     logout,
     setAuthRedirectPath,
     authCheckState,
-    authSuccess
+    authSuccess,
+    updateName
 } from './auth';

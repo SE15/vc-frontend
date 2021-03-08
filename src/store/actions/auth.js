@@ -29,6 +29,17 @@ export const authFail = (error) => {
     };
 };
 
+export const updateName = (firstName, lastName) => {
+    localStorage.setItem('firstName', firstName);
+    localStorage.setItem('lastName', lastName);
+
+    return {
+        type: actionTypes.UPDATE_NAME,
+        firstName: firstName,
+        lastName: lastName
+    }
+}
+
 export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
@@ -37,7 +48,7 @@ export const logout = () => {
     localStorage.removeItem('lastName');
     localStorage.removeItem('profilePic');
     delete axios.defaults.headers.common['Authorization'];
-    
+
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -51,7 +62,7 @@ export const checkAuthTimeout = (expirationTime) => {
     };
 };
 
-export const auth = (email, password, onLogin = () => {}) => {
+export const auth = (email, password, onLogin = () => { }) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -60,7 +71,7 @@ export const auth = (email, password, onLogin = () => {}) => {
         };
         console.log(authData);
         login(authData).then(result => {
-            if (result.data) { 
+            if (result.data) {
                 //decoding the jwt token
                 const token = result.data.token;
                 console.log(token);
@@ -72,7 +83,7 @@ export const auth = (email, password, onLogin = () => {}) => {
                 const profilePic = decoded.profilePic;
 
                 const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-                
+
                 localStorage.setItem('token', token);
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userID', userID);
@@ -80,8 +91,8 @@ export const auth = (email, password, onLogin = () => {}) => {
                 localStorage.setItem('lastName', lastName);
                 localStorage.setItem('profilePic', profilePic);
 
-				dispatch(authSuccess(token, userID, firstName, lastName, profilePic))
-			
+                dispatch(authSuccess(token, userID, firstName, lastName, profilePic))
+
                 onLogin();
                 dispatch(checkAuthTimeout(expiresIn));
             }

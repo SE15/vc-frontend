@@ -6,19 +6,19 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const GridComponent = (props) => {
+const GridComponent = ({heading, children, isConfirm, onClick, loading}) => {
     return (
         <VStack py={5} w="100%" h="100%" justify="center">
             <Heading size="md" color="purple.700">
-                {props.heading}
+                {heading}
             </Heading>
             <StackDivider borderColor="purple.100" borderWidth={1} />
             <Spacer />
             <VStack spacing={3} w="100%">
-                {props.children}
+                {children}
             </VStack>
             <Spacer />
-            {props.isConfirm && <Button type="submit" colorScheme="green" w="40%"> Confirm </Button>}
+            {isConfirm && <Button type="submit" colorScheme="green" w="40%" onClick={onClick} isLoading={loading}> Confirm </Button>}
         </VStack>
     );
 
