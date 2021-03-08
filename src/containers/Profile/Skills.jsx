@@ -1,5 +1,4 @@
-import SkillCard from '../../components/Skill/SkillCard';
-import SkilButton from '../../components/Skill/addSkill';
+import SkillCard from '../../components/Skill/Skill';
 import CardHolder from '../../components/ContainerTemplates/CardHolder';
 import NoResults from '../../components/Alerts/NoResults';
 import PopupWindow from '../../components/ContainerTemplates/PopupWindow';

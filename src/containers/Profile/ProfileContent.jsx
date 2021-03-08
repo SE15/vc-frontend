@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import ProfileInfo from "../../components/ProfileInfo";
+import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import {
     useToast,
     VStack,

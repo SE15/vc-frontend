@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import { useRef, useState } from 'react';
-=======
-import { useRef } from 'react';
-import { useState } from 'react';
->>>>>>> 2e6ed7ffa75356525b12d1388720cd08fea2aa46
 import {
     Button,
     Box,
@@ -18,18 +13,13 @@ import { changeProfilePic } from '../../api';
 import * as actions from '../../store/actions';
 
 import { connect } from 'react-redux';
-import { updateProfilePicture } from '../../store/actions';
 
 const ChangeProfilePicture = ({ user, firstName, lastName, profilePic, updateProfilePicture }) => {
     const uploadedImage = useRef(null);
     const imageUploader = useRef(null);
-<<<<<<< HEAD
     const [isImageChanged, setIsImageChanged] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const toast = useToast();
-=======
-    const [loading, setLoading] = useState(false);
->>>>>>> 2e6ed7ffa75356525b12d1388720cd08fea2aa46
 
     const handleImageUpload = e => {
         const [file] = e.target.files;
@@ -76,6 +66,7 @@ const ChangeProfilePicture = ({ user, firstName, lastName, profilePic, updatePro
             });
         }
         setLoading(false);
+        setIsImageChanged(false);
     }
 
     return (

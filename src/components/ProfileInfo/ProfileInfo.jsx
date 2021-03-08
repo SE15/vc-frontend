@@ -1,6 +1,5 @@
 import React from 'react';
 
-import anonymous from '../assets/anonymous.png';
 import { Skeleton, SkeletonCircle, Button, Box, Heading, Avatar } from '@chakra-ui/react';
 
 

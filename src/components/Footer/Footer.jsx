@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Box, Heading, Stack } from "@chakra-ui/react";
-import { kPrimaryBlack } from '../utils/constants';
+import { kPrimaryBlack } from '../../utils/constants';
 
 const Footer = () => {
   return (

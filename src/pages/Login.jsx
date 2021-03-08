@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import {
     Input, Stack, Button, InputGroup, Box, ReactRouterLink
-    , Divider, FormControl, Flex, Heading, Text, Spinner, InputRightElement, IconButton, HStack, Image
+    , Divider, FormControl, Flex, Heading, Text, InputRightElement, IconButton, HStack, Image
 } from '@chakra-ui/react';
 
 import { connect } from 'react-redux';

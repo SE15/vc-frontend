@@ -1,5 +1,4 @@
 import Recommendation from '../../components/Recommendation/Recommendation';
-import RecommendationPost from '../../components/Recommendation/RecommendationPost';
 import CardHolder from '../../components/ContainerTemplates/CardHolder';
 import NoResults from '../../components/Alerts/NoResults';
 import PopupWindow from '../../components/ContainerTemplates/PopupWindow';

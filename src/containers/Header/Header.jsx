@@ -17,14 +17,13 @@ import {
     useToast
 } from "@chakra-ui/react"
 import { Search2Icon, BellIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-import { getConnectionRequests, respondConnection } from '../api';
+import { getConnectionRequests, respondConnection } from '../../api';
 import { React, useState, useEffect } from 'react'
-import logo from '../assets/logo.png';
 import { Link, useHistory } from 'react-router-dom';
-import ConnectionRequest from '../components/Connection/ConnectionRequest';
+import ConnectionRequest from '../../components/Connection/ConnectionRequest';
 
 import { connect } from 'react-redux';
-import * as actions from '../store/actions';
+import * as actions from '../../store/actions';
 
 
 function Header({ isAuthenticated, onLogout, user }) {
@@ -36,12 +35,12 @@ function Header({ isAuthenticated, onLogout, user }) {
             <Grid templateColumns="repeat(12, 1fr)" bg="purple.700" w="100%" gap={2} align="center" py={2} px={1} borderBottomRadius="2rem" position="fixed" top={0} zIndex={1}>
                 <GridItem colSpan={3}>
                     <Link as={ReactRouterLink} to="/">
-                        <HStack color="white">
+                        <HStack color="white" pl={2}>
                             <Image
-                                src={logo}
-                                htmlWidth="60px"
+                                src='./logo.png'
+                                htmlWidth="40px"
                             />
-                            <Heading size="md" >
+                            <Heading size="md" pl={1}>
                                 <a href="/">Volunteer Circle</a>
                             </Heading>
                         </HStack>

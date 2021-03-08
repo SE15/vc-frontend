@@ -4,21 +4,13 @@ import { useTransition, animated } from "react-spring";
 import { connect } from 'react-redux';
 
 import Settings from './Settings';
-import ProfileSettings from './Settings';
 import Home from './Home';
 import Profile from './Profile';
 import Search from './Search';
 import Login from './Login';
 import SignUp from './SignUp';
-import Logout from './Logout';
-import Delete from '../popups/DeleteAccount'
-import Change from '../popups/ChangePassword'
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import CardHolder from '../components/ContainerTemplates/CardHolder';
-import SkilLCard from '../components/Skill/SkillCard';
-import Recommendation from '../components/Recommendation/Recommendation';
-import Connection from '../components/Connection/Connection';
+import Header from "../containers/Header/Header";
+import Footer from "../components/Footer/Footer";
 
 import * as actions from '../store/actions';
 

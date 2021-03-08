@@ -19,7 +19,7 @@ import {
 import PopupWindow from '../ContainerTemplates/PopupWindow';
 
 
-const SkillCard = ({ validations, name, isOwner, onClick, isAuth, isLoading, id, alreadyValidated }) => {
+const Skill = ({ validations, name, isOwner, onClick, isAuth, isLoading, id, alreadyValidated }) => {
     const icon = isOwner
         ? <DeletePopup
             name={name}
@@ -111,4 +111,4 @@ const ValidatePopup = ({ name, onClick, isLoading, alreadyValidated }) => {
     );
 }
 
-export default SkillCard;
+export default Skill;
