@@ -13,6 +13,7 @@ const Footer = () => {
       py={2}
       bg="purple.700"
       borderTopRadius="1rem"
+      opacity={0.9}
     >
       <Box width="full" boxShadow="xs">
         <Stack isInline justifyContent="center" px={8}>

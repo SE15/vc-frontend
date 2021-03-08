@@ -32,7 +32,7 @@ function Header({ isAuthenticated, onLogout, user }) {
 
     return (
         <>
-            <Grid templateColumns="repeat(12, 1fr)" bg="purple.700" w="100%" gap={2} align="center" py={2} px={1} borderBottomRadius="2rem" position="fixed" top={0} zIndex={1}>
+            <Grid templateColumns="repeat(12, 1fr)" bg="purple.700" w="100%" gap={2} align="center" py={2} px={1} borderBottomRadius="2rem" position="fixed" top={0} zIndex={1} opacity={0.9}>
                 <GridItem colSpan={3}>
                     <Link as={ReactRouterLink} to="/">
                         <HStack color="white" pl={2}>
