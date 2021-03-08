@@ -1,10 +1,15 @@
 import {
     Box,
     FormControl,
-    Input
+    Input,
+    toast
 } from '@chakra-ui/react';
 import React, { Component } from 'react';
 import GridComponent from '../../components/ContainerTemplates/GridComponent';
+
+
+import { editUserProfile } from '../../api';
+import { connect } from 'react-redux';
 
 //TODO: Complete form control
 class ChangePassword extends Component {
@@ -15,15 +20,8 @@ class ChangePassword extends Component {
             password:'',
             confirmPassword:'',
             passwordConfirmed: false,
+            loading:false
          };
-    }
-
-    componentDidMount() {
-        //load name api call
-        this.setState({
-            ...this.state,
-            currentPassword:'need to call api'
-        });
     }
 
     handleChange(field, e) {
@@ -54,19 +52,51 @@ class ChangePassword extends Component {
 
     submitHandler = async (event) => {
         event.preventDefault();
-        console.log(this.state);
-        // need to call change name api method
-        // const result = await createUser((({ firstName, lastName, email, password }) => ({ firstName, lastName, email, password }))(this.state));
+        this.setState({
+            ...this.state,
+            loading:true
+        })
+
+        await editUserProfile(this.props.user, { method: 'change-password', oldPass: this.state.currentPassword, newPass: this.state.password })
+        .then((result)=>{
+            if (result.data) {
+                toast({
+                    position: "bottom-left",
+                    title: `Password changed successfully`,
+                    //description: `You have updated your name to '${first_name} ${last_name}'`,
+                    status: "success",
+                    isClosable: true,
+                    htmlWidth: 200
+                });
+            } else {
+                toast({
+                    position: "bottom-left",
+                    title: 'Changing password failed',
+                    description: result.message,
+                    status: "error",
+                    isClosable: true,
+                    htmlWidth: 200
+                });
+            }
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+        
+        this.setState({
+            ...this.state,
+            loading:false
+        })
     }
 
     render() {
         return (
             <form action='submit' onSubmit={this.submitHandler.bind(this)}>
-                <GridComponent heading="Change Your Password" isConfirm={this.state.passwordConfirmed?true:false}>
+                <GridComponent heading="Change Your Password" isConfirm={true} loading={this.state.loading} show={this.state.passwordConfirmed?true:false}>
                     <FormControl align="center">
                         <Box borderColor="blue.500" w="50%">
                             <Input
-                                isReadOnly
+                                isRequired
                                 type="password"
                                 placeholder="Current Password"
                                 size="lg"
@@ -107,4 +137,11 @@ class ChangePassword extends Component {
     }
 }
 
-export default ChangePassword;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    };
+};
+
+
+export default connect(mapStateToProps, null)(ChangePassword);

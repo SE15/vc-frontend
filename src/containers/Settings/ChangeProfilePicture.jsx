@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useState } from 'react';
 import {
     Button,
     Box,
@@ -10,6 +11,7 @@ import GridComponent from '../../components/ContainerTemplates/GridComponent';
 const ChangeProfilePicture = () => {
     const uploadedImage = useRef(null);
     const imageUploader = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     const handleImageUpload = e => {
         const [file] = e.target.files;
@@ -22,10 +24,40 @@ const ChangeProfilePicture = () => {
             };
             reader.readAsDataURL(file);
         }
+        console.log([file])
     };
 
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        console.log("object")
+        // const result = await editUserProfile(user, { method: 'edit-info', first_name: first_name, last_name: last_name });
+        // if (result.data) {
+        //     toast({
+        //         position: "bottom-left",
+        //         title: `Changed name successfully`,
+        //         description: `You have updated your name to '${first_name} ${last_name}'`,
+        //         status: "success",
+        //         isClosable: true,
+        //         htmlWidth: 200
+        //     });
+        //     updateName(first_name, last_name);
+        // } else {
+        //     toast({
+        //         position: "bottom-left",
+        //         title: 'Changing name failed',
+        //         description: result.message,
+        //         status: "error",
+        //         isClosable: true,
+        //         htmlWidth: 200
+        //     });
+        // }
+
+        setLoading(false);
+    }
+
     return (
-        <GridComponent heading="Change Your Profile Picture" isConfirm={true}>
+        <GridComponent heading="Change Your Profile Picture" isConfirm={true} onClick={submitHandler.bind(this)} loading={loading} show={true}>
             <Box align="center">
                     <Avatar
                         size="2xl"

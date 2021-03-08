@@ -53,7 +53,7 @@ const ChangeName = ({ user, firstName, lastName, updateName, onLogout }) => {
     }
 
     return (
-            <GridComponent heading="Change Your Name" isConfirm={true} onClick={submitHandler.bind(this)} loading={loading}>
+            <GridComponent heading="Change Your Name" isConfirm={true} onClick={submitHandler.bind(this)} loading={loading} show={first_name=='' || last_name==''? false:true}>
                 <FormControl align="center">
                     <Box borderColor="blue.500" w="50%">
                         <Input
