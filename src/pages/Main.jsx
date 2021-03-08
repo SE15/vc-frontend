@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useLocation, Redirect, withRouter } from "react-router-dom";
 import { useTransition, animated } from "react-spring";
 import { connect } from 'react-redux';
 
@@ -34,25 +34,6 @@ const Main = (props) => {
     );
 }
 
-const AuthenticatedRoutes = ({ isAuthenticated }) => {
-    if (isAuthenticated) return ([
-        <Route path="/" exact>
-            <Home />
-        </Route>,
-        <Route path="/settings" exact>
-            <Settings />
-        </Route>
-    ]);
-    return ([
-        <Route path="/" exact>
-            <Login />
-        </Route>,
-        <Route path="/signup" exact>
-            <SignUp />
-        </Route>
-    ]);
-}
-
 const Content = ({ isAuthenticated }) => {
     const location = useLocation();
     const transitions = useTransition(location, (location) => location.pathname, {
@@ -61,35 +42,29 @@ const Content = ({ isAuthenticated }) => {
         leave: { opacity: 0 },
     });
 
+    let routes = (item) => (
+        <Switch location={item}>
+            <Route path="/" exact component={Login} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/search" component={Search} />
+            <Route path="/profiles" component={Profile} />
+            <Redirect to="/" />
+        </Switch>
+    );
+
+    if (isAuthenticated) routes = (item) => (
+        <Switch location={item}>
+            <Route path="/" exact component={Home} />
+            <Route path="/settings" exact component={Settings} />
+            <Route path="/search" component={Search} />
+            <Route path="/profiles" component={Profile} />
+            <Redirect to="/" />
+        </Switch>
+    );
+
     return transitions.map(({ item, props, key }) => (
         <animated.div key={key} style={props}>
-            <Switch location={item}>
-                <Route path="/delete" exact>
-                    <Delete />
-                </Route>
-                <Route path="/change" exact>
-                    <Change />
-                </Route>
-                <Route path="/search">
-                    <Search />
-                </Route>
-                <Route path="/psettings" exact>
-                    <ProfileSettings />
-                </Route>
-                <Route path="/profiles">
-                    <Profile />
-                </Route>
-                <AuthenticatedRoutes isAuthenticated={isAuthenticated} />
-                <Route path="/profiles" exact>
-                    <Profile button="3" />
-                </Route>
-                <Route path="/user/profile" exact>
-                    <Profile />
-                </Route>
-                <Route path="/logout" exact>
-                    <Logout />
-                </Route>
-            </Switch>
+            {routes(item)}
         </animated.div>
     ));
 };
