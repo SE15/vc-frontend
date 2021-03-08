@@ -18,9 +18,9 @@ export const postRequest = async (url, data) => {
 	}
 };
 
-export const putRequest = async (url, data) => {
+export const putRequest = async (url, data, headers = {}) => {
 	try {
-		let response = (data) ? await axios.put(url, data) : await axios.put(url);
+		let response = (data) ? await axios.put(url, data, headers) : await axios.put(url, headers);
 		return generateSuccessOutput(response);
 	} catch (error) {
 		return generateErrorOutput(error);

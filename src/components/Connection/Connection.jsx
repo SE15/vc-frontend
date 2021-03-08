@@ -2,7 +2,7 @@ import { React } from "react"
 //import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
 
-import { Text, Avatar, HStack, Button, Spacer, ReactRouterLink } from "@chakra-ui/react"
+import { Text, Avatar, HStack, Button, Spacer } from "@chakra-ui/react"
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { useHistory } from 'react-router-dom';
 
@@ -34,7 +34,8 @@ function Connection({ name, user, image, widthAuto, authUser }) {
             boxShadow="lg"
             spacing={4}
             width={widthAuto ? "100%" : "350px"}>
-            <Avatar name={name} src={image} />
+            <Avatar name={name} src={image} borderColor="purple.500"
+                    showBorder borderWidth={1}/>
             <Text color="gray.700" fontWeight={500} align="center" fontSize={16} overflow="hidden" isTruncated>{name}</Text>
             <Spacer />
             <Button

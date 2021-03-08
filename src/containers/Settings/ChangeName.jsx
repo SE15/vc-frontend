@@ -19,7 +19,6 @@ const ChangeName = ({ user, firstName, lastName, updateName, onLogout }) => {
 
     const handleChange = (field, e) => {
         let textField = e.target.value;
-
         if (field === 'first_name') setFirstName(textField);
         else setLastName(textField);
     }
@@ -53,33 +52,38 @@ const ChangeName = ({ user, firstName, lastName, updateName, onLogout }) => {
     }
 
     return (
-            <GridComponent heading="Change Your Name" isConfirm={true} onClick={submitHandler.bind(this)} loading={loading}>
-                <FormControl align="center">
-                    <Box borderColor="blue.500" w="50%">
-                        <Input
-                            isRequired
-                            type="text"
-                            placeholder="First Name"
-                            size="lg"
-                            value={first_name}
-                            onChange={handleChange.bind(this, "first_name")}
-                        />
-                    </Box>
-                </FormControl>
-                <FormControl align="center">
-                    <Box borderColor="blue.500" w="50%">
-                        <Input
-                            isRequired
-                            type="text"
-                            placeholder="Last Name"
-                            colorScheme="black"
-                            size="lg"
-                            value={last_name}
-                            onChange={handleChange.bind(this, "last_name")}
-                        />
-                    </Box>
-                </FormControl>
-            </GridComponent>
+        <GridComponent
+            heading="Change Your Name"
+            isConfirm={true}
+            onClick={submitHandler.bind(this)}
+            loading={loading}
+            disabled={firstName === first_name && lastName === last_name}>
+            <FormControl align="center">
+                <Box borderColor="blue.500" w="50%">
+                    <Input
+                        isRequired
+                        type="text"
+                        placeholder="First Name"
+                        size="lg"
+                        value={first_name}
+                        onChange={handleChange.bind(this, "first_name")}
+                    />
+                </Box>
+            </FormControl>
+            <FormControl align="center">
+                <Box borderColor="blue.500" w="50%">
+                    <Input
+                        isRequired
+                        type="text"
+                        placeholder="Last Name"
+                        colorScheme="black"
+                        size="lg"
+                        value={last_name}
+                        onChange={handleChange.bind(this, "last_name")}
+                    />
+                </Box>
+            </FormControl>
+        </GridComponent>
     );
 }
 

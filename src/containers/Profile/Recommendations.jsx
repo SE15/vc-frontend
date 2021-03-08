@@ -27,14 +27,20 @@ import {
 
 import { connect } from 'react-redux';
 
-const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated, user, firstName, lastName }) => {
+const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated, user, firstName, lastName, profilePic, authUser }) => {
     const [recommendations, setRecommendations] = useState(recommendationList);
     const [description, setDescription] = useState('');
     const [isLoading, setLoading] = useState(false);
+    const [alreadyPosted, setAlreadyPosted] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
 
-    useEffect(() => { setRecommendations(recommendationList) }, [recommendationList]);
+    useEffect(() => { 
+        setRecommendations(recommendationList);
+        recommendationList.forEach(recommendation => {
+            if (recommendation.id == authUser) setAlreadyPosted(true);
+        }); 
+    }, [recommendationList]);
 
     const generateSuccessMessage = (title, message) => {
         toast({
@@ -64,8 +70,9 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
         if (result.data) {
             const tempRecommendations = [...recommendations];
             console.log(tempRecommendations);
-            tempRecommendations.push({ id: tempRecommendations.length + 1, first_name: firstName, last_name: lastName, description });
+            tempRecommendations.push({ id: tempRecommendations.length + 1, first_name: firstName, last_name: lastName, description, profile_pic: profilePic });
             setRecommendations(tempRecommendations);
+            setAlreadyPosted(true)
 
             generateSuccessMessage('Recommendation posted', `Your recommendation has posted`);
             onClose();
@@ -82,7 +89,7 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
             size="sm"
             variant="outline"
             colorScheme="purple"
-            isDisabled={isOpen || loading}
+            isDisabled={isOpen || loading || alreadyPosted}
             onClick={onOpen}
         >
             Post Recommendation
@@ -99,7 +106,9 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
                 : recommendations.map((recommendation, index) =>
                     <Recommendation
                         key={index}
+                        image={recommendation.profile_pic}
                         author={`${recommendation.first_name} ${recommendation.last_name}`}
+                        user={recommendation.id}
                         description={recommendation.description}
                     />
                 )}
@@ -109,7 +118,8 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
                 onClick={onPostRecommendation}
                 isLoading={isLoading}
                 isOpen={isOpen}
-                onClose={onClose}>
+                onClose={onClose}
+                isDisabled={description.length===0}>
                 <HStack
                     gap={4}
                     w="100%"
@@ -119,7 +129,7 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
                     spacing={3}
                     minWidth="350px"
                 >
-                    <Avatar name={`${firstName} ${lastName}`} size="md" />//TODO: add profile image as src
+                    <Avatar name={`${firstName} ${lastName}`} src={profilePic} borderColor="purple.500" showBorder borderWidth={1}/>
                     <VStack align="left">
                         <Text color="gray.600" fontWeight="bold" align="left">{firstName} {lastName}</Text>
                         <StackDivider borderWidth="1px" borderColor="purple.200" />
@@ -145,7 +155,9 @@ const mapStateToProps = state => {
     return {
         isAuthenticated: !(state.token === null || state.token === undefined),
         firstName: state.firstName,
-        lastName: state.lastName
+        lastName: state.lastName,
+        profilePic: state.profilePic,
+        authUser: state.user
     };
 };
 

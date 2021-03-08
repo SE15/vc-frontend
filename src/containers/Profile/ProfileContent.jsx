@@ -24,7 +24,7 @@ import {
 
 import { getUser, getConnectionState, addConnection, deleteConnection } from '../../api';
 
-const ProfileContent = ({ authUser, user, isAuthenticated }) => {
+const ProfileContent = ({ authUser, user, isAuthenticated, profilePic }) => {
     const toast = useToast()
 
     const [profileInfo, setProfileInfo] = useState({ id: null, first_name: null, last_name: null, profile_pic: null });
@@ -85,11 +85,12 @@ const ProfileContent = ({ authUser, user, isAuthenticated }) => {
     }, []);
 
     return (
-        <VStack w="100%" align="center" px={window.innerWidth / 25} pb={window.innerWidth / 25}>
+        <VStack w="100%" align="center" px={window.innerWidth / 29} pb={window.innerWidth / 25}>
             <Box w="100%" border="5px" pt={2} align="center">
                 <ProfileInfo
                     name={`${profileInfo.first_name} ${profileInfo.last_name}`}
-                    isLoading={loading} />
+                    isLoading={loading}
+                    profilePic={authUser===user? profilePic : profileInfo.profile_pic} />
                 {!loading && <ConnectionButton
                     type={button}
                     user={profileInfo.id}
@@ -208,7 +209,8 @@ const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.token !== null,
-        authUser: state.user
+        authUser: state.user,
+        profilePic: state.profilePic
     };
 };
 

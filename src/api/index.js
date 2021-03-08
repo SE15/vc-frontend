@@ -24,6 +24,7 @@ export {
     searchUsers,
     getUser,
     editUserProfile,
+    changeProfilePic,
     deleteUser,
     createUser
 } from './user-api'

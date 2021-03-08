@@ -4,5 +4,6 @@ export {
     setAuthRedirectPath,
     authCheckState,
     authSuccess,
-    updateName
+    updateName,
+    updateProfilePicture
 } from './auth';

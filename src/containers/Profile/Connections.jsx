@@ -19,6 +19,7 @@ const Connections  = ({ connectionList, loading, user }) => {
                 <Connection
                 id={connection.id} 
                 name={`${connection.first_name} ${connection.last_name}`}
+                image={connection.profile_pic}
                 user={connection.id}/>
             )}
         </CardHolder>

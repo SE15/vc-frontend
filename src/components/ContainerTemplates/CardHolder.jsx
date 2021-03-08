@@ -11,7 +11,7 @@ import {
 
 const CardHolder = (props) => {
     return (
-        <Box h="420px" w="40%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="purple.100" px={5}>
+        <Box h="420px" w="36%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="purple.100" px={5}>
             <VStack py={5} w="100%" h="100%" justify="center">
                 <Heading size="md" color="purple.700">
                     {props.heading}

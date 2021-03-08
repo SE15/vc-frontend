@@ -12,12 +12,13 @@ import {
 } from '@chakra-ui/icons'
 import { useHistory } from 'react-router-dom';
 
-const ConnectionRequest = ({ name, onAccept, onReject, user, loader, loadingId }) => {
+const ConnectionRequest = ({ name, onAccept, onReject, user, loader, loadingId, image }) => {
     const history = useHistory();
 
     return (
         <HStack borderWidth="1px" borderRadius="lg" bg="white" px={4} py={2} bg="purple.100" boxShadow="lg">
-            <Avatar name={name} />
+            <Avatar name={name} src={image} borderColor="purple.500"
+                    showBorder borderWidth={1}/>
             <VStack spacing={1}>
                 <Button
                     fontSize="16px"

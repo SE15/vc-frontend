@@ -9,16 +9,16 @@ import { Skeleton, SkeletonCircle, Button, Box, Heading, Avatar } from '@chakra-
  * 
  * @param name - Name of the user
  */
-const ProfileInfo = ({ name, isLoading }) => {
+const ProfileInfo = ({ name, user, isLoading, profilePic }) => {
     return (
         <center>
             {isLoading ? <SkeletonCircle size="120px" /> :
                 <Avatar
                     name={name}
-                    //TODO: set profile picture from the back-end
+                    src={profilePic}
                     size="2xl"
                     borderColor="purple.500"
-                    showBorder={true}
+                    showBorder
                     loading="lazy"
                 />
             }

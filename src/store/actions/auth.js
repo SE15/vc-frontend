@@ -40,6 +40,16 @@ export const updateName = (firstName, lastName) => {
     }
 }
 
+export const updateProfilePicture = (profilePic) => {
+    localStorage.setItem('profilePic', profilePic);
+
+    return {
+        type: actionTypes.UPDATE_PROFILE_PICTURE,
+        profilePic: profilePic
+    }
+}
+
+
 export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');

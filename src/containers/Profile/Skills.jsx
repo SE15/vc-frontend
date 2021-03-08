@@ -154,6 +154,7 @@ const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
                 onClick={onAddSkill}
                 isLoading={isLoading}
                 isOpen={isOpen}
+                isDisabled={name.length===0}
                 onClose={onClose}>
                 <Input
                     variant="outline"

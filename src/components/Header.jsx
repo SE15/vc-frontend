@@ -61,10 +61,10 @@ function Header({ isAuthenticated, onLogout, user }) {
                             isRequired
                             onChange={((e) => {setKeyword(e.target.value)}).bind(this)}
                             value={keyword} 
-                            onKeyPress={((e) => {if (e.key === 'Enter' && keyword.length !== 0)  history.push(`/search/${keyword}`, { keyword: keyword })}).bind(this)}/>
+                            onKeyPress={((e) => {if (e.key === 'Enter' && keyword.length !== 0) {history.push(`/search/${keyword}`, { keyword: keyword }); setKeyword('')}}).bind(this)}/>
                         <IconButton  
                             icon={<Search2Icon />} 
-                            onClick={() => { if (keyword.length !== 0) history.push(`/search/${keyword}`, { keyword: keyword }) }} 
+                            onClick={() => { if (keyword.length !== 0) {history.push(`/search/${keyword}`, { keyword: keyword }); setKeyword('')} }} 
                             bg="blueGreen.400" 
                             color="white"/>
                         <Link />
@@ -176,6 +176,7 @@ const NotificationPopover = ({ user, isAuthenticated }) => {
                                 <VStack w="100%" spacing={3} overflow="auto" h="270px">
                                     {connections.map((obj) =>
                                         <ConnectionRequest
+                                            image={obj.profile_pic}
                                             key={obj.id}
                                             name={`${obj.first_name} ${obj.last_name}`}
                                             onAccept={onClick(true, obj)}

@@ -2,7 +2,7 @@ import { React, useState, useEffect, Redirect } from "react";
 import { useLocation } from 'react-router-dom';
 import {
     VStack,
-    Heading,
+    Text,
     Image,
     HStack,
     SkeletonCircle,
@@ -48,19 +48,27 @@ const Search = () => {
     }, [])
 
     let results = (
-        <VStack p={8} w="40%" verticalAlign="center" alignContent="center" h={window.innerHeight / 1.4} borderWidth={3} borderRadius={8} VStackShadow="lg" bg="white.200" borderColor="purple.100" spacing={6} overflowX="hidden" overflowY="auto">
-            {loading ? <LoadingScreen />
-                : networkError ? <NetworkError />
-                    : noResults ? <NoResults />
-                        : connections.map((obj =>
-                            <Connection
-                                widthAuto
-                                name={`${obj.first_name} ${obj.last_name}`}
-                                user={obj.id}/> //TODO: Need to assign the connection_id from back-end
-                        ))}
-        </VStack>);
+        <VStack w="40%" h="100%">
+            <HStack spacing={1} wrap="wrap">
+                <Text color="gray.700" fontWeight="bold" fontSize={18}>Search results for</Text>
+                <Text color="purple.700" fontWeight="bold" fontSize={18}>{location.state.keyword}</Text>
+            </HStack>
+            <VStack w="100%" p={8} verticalAlign="center" alignContent="center" h={window.innerHeight / 1.4} borderWidth={3} borderRadius={8} VStackShadow="lg" bg="white.200" borderColor="purple.100" spacing={6} overflowX="hidden" overflowY="auto">
+                {loading ? <LoadingScreen />
+                    : networkError ? <NetworkError />
+                        : noResults ? <NoResults />
+                            : connections.map((obj =>
+                                <Connection
+                                    widthAuto
+                                    name={`${obj.first_name} ${obj.last_name}`}
+                                    user={obj.id}
+                                    image={obj.profile_pic} />
+                            ))}
+            </VStack>
+        </VStack>
+    );
     return (
-        <HStack spacing={20} pt={window.innerHeight / 15} px={window.innerWidth / 45} justify="center">
+        <HStack spacing={20} pt={window.innerHeight / 25} px={window.innerWidth / 45} justify="center">
             <Image
                 boxSize="20%"
                 src="/signup-bg1.png"

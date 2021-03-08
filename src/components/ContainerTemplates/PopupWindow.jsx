@@ -8,7 +8,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const PopupWindow = ({ title, buttonName, onClick, isLoading, children, isOpen, onClose }) => {
+const PopupWindow = ({ title, buttonName, onClick, isLoading, children, isOpen, onClose, isDisabled }) => {
     return (
         <Modal
             onClose={onClose}
@@ -25,7 +25,7 @@ const PopupWindow = ({ title, buttonName, onClick, isLoading, children, isOpen, 
                     {children}
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="purple" mr={3} onClick={onClick} isLoading={isLoading}>
+                    <Button colorScheme="purple" mr={3} onClick={onClick} isLoading={isLoading} isDisabled={isDisabled}>
                         {buttonName}
                     </Button>
                     <Button colorScheme="red" onClick={onClose} isDisabled={isLoading}>Cancel</Button>
