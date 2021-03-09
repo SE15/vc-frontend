@@ -109,6 +109,7 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
                         author={`${recommendation.first_name} ${recommendation.last_name}`}
                         user={recommendation.id}
                         description={recommendation.description}
+                        authUser={authUser}
                     />
                 )}
             <PopupWindow

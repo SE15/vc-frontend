@@ -6,8 +6,6 @@ import { Text, Avatar, HStack, Button, Spacer } from "@chakra-ui/react"
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { useHistory } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-
 function Connection({ name, user, image, widthAuto, authUser }) {
     const history = useHistory();
 
@@ -50,10 +48,4 @@ function Connection({ name, user, image, widthAuto, authUser }) {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        authUser: state.user
-    };
-};
-
-export default connect(mapStateToProps)(Connection);
+export default Connection;

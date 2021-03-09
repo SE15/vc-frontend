@@ -4,7 +4,9 @@ import NoResults from '../../components/Alerts/NoResults';
 
 import { useState, useEffect } from 'react';
 
-const Connections  = ({ connectionList, loading, user }) => {
+import { connect } from 'react-redux';
+
+const Connections  = ({ connectionList, loading, authUser }) => {
     const [connections, setConnections] = useState(connectionList);
 
     useEffect(() => {setConnections(connectionList); console.log(connections, connectionList)}, [connectionList]);
@@ -20,10 +22,18 @@ const Connections  = ({ connectionList, loading, user }) => {
                 id={connection.id} 
                 name={`${connection.first_name} ${connection.last_name}`}
                 image={connection.profile_pic}
-                user={connection.id}/>
+                user={connection.id}
+                authUser={authUser}/>
             )}
         </CardHolder>
     );
 }
 
-export default Connections;
+const mapStateToProps = state => {
+    return {
+        authUser: state.user
+    };
+};
+
+
+export default connect(mapStateToProps)(Connections);

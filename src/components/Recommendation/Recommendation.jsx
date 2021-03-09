@@ -13,7 +13,6 @@ import {
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 const Recommendation = ({ author, description, image, user, authUser }) => {
     const history = useHistory();
@@ -64,11 +63,4 @@ const Recommendation = ({ author, description, image, user, authUser }) => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        authUser: state.user
-    };
-};
-
-
-export default connect(mapStateToProps)(Recommendation);
+export default Recommendation;

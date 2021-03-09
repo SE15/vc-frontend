@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { Skeleton, SkeletonCircle, Button, Box, Heading, Avatar } from '@chakra-ui/react';
+import {
+    Skeleton,
+    SkeletonCircle,
+    Button,
+    Box,
+    Heading,
+    Avatar
+} from '@chakra-ui/react';
 
-
-/**
- * Information of the user.
- * 
- * @param name - Name of the user
- */
-const ProfileInfo = ({ name, user, isLoading, profilePic }) => {
+const ProfileInfo = ({ name, isLoading, profilePic }) => {
     return (
         <center>
             {isLoading ? <SkeletonCircle size="120px" /> :
