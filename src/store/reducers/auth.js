@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from '../actions/action-types';
 
 const updateObject = (oldObject, updatedProperties) => {
     return {
@@ -10,6 +10,9 @@ const updateObject = (oldObject, updatedProperties) => {
 const initialState = {
     token: null,
     user: null,
+    firstName: null,
+    lastName: null,
+    profilePic: null,
     error: null,
     loading: false,
     authRedirectPath: '/home'
@@ -23,6 +26,9 @@ const authSuccess = (state, action) => {
     return updateObject( state, { 
         token: action.token,
         user: action.user,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        profilePic: action.profilePic,
         error: null,
         loading: false
      } );
@@ -36,12 +42,26 @@ const authFail = (state, action) => {
 };
 
 const authLogout = (state, action) => {
-    return updateObject(state, { token: null, user: null });
+    return updateObject(state, { token: null, user: null, firstName: null, lastName: null, profilePic: null });
 };
 
 const setAuthRedirectPath = (state, action) => {
     return updateObject(state, { authRedirectPath: action.path })
 }
+
+const updateName = (state, action) => {
+    return updateObject( state, {
+        firstName: action.firstName,
+        lastName: action.lastName,
+    })
+}
+
+const updateProfilePicture = (state, action) => {
+    return updateObject( state, {
+        profilePic: action.profilePic
+    })
+}
+
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
@@ -50,6 +70,8 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.AUTH_FAIL: return authFail(state, action);
         case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
         case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state,action);
+        case actionTypes.UPDATE_NAME: return updateName(state, action);
+        case actionTypes.UPDATE_PROFILE_PICTURE: return updateProfilePicture(state, action);
         default:
             return state;
     }

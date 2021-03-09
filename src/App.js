@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './store/actions/auth';
 
 import './App.css';
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+
 import Main from "./pages/Main";
 
 class App extends Component {
@@ -17,9 +16,7 @@ class App extends Component {
   render() {
     return (
       <ChakraProvider>
-        <Header type = {true}/>
         <Main />
-        <Footer />
       </ChakraProvider>
     );
   } 
