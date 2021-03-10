@@ -1,6 +1,4 @@
 import { React } from "react"
-//import { Link } from "react-router-dom"
-import PropTypes from "prop-types"
 
 import { Text, Avatar, HStack, Button, Spacer } from "@chakra-ui/react"
 import { ExternalLinkIcon } from '@chakra-ui/icons'

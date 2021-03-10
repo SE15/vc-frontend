@@ -8,7 +8,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const PopupWindow = ({ title, buttonName, onClick, isLoading, children, isOpen, onClose, isDisabled }) => {
+const PopupWindow = ({ title, buttonName, onClick, isLoading, isDisabled, children, isOpen, onClose}) => {
     return (
         <Modal
             onClose={onClose}

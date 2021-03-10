@@ -18,7 +18,7 @@ const GridComponent = ({heading, children, isConfirm, onClick, loading, disabled
                 {children}
             </VStack>
             <Spacer />
-            {isConfirm && <Button type="submit" colorScheme="green" w="40%" onClick={onClick} isLoading={loading} isDisabled={disabled}> Confirm </Button>}
+            {isConfirm && <Button type="submit" colorScheme="green" w="40%" onClick={onClick} isLoading={loading} isDisabled={disabled}>Confirm</Button>}
         </VStack>
     );
 

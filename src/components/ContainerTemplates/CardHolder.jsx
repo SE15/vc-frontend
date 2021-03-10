@@ -9,20 +9,20 @@ import {
     AlertIcon
 } from '@chakra-ui/react';
 
-const CardHolder = (props) => {
+const CardHolder = ({heading, button, isLoading, children}) => {
     return (
         <Box h="420px" w="36%" borderWidth={3} borderRadius={8} boxShadow="lg" bg="white.200" borderColor="purple.100" px={5}>
             <VStack py={5} w="100%" h="100%" justify="center">
                 <Heading size="md" color="purple.700">
-                    {props.heading}
+                    {heading}
                 </Heading>
                 <StackDivider borderColor="purple.100" borderWidth={1} />
                 <Spacer />
                 <VStack h="75%" spacing={3} w="100%" overflowY="auto" py={2}>
-                    {props.isLoading ? <Loader /> : props.children || <NoResults name={props.heading.toLowerCase()} />}
+                    {isLoading ? <Loader /> : children || <NoResults name={heading.toLowerCase()} />}
                 </VStack>
                 <Spacer />
-                {props.button ? props.button : <Box h="30px"/>}
+                {button ? button : <Box h="30px"/>}
             </VStack>
         </Box>
     );

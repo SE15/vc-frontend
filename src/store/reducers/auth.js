@@ -15,7 +15,7 @@ const initialState = {
     profilePic: null,
     error: null,
     loading: false,
-    authRedirectPath: '/home'
+    authRedirectPath: '/'
 };
 
 const authStart = ( state, action ) => {

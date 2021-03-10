@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/icons'
 import { useHistory } from 'react-router-dom';
 
-const ConnectionRequest = ({ name, onAccept, onReject, user, loader, loadingId, image }) => {
+const ConnectionRequest = ({ name, image, user, onAccept, onReject, loader, loadingId }) => {
     const history = useHistory();
 
     return (
