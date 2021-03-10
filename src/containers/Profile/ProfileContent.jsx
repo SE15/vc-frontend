@@ -219,7 +219,7 @@ const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
                         isLoading={loading}
                         isOpen={isOpen}
                         onClose={onClose}>
-                        Do you wish to remove <Text as="em">{name}</Text> from your connections?
+                        Do you wish to remove <Text as="em" color="purple.700">{name}</Text> from your connections?
                      </PopupWindow>
                 </>);
         case 3:
