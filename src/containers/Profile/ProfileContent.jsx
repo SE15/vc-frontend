@@ -28,7 +28,7 @@ import {
 
 import { getUser, getConnectionState, addConnection, deleteConnection } from '../../api';
 
-const ProfileContent = ({ authUser, user, isAuthenticated, profilePic }) => {
+export const ProfileContent = ({ authUser, user, isAuthenticated, profilePic }) => {
     const toast = useToast()
 
     const [profileInfo, setProfileInfo] = useState({ id: null, first_name: null, last_name: null, profile_pic: null });
@@ -142,7 +142,7 @@ const ProfileContent = ({ authUser, user, isAuthenticated, profilePic }) => {
     }
 }
 
-const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
+export const ConnectionButton = ({ type, user, authUser, setButton, name }) => {
     const [loading, setLoading] = useState(false);
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
