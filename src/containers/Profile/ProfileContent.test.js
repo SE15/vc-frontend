@@ -14,7 +14,7 @@ import Connections from './Connections';
 import { connect } from 'react-redux';
 
 import { getUser, getConnectionState, addConnection, deleteConnection } from '../../api';
-import { HStack } from "@chakra-ui/layout";
+import { Box, HStack, VStack } from "@chakra-ui/layout";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 
 configure({ adapter: new Adapter() });
@@ -34,9 +34,15 @@ describe("profile container",()=>{
         wrapper=shallow(<ProfileContent/>);
         expect(wrapper.find(ProfileInfo)).toHaveLength(1);
     });
-
+//todo-err
     it('should display connect button if not a connection',()=>{
-
+        wrapper=shallow(<ProfileContent user={1} isAuthenticated={true} authUser={2}/>);
+        console.log(wrapper.find(VStack).childAt(1));
+        expect(wrapper.find(Box).childAt(1)).toMatchInlineSnapshot(
+            `<Button leftIcon={<EmailIcon />} colorScheme="green" variant="outline" my={2} isLoading={loading} onClick={onSendRequest}>
+            Send Request
+        </Button>`
+        )
     });
 
     it('should display remove connection button if it\'s a connection',()=>{
