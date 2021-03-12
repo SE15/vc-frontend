@@ -6,10 +6,10 @@ import { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
 
-const Connections  = ({ connectionList, loading, authUser }) => {
+export const Connections  = ({ connectionList, loading, authUser }) => {
     const [connections, setConnections] = useState(connectionList);
 
-    useEffect(() => {setConnections(connectionList); console.log(connections, connectionList)}, [connectionList]);
+    useEffect(() => {setConnections(connectionList)}, [connectionList]);
 
     return (
         <CardHolder
@@ -19,6 +19,7 @@ const Connections  = ({ connectionList, loading, authUser }) => {
             {connections.length === 0 ? <NoResults message="There are no connections"/> 
             : connections.map((connection) => 
                 <Connection
+                key={connection}
                 id={connection.id} 
                 name={`${connection.first_name} ${connection.last_name}`}
                 image={connection.profile_pic}
