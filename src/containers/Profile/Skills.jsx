@@ -25,7 +25,7 @@ import {
 
 import { connect } from 'react-redux';
 
-const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
+export const Skills = ({ skillList, isOwner, loading, isAuthenticated, user }) => {
     const [skills, setSkills] = useState(skillList);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
