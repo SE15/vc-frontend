@@ -26,7 +26,7 @@ import {
 
 import { connect } from 'react-redux';
 
-const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated, user, firstName, lastName, profilePic, authUser }) => {
+export const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated, user, firstName, lastName, profilePic, authUser }) => {
     const [recommendations, setRecommendations] = useState(recommendationList);
     const [description, setDescription] = useState('');
     const [isLoading, setLoading] = useState(false);
