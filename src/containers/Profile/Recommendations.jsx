@@ -134,6 +134,7 @@ export const Recommendations = ({ recommendationList, loading, isOwner, isAuthen
                         <Text color="gray.600" fontWeight="bold" align="left">{firstName} {lastName}</Text>
                         <StackDivider borderWidth="1px" borderColor="purple.200" />
                         <Textarea
+                            className="user-input"
                             w="280px"
                             variant="outline"
                             placeholder="type your recommendation..."
