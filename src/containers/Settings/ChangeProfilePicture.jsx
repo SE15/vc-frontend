@@ -14,7 +14,7 @@ import * as actions from '../../store/actions';
 
 import { connect } from 'react-redux';
 
-const ChangeProfilePicture = ({ user, firstName, lastName, profilePic, updateProfilePicture }) => {
+export const ChangeProfilePicture = ({ user, firstName, lastName, profilePic, updateProfilePicture }) => {
     const uploadedImage = useRef(null);
     const imageUploader = useRef(null);
     const [isImageChanged, setIsImageChanged] = useState(false);

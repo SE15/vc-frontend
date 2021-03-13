@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { editUserProfile } from '../../api';
 import * as actions from '../../store/actions';
 
-const ChangeName = ({ user, firstName, lastName, updateName, onLogout }) => {
+export const ChangeName = ({ user, firstName, lastName, updateName, onLogout }) => {
     const [first_name, setFirstName] = useState(firstName);
     const [last_name, setLastName] = useState(lastName);
     const [loading, setLoading] = useState(false);

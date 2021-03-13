@@ -18,7 +18,7 @@ const withToast = (Component) => {
     }
 }
 
-class ChangePassword extends Component {
+export class ChangePassword extends Component {
     constructor(props) {
         super(props);
         this.state = {

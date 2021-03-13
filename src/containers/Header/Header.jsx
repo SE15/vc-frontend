@@ -26,7 +26,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 
 
-function Header({ isAuthenticated, onLogout, user }) {
+export function Header({ isAuthenticated, onLogout, user }) {
     const history = useHistory();
     const [keyword, setKeyword] = useState('');
 

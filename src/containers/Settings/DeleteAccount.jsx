@@ -20,7 +20,7 @@ import { deleteUser } from '../../api';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-const DeleteAccount = ({user, onLogout}) => {
+export const DeleteAccount = ({user, onLogout}) => {
     const [loading, setLoading] = useState(false);
     const {isOpen, onOpen, onClose} = useDisclosure();
     const toast = useToast();
