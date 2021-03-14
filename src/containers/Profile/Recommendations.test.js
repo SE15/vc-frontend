@@ -91,7 +91,7 @@ describe("Recommendation Container", () => {
     `);
   });
 
-  it("should display box for a profile owner", () => {
+  it("shouldn\'t display the post recommendation button for the profile owner", () => {
     const recommendations = [];
     wrapper = mount(
       <Recommendations
@@ -241,7 +241,7 @@ describe("Recommendation Container", () => {
     expect(wrapper.find(Recommendation)).toHaveLength(0);
   });
 
-  it("should disable the post recommendation button when the logged in user already posted a recommendation", () => {
+  it("should disable the post recommendation button when the logged in user already posted a recommendation before", () => {
     const recommendations = [
       {
         id: 1,
@@ -260,6 +260,42 @@ describe("Recommendation Container", () => {
         isAuthenticated={true}
       />
     );
+
+    expect(wrapper.find(CardHolder).prop("button")).toMatchInlineSnapshot(`
+      <Button
+        colorScheme="purple"
+        isDisabled={true}
+        leftIcon={<EmailIcon />}
+        onClick={[Function]}
+        size="sm"
+        variant="outline"
+      >
+        Post Recommendation
+      </Button>
+    `);
+  });
+
+  it("should disable the post recommendation button when the logged in user posted a new recommendation", async () => {
+    const recommendations = [];
+
+    wrapper = shallow(
+      <Recommendations
+        recommendationList={recommendations}
+        firstName="some-firstname"
+        lastName="some-lastName"
+        profilePic="some-image"
+        user={2}
+        authUser={1}
+        loading={false}
+        isOwner={false}
+        isAuthenticated={true}
+      />
+    );
+    const eventObj = { target: { value: "some-description" } };
+    wrapper.find(Textarea).simulate("change", eventObj);
+    wrapper.update();
+
+    await wrapper.find(PopupWindow).prop("onClick")();
 
     expect(wrapper.find(CardHolder).prop("button")).toMatchInlineSnapshot(`
       <Button
