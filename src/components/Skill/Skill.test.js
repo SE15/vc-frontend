@@ -9,14 +9,7 @@ import ValidateSkillPopup from "./ValidateSkillPopup";
 
 import {
   Box,
-  HStack,
-  Text,
-  IconButton,
-  Tooltip,
-  Spacer,
-  useDisclosure,
-  Alert,
-  AlertIcon,
+  Text
 } from "@chakra-ui/react";
 
 configure({ adapter: new Adapter() });

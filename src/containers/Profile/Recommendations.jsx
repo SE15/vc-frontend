@@ -38,6 +38,7 @@ export const Recommendations = ({ recommendationList, loading, isOwner, isAuthen
         setRecommendations(recommendationList);
         recommendationList.forEach(recommendation => {
             if (recommendation.id == authUser) setAlreadyPosted(true);
+            else setAlreadyPosted(false);
         }); 
     }, [recommendationList]);
 
@@ -67,13 +68,13 @@ export const Recommendations = ({ recommendationList, loading, isOwner, isAuthen
         setLoading(true);
         const result = await submitRecommendation(user, { description });
         if (result.data) {
+            console.log(result.data);
             const tempRecommendations = [...recommendations];
-            console.log(tempRecommendations);
             tempRecommendations.push({ id: tempRecommendations.length + 1, first_name: firstName, last_name: lastName, description, profile_pic: profilePic });
             setRecommendations(tempRecommendations);
             setAlreadyPosted(true)
 
-            generateSuccessMessage('Recommendation posted', `Your recommendation has posted`);
+            generateSuccessMessage('Recommendation posted', `Your recommendation has been posted`);
             onClose();
             setDescription('')
         } else {

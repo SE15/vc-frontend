@@ -12,13 +12,17 @@ import CardHolder from "../../components/ContainerTemplates/CardHolder";
 import NoResults from "../../components/Alerts/NoResults";
 import PopupWindow from "../../components/ContainerTemplates/PopupWindow";
 
-import { submitRecommendation } from "../../api";
-import { Button } from "@chakra-ui/button";
-import { Textarea } from "@chakra-ui/textarea";
-import { VStack } from "@chakra-ui/layout";
+import { Button, Textarea } from "@chakra-ui/react";
 
 configure({ adapter: new Adapter() });
 const mockStore = configureMockStore();
+
+jest.mock("../../api", () => ({
+  submitRecommendation: (user, description) => {
+    if (user) return { data: true };
+    else return { message: "some-error" };
+  },
+}));
 
 describe("Recommendation Container", () => {
   let wrapper;
@@ -33,7 +37,7 @@ describe("Recommendation Container", () => {
   it("should display one recommendation when provided", () => {
     const recommendations = [
       {
-        key: 1,
+        id: 1,
         image: "some-image",
         author: "some-firstname some-lastname",
         description: "some-description",
@@ -47,13 +51,13 @@ describe("Recommendation Container", () => {
   it("should display two recommendation when provided", () => {
     const recommendations = [
       {
-        key: 1,
+        id: 1,
         image: "some-image1",
         author: "some-firstname1 some-lastname1",
         description: "some-description1",
       },
       {
-        key: 2,
+        id: 2,
         image: "some-image2",
         author: "some-firstname2 some-lastname2",
         description: "some-description2",
@@ -63,7 +67,7 @@ describe("Recommendation Container", () => {
     wrapper = mount(<Recommendations recommendationList={recommendations} />);
     expect(wrapper.find(Recommendation)).toHaveLength(2);
   });
-  //todo
+
   it("should display post recommendation button for a non profile owner", () => {
     const recommendations = [];
     wrapper = mount(
@@ -86,8 +90,8 @@ describe("Recommendation Container", () => {
       </Button>
     `);
   });
-  //todo
-  it("should display box for a  profile owner", () => {
+
+  it("should display box for a profile owner", () => {
     const recommendations = [];
     wrapper = mount(
       <Recommendations
@@ -102,15 +106,11 @@ describe("Recommendation Container", () => {
       />
     `);
   });
-  //todo
-  it("should generate success toast if post reccomendation was a success", () => {});
-  //todo
-  it("should generate error toast if post reccomendation was a unsuccessful", () => {});
 
   it("should set loading prop when loading prop is set", () => {
     const recommendations = [
       {
-        key: 1,
+        id: 1,
         image: "some-image1",
         author: "some-firstname1 some-lastname1",
         description: "some-description1",
@@ -122,25 +122,21 @@ describe("Recommendation Container", () => {
     );
     expect(wrapper.find(CardHolder).prop("isLoading")).toBeTruthy();
   });
-  //todo
+
   it("should set description on change", () => {
-      const ontypeMock= jest.fn();
-      const recommendations=[];
-      wrapper = shallow(
-        <Recommendations recommendationList={recommendations}/>
-      );
-      const eventObj = {currentTarget: {value: 'some-description'}};
-      expect(wrapper.find(Textarea).prop('value')).toEqual('');
-      wrapper.find(Textarea).simulate('change', eventObj);
-      wrapper.update();
-      expect(wrapper.find(Textarea).prop('value')).toEqual('some-description');
-      //console.log(wrapper.find(Textarea).props());
+    const recommendations = [];
+    wrapper = shallow(<Recommendations recommendationList={recommendations} />);
+    const eventObj = { target: { value: "some-description" } };
+    expect(wrapper.find(Textarea).prop("value")).toEqual("");
+    wrapper.find(Textarea).simulate("change", eventObj);
+    wrapper.update();
+    expect(wrapper.find(Textarea).prop("value")).toEqual("some-description");
   });
 
   it("should pass logged in user's id", () => {
     const recommendations = [
       {
-        key: 1,
+        id: 1,
         image: "some-image1",
         author: "some-firstname1 some-lastname1",
         description: "some-description1",
@@ -164,7 +160,7 @@ describe("Recommendation Container", () => {
   it("should pass logged in user's first name and last name", () => {
     const recommendations = [
       {
-        key: 1,
+        id: 1,
         image: "some-image1",
         author: "some-firstname1 some-lastname1",
         description: "some-description1",
@@ -186,11 +182,11 @@ describe("Recommendation Container", () => {
     expect(wrapper.props().firstName).toBe("some-firstname1");
     expect(wrapper.props().lastName).toBe("some-lastname1");
   });
-  //todo
+
   it("should pass logged in user's authentication status", () => {
     const recommendations = [
       {
-        key: 1,
+        id: 1,
         image: "some-image1",
         author: "some-firstname1 some-lastname1",
         description: "some-description1",
@@ -198,8 +194,9 @@ describe("Recommendation Container", () => {
     ];
 
     const initState = {
-      isAuthenticated: true,
+      token: "some-token",
     };
+
     store = mockStore(initState);
     wrapper = shallow(
       <ReduxRecommendations
@@ -209,5 +206,72 @@ describe("Recommendation Container", () => {
     ).dive();
 
     expect(wrapper.props().isAuthenticated).toBe(true);
+  });
+
+  it("should add recommendation when the user clicked the confirm button and updated database", async () => {
+    const recommendations = [];
+
+    wrapper = shallow(
+      <Recommendations
+        recommendationList={recommendations}
+        firstName="some-firstname"
+        lastName="some-lastName"
+        profilePic="some-image"
+        user={1}
+      />
+    );
+    const eventObj = { target: { value: "some-description" } };
+    wrapper.find(Textarea).simulate("change", eventObj);
+    wrapper.update();
+
+    await wrapper.find(PopupWindow).prop("onClick")();
+    expect(wrapper.find(Recommendation)).toHaveLength(1);
+  });
+
+  it("shouldn't add recommendation when the user clicked the confirm button and didn't update the database", async () => {
+    const recommendations = [];
+
+    wrapper = shallow(<Recommendations recommendationList={recommendations} />);
+
+    const eventObj = { target: { value: "some-description" } };
+    wrapper.find(Textarea).simulate("change", eventObj);
+    wrapper.update();
+
+    await wrapper.find(PopupWindow).prop("onClick")();
+    expect(wrapper.find(Recommendation)).toHaveLength(0);
+  });
+
+  it("should disable the post recommendation button when the logged in user already posted a recommendation", () => {
+    const recommendations = [
+      {
+        id: 1,
+        image: "some-image",
+        author: "some-firstname some-lastname",
+        description: "some-description",
+      },
+    ];
+
+    wrapper = mount(
+      <Recommendations
+        recommendationList={recommendations}
+        authUser={1}
+        loading={false}
+        isOwner={false}
+        isAuthenticated={true}
+      />
+    );
+
+    expect(wrapper.find(CardHolder).prop("button")).toMatchInlineSnapshot(`
+      <Button
+        colorScheme="purple"
+        isDisabled={true}
+        leftIcon={<EmailIcon />}
+        onClick={[Function]}
+        size="sm"
+        variant="outline"
+      >
+        Post Recommendation
+      </Button>
+    `);
   });
 });
