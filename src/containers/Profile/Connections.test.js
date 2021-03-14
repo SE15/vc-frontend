@@ -89,4 +89,13 @@ describe("Connections Container", () => {
 
         expect(wrapper.props().authUser).toBe(1);
     });
+
+    it('should direct to user profile when view is clicked', ()=>{
+
+    });
+
+    it('should show when a new connection is added', ()=>{
+
+    });
+    
 });

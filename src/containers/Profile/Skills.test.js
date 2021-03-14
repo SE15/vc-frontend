@@ -20,9 +20,30 @@ import {
     deleteSkill,
     validateSkill
 } from '../../api'
+import Skill from "../../components/Skill/Skill";
+import ValidateSkillPopup from "../../components/Skill/ValidateSkillPopup";
+import { Children } from "react";
+import { Input } from "@chakra-ui/input";
 
 configure({ adapter: new Adapter() });
 const mockStore = configureMockStore();
+
+jest.mock("../../api", () => ({
+  addSkill: (userId, name) => {
+    if (userId) return { data: true };
+    else return { message: "some-error" };
+  },
+  validateSkill: (userId, skillId) => {
+    if (userId) return { skillId: true };
+    else return { message: "some-error" };
+  },
+  deleteSkill: (userId, skillId) => {
+    if (userId) return { skillId: true };
+    else return { message: "some-error" };
+  },
+}));
+
+
 
 describe("Skills container", () => {
   let wrapper;
@@ -178,28 +199,33 @@ describe("Skills container", () => {
       ];
 
     const initState = {
-        isAuthenticated: true
+        token: "some-token",
     }
     store = mockStore(initState);
     
     wrapper = shallow(<ReduxSkills store={store} skillList={skills}/>).dive();
-    //console.log(wrapper.props());
     expect(wrapper.props().isAuthenticated).toBe(true);
   });
 
   //todo
-  it("should call function on click of validate skill",()=>{
+  it("should call function on click of validate skill",async ()=>{
       const valSkill= jest.fn();
       const skills = [
         {
           id: 1,
           name: "skill-name1",
-          validations: 5,
+          validations:5,
+          alreadyValidated: false,
         },
       ];
-      wrapper = mount(<Skills skillList={skills} isOwner={false} />);
-      wrapper.find(SkillCard).at(0).simulate('click');
-      expect(valSkill).toHaveBeenCalled();
+      const eventObj= { target: {validations: 6}};
+      wrapper = mount(<Skills skillList={skills} isOwner={false} isAuthenticated={true} />);
+      wrapper.find(SkillCard).at(0).simulate('click', { target: {validations: 6}});
+     
+
+      await wrapper.find(ValidateSkillPopup).prop("onClick")();
+      console.log(wrapper.find(SkillCard).props());
+      expect(wrapper.find(SkillCard).at(0).prop("validations")).toEqual(5);
 
 
   });
@@ -215,18 +241,91 @@ describe("Skills container", () => {
     ];
     wrapper = mount(<Skills skillList={skills} isOwner={true} />);
     wrapper.find(SkillCard).at(0).simulate('click');
-    expect(delSkill).toHaveBeenCalled();
+    
 
 
   });
 //todo
   it('should open validate skill popup',()=>{
+    const skills = [
+      {
+        id: 1,
+        name: "skill-name1",
+        validations:5,
+        alreadyValidated: false,
+      },
+    ];
+    const eventObj= { target: {validations: 6}};
+    wrapper = mount(<Skills skillList={skills} isOwner={false} isAuthenticated={true} />);
+    
 
   });
 //todo
   it('should open delete skill popup',()=>{
 
   });
+
+  it("should change skill name on change", async()=>{
+    const skills=[];
+
+    wrapper =shallow(
+      <Skills skillList={skills} isAuthenticated={true} isOwner={true}/>
+    );
+    const eventObj={target:{value: "skill-name"}};
+    wrapper.find(Input).simulate("change", eventObj);
+    wrapper.update();
+    expect(wrapper.find(Input).prop("value")).toEqual("skill-name");
+  });
+
+  it("should add skill when the user clicked the confirm button and updated database", async()=>{
+    const skills=[
+      {
+        id: 1,
+        name: "skill-name1",
+        validations:5,
+        alreadyValidated: false,
+      },
+    ];
+
+    wrapper =shallow(
+      <Skills skillList={skills} isAuthenticated={true} isOwner={true}/>
+    );
+    const eventObj={target:{value: "skill-name"}};
+    wrapper.find(Input).simulate("change", eventObj);
+    wrapper.update();
+    expect(wrapper.find(Input).prop("value")).toEqual("skill-name");
+    await wrapper.find(PopupWindow).prop("onClick")();
+    expect(wrapper.find(Skill)).toHaveLength(1);
+  });
+
+  it("should not add skill when the user clicked the confirm button but not updated database", async()=>{
+    const skills=[];
+
+    wrapper =shallow(
+      <Skills skillList={skills} isAuthenticated={true} isOwner={true}/>
+    );
+    const eventObj={target:{value: "skill-name"}};
+    wrapper.find(Input).simulate("change", eventObj);
+    wrapper.update();
+    expect(wrapper.find(Input).prop("value")).toEqual("skill-name");
+    await wrapper.find(PopupWindow).prop("onClick")();
+    expect(wrapper.find(Skill)).toHaveLength(0);
+  });
+
+  it("should display validated in validation popup if skill has been already validated", ()=>{
+
+  });
+
+  it("should remove skill from container if deleted by user", ()=>{
+
+  });
+
+  it("should disable validate button if a user has validated a specific skill in that user profile", ()=>{
+
+  });
+
+
+
 
 
 
