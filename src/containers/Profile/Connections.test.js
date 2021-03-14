@@ -37,6 +37,7 @@ describe("Connections Container", () => {
         expect(wrapper.find(CardHolder).prop('children')).toHaveLength(1);
     });
 
+    
     it("should display two connections when provided", () => {
         const connections = [
             {

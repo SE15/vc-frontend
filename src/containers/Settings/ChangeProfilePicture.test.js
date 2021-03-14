@@ -20,7 +20,6 @@ import configureMockStore from 'redux-mock-store';
 configure({adapter: new Adapter()});
 const mockStore = configureMockStore();
 
-
 jest.mock('../../api', () => ({
     changeProfilePic: (user, data) => {
         if ( data.method =='change-profile-pic' && data.picture!="") {

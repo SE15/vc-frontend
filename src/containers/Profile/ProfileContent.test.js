@@ -35,6 +35,7 @@ describe("profile container",()=>{
         expect(wrapper.find(ProfileInfo)).toHaveLength(1);
     });
 //todo-err
+
     it('should display connect button if not a connection',()=>{
         // wrapper=shallow(<ProfileContent user={1} isAuthenticated={true} authUser={2}/>);
         // console.log(wrapper.find(VStack).childAt(1));

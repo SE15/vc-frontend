@@ -207,6 +207,7 @@ describe("Recommendation Container", () => {
 
     expect(wrapper.props().isAuthenticated).toBe(true);
   });
+  
 
   it("should add recommendation when the user clicked the confirm button and updated database", async () => {
     const recommendations = [];

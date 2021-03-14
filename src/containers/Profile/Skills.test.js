@@ -14,7 +14,6 @@ import NoResults from "../../components/Alerts/NoResults";
 import PopupWindow from "../../components/ContainerTemplates/PopupWindow";
 import { Button } from "@chakra-ui/button";
 
-
 import {
     addSkill,
     deleteSkill,

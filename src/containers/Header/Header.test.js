@@ -170,4 +170,5 @@ describe('<Header />', () => {
     it('should dispatch onLogout of global store when profilePicture is updated', () => {
 
     });
+    
 });

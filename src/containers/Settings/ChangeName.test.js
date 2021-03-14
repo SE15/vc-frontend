@@ -41,7 +41,6 @@ describe('<ChangeName />', () => {
     let wrapper;
     let store;
 
-    
     beforeEach(() => {
         wrapper = shallow(<ChangeName />);
     });

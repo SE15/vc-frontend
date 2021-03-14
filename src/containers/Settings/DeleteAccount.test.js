@@ -42,6 +42,7 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
+
 describe('<DeleteAccount />', () => {
     let wrapper;
     let store;

@@ -20,6 +20,7 @@ configure({adapter: new Adapter()});
 const mockStore = configureMockStore();
 
 
+
 jest.mock('../../api', () => ({
     editUserProfile: (user, data) => {
         if ( user && data.method =='change-password' && data.oldPass!="" && data.newPass!="") {
