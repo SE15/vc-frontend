@@ -4,6 +4,7 @@ import {
     Input,
     useToast
 } from '@chakra-ui/react';
+import { act } from 'react-dom/test-utils';
 import React, { Component } from 'react';
 import GridComponent from '../../components/ContainerTemplates/GridComponent';
 import { ChangePassword } from './ChangePassword';
@@ -19,15 +20,20 @@ configure({adapter: new Adapter()});
 const mockStore = configureMockStore();
 
 
-jest.mock('react-router-dom', () => ({
+jest.mock('../../api', () => ({
     editUserProfile: (user, data) => {
-        if ( data.method =='edit-info' && data.first_name!="" && data.last_name!="") {
+        if ( user && data.method =='change-password' && data.oldPass!="" && data.newPass!="") {
             return {
                 data: true
             }
+        }else{
+            return { 
+                message: "some-error" 
+            };
         }
     },
 }));
+
 
 describe('<ChangePassword />', () => {
     let wrapper;
@@ -45,15 +51,7 @@ describe('<ChangePassword />', () => {
         
         expect(wrapper.children(GridComponent).length).toEqual(1);
     });
-
-    it('should echo current password in text', () => {
-        
-        wrapper.find(Input).at(0).simulate('change', {
-            target: {value: "current password"}
-        });
-
-        expect(wrapper.find(Input).at(0).props().value).toEqual('current password');
-    });
+    
 
     it('should echo New password in text', () => {
         
@@ -109,17 +107,51 @@ describe('<ChangePassword />', () => {
         expect(wrapper.find(Input).at(2).props().focusBorderColor).toEqual('red.400');
     });
 
-    // it('should cancel the event when submitted', () => {
-    //     wrapper = mount(<ChangeName submitHandler/>);
-    //     let prevented = false;
-    //     wrapper.find(Button).simulate("click", {
-    //         preventDefault: () => {
-    //             prevented = true;
-    //         },
-    //     });
-    //     //wrapper.find(Button).prop('onClick')()
-    //     expect(prevented).toBe(true);
-    // });
+    it('should cancel the event when submitted',async () => {
+        // wrapper = mount(<ChangePassword />);
+        // let prevented = false;
+
+        // await act(async () => {
+        //     await wrapper.find(Button).at(0).prop("onClick")(
+        //         {
+        //             preventDefault: () => {
+        //                 prevented = true;
+        //             },
+        //         }
+        //     );
+        // });
+        // wrapper.update();
+        // expect(prevented).toBe(true);
+    });
+
+    it("should change password when the user clicked the confirm button and update database and show success message", async () => {
+
+        // wrapper = mount(
+        //   <ChangePassword
+        //     user={1}
+        //   />
+        // );
+        // wrapper.setState({password:"password"})
+        // wrapper.find(Input).at(2).simulate('change', {
+        //     target: {value: "password"}
+        // });
+        // wrapper.update();
+
+        // await act(async () => {
+        //     await wrapper.find(Button).at(0).prop("onClick")(
+        //         {
+        //             preventDefault: jest.fn(),
+        //         }
+        //     );
+        // });
+        
+
+        // expect(wrapper.state().confirmPassword).toEqual('');
+    });
+
+    it("should't change password and show error message when currunt password is incorrect, when press confirm", async () => {
+        
+    });
 
     it('should pass logged in user\'s id', () => {
 

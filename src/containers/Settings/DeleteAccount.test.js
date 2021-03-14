@@ -60,17 +60,17 @@ describe('<DeleteAccount />', () => {
         expect(wrapper.children(PopupWindow).length).toEqual(1);
     });
 
-    // it('should cancel the event when submitted', () => {
-    //     wrapper = mount(<ChangeName submitHandler/>);
-    //     let prevented = false;
-    //     wrapper.find(Button).simulate("click", {
-    //         preventDefault: () => {
-    //             prevented = true;
-    //         },
-    //     });
-    //     //wrapper.find(Button).prop('onClick')()
-    //     expect(prevented).toBe(true);
-    // });
+    it("should delete account when the user clicked the confirm button and update database and show success message", async () => {
+
+    });
+
+    it("should call onLogout redux function on success, when confirm pressed", async () => {
+        
+    });
+
+    it("should't delete account and show error message when deletion fails, when press confirm", async () => {
+        
+    });
 
     it('should pass logged in user\'s id', () => {
 
@@ -81,6 +81,10 @@ describe('<DeleteAccount />', () => {
         wrapper = shallow(<ReduxConnections store={store} />).dive();
 
         expect(wrapper.props().user).toBe(1);
+    });
+
+    it('should dispatch onLogout of global store when profilePicture is updated', () => {
+
     });
 });
 

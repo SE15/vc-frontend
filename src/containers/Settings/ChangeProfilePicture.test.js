@@ -21,12 +21,16 @@ configure({adapter: new Adapter()});
 const mockStore = configureMockStore();
 
 
-jest.mock('react-router-dom', () => ({
+jest.mock('../../api', () => ({
     changeProfilePic: (user, data) => {
         if ( data.method =='change-profile-pic' && data.picture!="") {
             return {
                 data: true
             }
+        }else{
+            return { 
+                message: "some-error" 
+            };
         }
     },
 }));
@@ -48,40 +52,36 @@ describe('<ChangeProfilePicture />', () => {
         expect(wrapper.children(GridComponent).length).toEqual(1);
     });
 
-    // it('should not show avatar and show image when isImageChanged true', () => {
-    //     wrapper.setState({isImageChanged:true});
+    it('should not show avatar and show image when isImageChanged true', () => {
+        // wrapper.setState({isImageChanged:true});
 
-    //     expect(wrapper.find(Avatar).at(0).props().display).toEqual('none');
-    //     expect(wrapper.find(Image).at(0).props().display).toEqual('block');
-    // });
+        // expect(wrapper.find(Avatar).at(0).props().display).toEqual('none');
+        // expect(wrapper.find(Image).at(0).props().display).toEqual('block');
+    });
 
-    // it('should show avatar and not show image when isImageChanged false', () => {
-    //     wrapper.setState({isImageChanged:true});
+    it('should show avatar and not show image when isImageChanged false', () => {
+        // wrapper.setState({isImageChanged:true});
 
-    //     expect(wrapper.find(Avatar).at(0).props().display).toEqual('block');
-    //     expect(wrapper.find(Image).at(0).props().display).toEqual('none');
-    // });
+        // expect(wrapper.find(Avatar).at(0).props().display).toEqual('block');
+        // expect(wrapper.find(Image).at(0).props().display).toEqual('none');
+    });
 
-    // it('should change isImageChanged to when image uploaded', () => {
+    it('should change isImageChanged to when image uploaded', () => {
         
-    //     wrapper.find('input').at(0).simulate('change', {
-    //         target: {files: true, src: "pic.png"}
-    //     });
+        // wrapper.find('input').at(0).simulate('change', {
+        //     target: {files: true, src: "pic.png"}
+        // });
 
-    //     expect(wrapper.state().isImageChanged).toBe(true);
-    // });
+        // expect(wrapper.state().isImageChanged).toBe(true);
+    });
 
-    // it('should cancel the event when submitted', () => {
-    //     wrapper = mount(<ChangeName submitHandler/>);
-    //     let prevented = false;
-    //     wrapper.find(Button).simulate("click", {
-    //         preventDefault: () => {
-    //             prevented = true;
-    //         },
-    //     });
-    //     //wrapper.find(Button).prop('onClick')()
-    //     expect(prevented).toBe(true);
-    // });
+    it("should change profile picture when the user clicked the confirm button and update database and show success message", async () => {
+
+    });
+
+    it("should't change profile picture and show error message when profile picture updatefails, when press confirm", async () => {
+        
+    });
 
     it('should pass logged in user\'s id', () => {
 
@@ -137,5 +137,9 @@ describe('<ChangeProfilePicture />', () => {
         wrapper = shallow(<ReduxConnections store={store} />).dive();
 
         expect(wrapper.props().profilePic).toEqual("pic.png");
+    });
+
+    it('should dispatch updateProfilePicture of global store when profilePicture is updated', () => {
+
     });
 });

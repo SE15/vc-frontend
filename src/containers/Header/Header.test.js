@@ -34,7 +34,7 @@ const mockStore = configureMockStore();
 
 const mockPush = jest.fn();
 
-jest.mock('react-router-dom', () => ({
+jest.mock('../../api', () => ({
     getConnectionRequests: (user) => {
         if (user) {
             return {
@@ -42,6 +42,9 @@ jest.mock('react-router-dom', () => ({
             }
         }
     },
+}));
+
+jest.mock('react-router-dom', () => ({
     useHistory: () => ({
         push: mockPush
     }),
@@ -68,17 +71,19 @@ describe('<Header />', () => {
         expect(wrapper.find(Input).at(0).props().value).toEqual('person_name');
     });
 
-    // it('should cancel the event when submitted', () => {
-    //     wrapper = mount(<ChangeName submitHandler/>);
-    //     let prevented = false;
-    //     wrapper.find(Button).simulate("click", {
-    //         preventDefault: () => {
-    //             prevented = true;
-    //         },
-    //     });
-    //     //wrapper.find(Button).prop('onClick')()
-    //     expect(prevented).toBe(true);
-    // });
+    it('should route to search onkeypress in input search bar', () => {
+
+    });
+
+    it('should route to search when search icon click', () => {
+
+    });
+
+    it('should show GridItem when isAuthenticated true', () => {
+
+    });
+
+   //should include notification popover fuctions
 
     it('should pass logged in user\'s id', () => {
 
@@ -126,5 +131,9 @@ describe('<Header />', () => {
         wrapper = shallow(<ReduxConnections store={store} />).dive();
 
         expect(wrapper.props().isAuthenticated).toBe(false);
+    });
+
+    it('should dispatch onLogout of global store when profilePicture is updated', () => {
+
     });
 });
