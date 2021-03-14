@@ -26,7 +26,7 @@ import {
 
 import { connect } from 'react-redux';
 
-const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated, user, firstName, lastName, profilePic, authUser }) => {
+export const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated, user, firstName, lastName, profilePic, authUser }) => {
     const [recommendations, setRecommendations] = useState(recommendationList);
     const [description, setDescription] = useState('');
     const [isLoading, setLoading] = useState(false);
@@ -38,6 +38,7 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
         setRecommendations(recommendationList);
         recommendationList.forEach(recommendation => {
             if (recommendation.id == authUser) setAlreadyPosted(true);
+            else setAlreadyPosted(false);
         }); 
     }, [recommendationList]);
 
@@ -67,13 +68,13 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
         setLoading(true);
         const result = await submitRecommendation(user, { description });
         if (result.data) {
+            console.log(result.data);
             const tempRecommendations = [...recommendations];
-            console.log(tempRecommendations);
             tempRecommendations.push({ id: tempRecommendations.length + 1, first_name: firstName, last_name: lastName, description, profile_pic: profilePic });
             setRecommendations(tempRecommendations);
             setAlreadyPosted(true)
 
-            generateSuccessMessage('Recommendation posted', `Your recommendation has posted`);
+            generateSuccessMessage('Recommendation posted', `Your recommendation has been posted`);
             onClose();
             setDescription('')
         } else {
@@ -134,6 +135,7 @@ const Recommendations = ({ recommendationList, loading, isOwner, isAuthenticated
                         <Text color="gray.600" fontWeight="bold" align="left">{firstName} {lastName}</Text>
                         <StackDivider borderWidth="1px" borderColor="purple.200" />
                         <Textarea
+                            className="user-input"
                             w="280px"
                             variant="outline"
                             placeholder="type your recommendation..."
